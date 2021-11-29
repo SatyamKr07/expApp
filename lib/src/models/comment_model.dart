@@ -6,43 +6,38 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'user_model.dart';
+
 class CommentModel {
-  CommentModel({
-    this.commentText = "",
-    this.userId = "",
-    this.userName = "",
-    this.postId = "",
-    required this.timestamp,
-    this.likes = 0,
-  });
+  CommentModel(
+      {this.commentText = "",
+      required this.postId,
+      required this.timestamp,
+      this.likes = 0,
+      required this.postedBy});
 
   String commentText;
-  String userId;
-  String userName;
   String postId;
-  Timestamp timestamp;
+  DateTime timestamp;
   int likes;
+  UserModel postedBy;
 
-  factory CommentModel.fromRawJson(String str) =>
-      CommentModel.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
-  factory CommentModel.fromJson(Map<String, dynamic> json) => CommentModel(
+  factory CommentModel.fromJson(
+          Map<String, dynamic> json, DocumentSnapshot doc) =>
+      CommentModel(
         commentText: json["commentText"],
-        userId: json["userId"],
-        userName: json["userName"],
-        postId: json["postId"],
-        timestamp: json["timestamp"],
+        timestamp: json['timestamp'].toDate(),
         likes: json["likes"],
+        postedBy: UserModel.fromJson(json['postedBy']),
+        postId: doc.id,
       );
 
   Map<String, dynamic> toJson() => {
         "commentText": commentText,
-        "userId": userId,
-        "userName": userName,
-        "postId": postId,
+        // "postId": postId,
         "timestamp": timestamp,
         "likes": likes,
+        "postedBy": postedBy.toJson(),
+        "postId": postId,
       };
 }

@@ -1,11 +1,13 @@
+import 'package:commentor/src/controllers/add_post_controller.dart';
 import 'package:commentor/src/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/instance_manager.dart';
 
 class WriteCommentArea extends StatelessWidget {
-  WriteCommentArea({Key? key}) : super(key: key);
-  final homeController = Get.find<HomeController>();
+  WriteCommentArea({Key? key, required this.postId}) : super(key: key);
+  final addPostController = Get.find<AddPostController>();
+  String postId;
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +27,11 @@ class WriteCommentArea extends StatelessWidget {
                     // setState(() {
                     //   logger.d('write comment textField');
                     // });
-                    homeController.commentTextCtrl = TextEditingController();
+                    // addPostController.commentTextCtrl = TextEditingController();
                   },
                   maxLines: null,
                   // style: const TextStyle(color: Colors.black38, fontSize: 15),
-                  controller: homeController.commentTextCtrl,
+                  controller: addPostController.commentTextCtrl,
                   decoration: const InputDecoration.collapsed(
                     border: UnderlineInputBorder(),
                     hintText: 'Type your comment here',
@@ -41,7 +43,7 @@ class WriteCommentArea extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.send),
               onPressed: () {
-                homeController.postComment();
+                addPostController.postComment(postId: postId);
               },
             ),
           ],

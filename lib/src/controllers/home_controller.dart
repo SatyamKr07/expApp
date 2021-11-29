@@ -6,7 +6,6 @@ import 'package:get/state_manager.dart';
 
 class HomeController extends GetxController {
   String filterCategory = "All Posts";
-  TextEditingController commentTextCtrl = TextEditingController();
 
   changeFilter(String? category) {
     logger.d('category $category');
@@ -42,7 +41,7 @@ class HomeController extends GetxController {
     // .then();
   }
 
-  Stream<QuerySnapshot> fetchComments() {
+  Stream<QuerySnapshot> fetchComments({required String postId}) {
     // logger.d('category $category');
     // filterCategory = category!;
     // WidgetsBinding.instance!.addPostFrameCallback((_) {
@@ -53,6 +52,7 @@ class HomeController extends GetxController {
     logger.d('fetching all comments');
     return FirebaseFirestore.instance
         .collection("comments")
+        .where("postId", isEqualTo: postId)
         .orderBy('timestamp', descending: true)
         .snapshots();
     // }

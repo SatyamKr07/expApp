@@ -53,7 +53,9 @@ class PostBlock extends StatelessWidget {
                 Spacer(),
                 InkWell(
                   onTap: () {
-                    Get.to(() => Comments());
+                    Get.to(() => Comments(
+                          postId: postModel.postId,
+                        ));
                   },
                   child: Container(
                     child: Padding(

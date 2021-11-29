@@ -3,6 +3,7 @@ import 'package:commentor/src/central/services/firebase_services.dart';
 import 'package:commentor/src/central/services/image_service.dart';
 import 'package:commentor/src/central/services/my_logger.dart';
 import 'package:commentor/src/central/services/user_controller.dart';
+import 'package:commentor/src/models/comment_model.dart';
 import 'package:commentor/src/models/post_model.dart';
 import 'package:commentor/src/models/user_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,13 +14,20 @@ import 'package:image_picker/image_picker.dart';
 
 import 'home_controller.dart';
 
-class AddBlogController extends GetxController {
-  PostModel blogModel = PostModel(
+class AddPostController extends GetxController {
+  PostModel postModel = PostModel(
     picList: [],
     category: "*choose category",
     postedBy: UserModel(),
     postedOn: DateTime.now(),
   );
+
+  CommentModel commentModel = CommentModel(
+    timestamp: DateTime.now(),
+    postedBy: UserModel(),
+    postId: '',
+  );
+
   TextEditingController titleCtrl = TextEditingController();
   TextEditingController descCtrl = TextEditingController();
 
@@ -35,15 +43,20 @@ class AddBlogController extends GetxController {
 
   List<XFile>? multiImages = [];
   List<String> imagesPath = [];
+
+  TextEditingController commentTextCtrl = TextEditingController();
+  final CollectionReference _commentCollection =
+      FirebaseFirestore.instance.collection('comments');
+
   Future pickBlogImageFromGallery() async {
     multiImages = (await imageService.getImagesFromGallery());
     // multiImages!.addAll(await imageService.getImagesFromGallery());
     if (multiImages != null) {
       for (var element in multiImages!) {
         imagesPath.add(element.path);
-        // blogModel.picList.add(element.path);
+        // postModel.picList.add(element.path);
       }
-      logger.d('exchangeImages ${blogModel.picList}');
+      logger.d('exchangeImages ${postModel.picList}');
       update(['ADD_IMAGES_SWIPER']);
     }
   }
@@ -57,7 +70,7 @@ class AddBlogController extends GetxController {
   }
 
   void selectCategory(String? category) {
-    blogModel.category = category!;
+    postModel.category = category!;
     update(['CATEGORY_DROPDOWN']);
   }
 
@@ -65,7 +78,7 @@ class AddBlogController extends GetxController {
     try {
       await firebaseServices.uploadImageToFirebaseStorage(
         imagesPath: imagesPath,
-        imagesUrlToStore: blogModel.picList,
+        imagesUrlToStore: postModel.picList,
       );
     } catch (e) {
       logger.e('error in uploading images $e');
@@ -83,7 +96,7 @@ class AddBlogController extends GetxController {
     try {
       await uploadImages();
       _mainCollection
-          .add(blogModel.toJson())
+          .add(postModel.toJson())
           .then((docRef) {})
           .catchError((error) {
         logger.e('firestore error $error');
@@ -93,7 +106,7 @@ class AddBlogController extends GetxController {
       isUploading = false;
       update(['ADD_BLOG_PAGE']);
     } finally {
-      blogModel = PostModel(
+      postModel = PostModel(
         picList: [],
         category: "*choose category",
         postedBy: UserModel(),
@@ -108,19 +121,48 @@ class AddBlogController extends GetxController {
   }
 
   feedBlogData() {
-    blogModel.title = titleCtrl.text;
-    blogModel.description = descCtrl.text;
-    blogModel.postedBy = userController.appUser;
-    blogModel.postedOn = DateTime.now();
+    postModel.title = titleCtrl.text;
+    postModel.description = descCtrl.text;
+    postModel.postedBy = userController.appUser;
+    postModel.postedOn = DateTime.now();
   }
 
   validateData() {
-    if (blogModel.title == "" ||
-        blogModel.description == "" ||
+    if (postModel.title == "" ||
+        postModel.description == "" ||
         imagesPath.isEmpty ||
-        blogModel.category == "*choose category") {
+        postModel.category == "*choose category") {
       return false;
     }
     return true;
+  }
+
+  postComment({required String postId}) async {
+    commentModel.postedBy = userController.appUser;
+    commentModel.commentText = commentTextCtrl.text;
+    commentModel.likes = 0;
+    commentModel.timestamp = DateTime.now();
+    commentModel.postId = postId;
+    try {
+      _commentCollection.add(commentModel.toJson()).then((docRef) {
+        commentModel = CommentModel(
+            timestamp: DateTime.now(),
+            postedBy: userController.appUser,
+            postId: '');
+        commentTextCtrl.text = "";
+      }).catchError((error) {
+        logger.e('firestore error $error');
+      });
+    } catch (e) {
+      logger.e(e);
+      // isUploading = false;
+      // update(['ADD_BLOG_PAGE']);
+    } finally {
+      // isUploading = false;
+      // // update(['ADD_BLOG_PAGE']);
+      // Get.back();
+      // Get.back();
+      // homeController.changeFilter("All Posts");
+    }
   }
 }

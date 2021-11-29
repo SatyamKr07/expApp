@@ -12,7 +12,11 @@ import 'package:get/instance_manager.dart';
 import 'views/comment_template.dart';
 
 class Comments extends StatelessWidget {
-  Comments({Key? key}) : super(key: key);
+  Comments({
+    Key? key,
+    required this.postId,
+  }) : super(key: key);
+  String postId;
   final homeController = Get.find<HomeController>();
   List<CommentModel> blogList = [];
   @override
@@ -23,8 +27,10 @@ class Comments extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Expanded(child: AllComments()),
-            WriteCommentArea(),
+            Expanded(child: AllComments(postId: postId)),
+            WriteCommentArea(
+              postId: postId,
+            ),
           ],
         ));
   }

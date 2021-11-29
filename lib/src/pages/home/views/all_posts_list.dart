@@ -9,7 +9,7 @@ import 'package:get/instance_manager.dart';
 
 class AllPostsList extends StatelessWidget {
   AllPostsList({Key? key}) : super(key: key);
-  List<PostModel> blogList = [];
+  List<PostModel> postList = [];
   final homeController = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
@@ -31,17 +31,23 @@ class AllPostsList extends StatelessWidget {
               child: Center(child: Text("Loading...")),
             );
           }
-          blogList = snapshot.data!.docs.map((DocumentSnapshot document) {
-            return PostModel.fromJson(document.data() as Map<String, dynamic>);
+          postList = snapshot.data!.docs.map((DocumentSnapshot document) {
+            // PostModel postModel;
+            return PostModel.fromJson(
+              document.data() as Map<String, dynamic>,
+              document,
+            );
           }).toList();
-          logger.d("blogList", blogList.length.toString());
+
+          logger.d("postList", postList.length.toString());
 
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             physics: const ClampingScrollPhysics(),
             shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
-              PostModel postModel = blogList[index];
+              PostModel postModel = postList[index];
+
               return PostBlock(
                 postModel: postModel,
               );

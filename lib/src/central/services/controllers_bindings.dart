@@ -10,7 +10,7 @@ class ControllerBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<UserController>(() => UserController(), fenix: true);
-    Get.lazyPut<AddBlogController>(() => AddBlogController(), fenix: true);
+    Get.lazyPut<AddPostController>(() => AddPostController(), fenix: true);
     Get.lazyPut<HomeController>(() => HomeController(), fenix: true);
     Get.lazyPut<ImageService>(() => ImageService(), fenix: true);
     Get.lazyPut<FirebaseStorageService>(() => FirebaseStorageService(),

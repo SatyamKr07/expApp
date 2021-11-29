@@ -4,21 +4,19 @@
 
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'user_model.dart';
 
-PostModel blogModelFromJson(String str) => PostModel.fromJson(json.decode(str));
-
-String blogModelToJson(PostModel data) => json.encode(data.toJson());
-
 class PostModel {
-  PostModel({
-    this.title = "",
-    this.description = "",
-    required this.picList,
-    this.category = "",
-    required this.postedBy,
-    required this.postedOn,
-  });
+  PostModel(
+      {this.title = "",
+      this.description = "",
+      required this.picList,
+      this.category = "",
+      required this.postedBy,
+      required this.postedOn,
+      this.postId = ''});
 
   String title;
   String description;
@@ -26,14 +24,17 @@ class PostModel {
   String category;
   UserModel postedBy;
   DateTime postedOn;
+  String postId;
 
-  factory PostModel.fromJson(Map<String, dynamic> json) => PostModel(
+  factory PostModel.fromJson(Map<String, dynamic> json, DocumentSnapshot doc) =>
+      PostModel(
         title: json["title"],
         description: json["description"],
         picList: List<String>.from(json["picList"].map((x) => x)),
         category: json["category"],
         postedBy: UserModel.fromJson(json['postedBy']),
-        postedOn: (json['postedOn']).toDate(),
+        postedOn: json['postedOn'].toDate(),
+        postId: doc.id,
       );
 
   Map<String, dynamic> toJson() => {

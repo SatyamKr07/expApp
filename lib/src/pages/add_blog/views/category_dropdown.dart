@@ -5,16 +5,16 @@ import 'package:get/state_manager.dart';
 
 class CategoryDropdown extends StatelessWidget {
   CategoryDropdown({Key? key}) : super(key: key);
-  final addBlogController = Get.find<AddBlogController>();
+  final addBlogController = Get.find<AddPostController>();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: GetBuilder<AddBlogController>(
+      child: GetBuilder<AddPostController>(
         id: "CATEGORY_DROPDOWN",
         builder: (_) => DropdownButton<String>(
-          value: addBlogController.blogModel.category,
+          value: addBlogController.postModel.category,
           onChanged: addBlogController.selectCategory,
           items: const [
             DropdownMenuItem(

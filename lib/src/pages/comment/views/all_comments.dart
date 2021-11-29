@@ -10,15 +10,16 @@ import 'package:get/instance_manager.dart';
 import 'comment_template.dart';
 
 class AllComments extends StatelessWidget {
-  AllComments({Key? key}) : super(key: key);
+  AllComments({Key? key, required this.postId}) : super(key: key);
   final homeController = Get.find<HomeController>();
+  String postId;
   List<CommentModel> blogList = [];
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
       id: 'ALL_POSTS',
       builder: (_) => StreamBuilder<QuerySnapshot>(
-        stream: homeController.fetchComments(),
+        stream: homeController.fetchComments(postId: postId),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return const Padding(
@@ -35,7 +36,9 @@ class AllComments extends StatelessWidget {
           }
           blogList = snapshot.data!.docs.map((DocumentSnapshot document) {
             return CommentModel.fromJson(
-                document.data() as Map<String, dynamic>);
+              document.data() as Map<String, dynamic>,
+              document,
+            );
           }).toList();
           logger.d("blogList", blogList.length.toString());
 

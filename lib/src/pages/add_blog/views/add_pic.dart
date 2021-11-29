@@ -4,7 +4,7 @@ import 'package:get/instance_manager.dart';
 
 class AddPic extends StatelessWidget {
   AddPic({Key? key}) : super(key: key);
-  final addBlogController = Get.find<AddBlogController>();
+  final addBlogController = Get.find<AddPostController>();
 
   @override
   Widget build(BuildContext context) {

@@ -10,10 +10,10 @@ import 'views/title_desc.dart';
 
 class AddBlog extends StatelessWidget {
   AddBlog({Key? key}) : super(key: key);
-  final addBlogController = Get.find<AddBlogController>();
+  final addBlogController = Get.find<AddPostController>();
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AddBlogController>(
+    return GetBuilder<AddPostController>(
         id: 'ADD_BLOG_PAGE',
         builder: (_) {
           return _.isUploading == true
@@ -41,7 +41,7 @@ class AddBlog extends StatelessWidget {
                         child: Text("*Choose/Click pics"),
                       ),
                       AddPic(),
-                      GetBuilder<AddBlogController>(
+                      GetBuilder<AddPostController>(
                         id: "ADD_IMAGES_SWIPER",
                         builder: (_) => BuildSwiper(
                           picList: addBlogController.imagesPath,

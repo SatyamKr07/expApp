@@ -8,11 +8,12 @@ class CommentTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: CircleAvatar(
-        child: Image.network(
-            "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"),
+      leading: ClipOval(
+        child: CircleAvatar(
+          child: Image.network(commentModel.postedBy.profilePic),
+        ),
       ),
-      title: Text(commentModel.userName),
+      title: Text(commentModel.postedBy.displayName),
       subtitle: Text(commentModel.commentText),
       trailing: const Icon(Icons.link),
     );
