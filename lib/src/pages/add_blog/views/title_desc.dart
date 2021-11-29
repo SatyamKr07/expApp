@@ -1,4 +1,4 @@
-import 'package:commentor/src/controllers/add_blog_controller.dart';
+import 'package:commentor/src/controllers/add_post_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 

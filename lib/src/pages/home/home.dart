@@ -2,16 +2,17 @@ import 'package:commentor/src/central/shared/dimensions.dart';
 import 'package:commentor/src/pages/add_blog/add_blog.dart';
 import 'package:commentor/src/central/services/user_controller.dart';
 import 'package:commentor/src/controllers/home_controller.dart';
-import 'package:commentor/src/pages/home/views/all_blogs.dart';
+import 'package:commentor/src/pages/home/views/all_posts_list.dart';
 import 'package:commentor/src/pages/profile/profile_page.dart';
 import 'package:commentor/src/pages/search_user/search_user.dart';
+import 'package:commentor/src/settings/settings_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/route_manager.dart';
 
-import 'views/all_blogs.dart';
+import 'views/all_posts_list.dart';
 import 'views/story_list.dart';
 
 class Home extends StatelessWidget {
@@ -26,7 +27,14 @@ class Home extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () {}, icon: const Icon(FontAwesomeIcons.bell)),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.menu))
+            IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+            IconButton(
+                onPressed: () {
+                  Get.toNamed("/settings");
+                  // Navigator.restorablePushNamed(
+                  //     context, SettingsView.routeName);
+                },
+                icon: Icon(Icons.settings)),
           ],
           automaticallyImplyLeading: false,
           title: Row(children: [
@@ -69,7 +77,7 @@ class Home extends StatelessWidget {
             child: StoryListView(),
           ),
 
-          AllBlogs(),
+          AllPostsList(),
         ],
       ),
       floatingActionButton: FloatingActionButton(

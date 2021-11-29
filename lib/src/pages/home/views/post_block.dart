@@ -1,5 +1,6 @@
 import 'package:commentor/src/central/shared/dimensions.dart';
 import 'package:commentor/src/models/post_model.dart';
+import 'package:commentor/src/pages/comment/comments.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -14,7 +15,7 @@ class PostBlock extends StatelessWidget {
     var date = DateTime.now();
     // var date = DateTime.parse(data['created_at'].toDate().toString());
     return Padding(
-      padding: const EdgeInsets.only(left: 8, bottom: 8, right: 8),
+      padding: const EdgeInsets.only(left: 8, bottom: 40, right: 8),
       child: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -23,7 +24,7 @@ class PostBlock extends StatelessWidget {
             Row(
               children: [
                 hSizedBox1,
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 16,
                   backgroundColor: CupertinoColors.systemPurple,
                   child: Icon(
@@ -50,39 +51,44 @@ class PostBlock extends StatelessWidget {
                   ],
                 ),
                 Spacer(),
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          FontAwesomeIcons.comment,
-                          size: 14,
-                          color: Colors.white,
-                          // color: KConstantColors.whiteColor,
-                        ),
-                        hSizedBox2,
-                        Text(
-                          "Comment",
-                          // style: KCustomTextstyle.kBold(context, 8),
-                          style: TextStyle(
+                InkWell(
+                  onTap: () {
+                    Get.to(() => Comments());
+                  },
+                  child: Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            FontAwesomeIcons.comment,
+                            size: 14,
                             color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                            // color: KConstantColors.whiteColor,
                           ),
-                        ),
-                      ],
+                          hSizedBox2,
+                          Text(
+                            "Comment",
+                            // style: KCustomTextstyle.kBold(context, 8),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
+                    decoration: BoxDecoration(
+                        color: CupertinoColors.systemPurple,
+                        borderRadius: BorderRadius.circular(12)),
                   ),
-                  decoration: BoxDecoration(
-                      color: CupertinoColors.systemPurple,
-                      borderRadius: BorderRadius.circular(12)),
                 ),
                 hSizedBox2
               ],
             ),
             vSizedBox2,
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.only(left: 8.0, right: 8),
               child: Text(
                 postModel.title,
                 // style: KCustomTextstyle.kBold(context, 10),

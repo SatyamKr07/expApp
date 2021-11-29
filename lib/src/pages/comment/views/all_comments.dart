@@ -1,27 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:commentor/src/central/services/my_logger.dart';
 import 'package:commentor/src/controllers/home_controller.dart';
+import 'package:commentor/src/models/comment_model.dart';
 import 'package:commentor/src/models/post_model.dart';
-import 'package:commentor/src/pages/home/views/blog_template.dart';
-import 'package:commentor/src/pages/home/views/post_block.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/instance_manager.dart';
 
-class AllBlogs extends StatelessWidget {
-  AllBlogs({Key? key}) : super(key: key);
-  List<PostModel> blogList = [];
+import 'comment_template.dart';
+
+class AllComments extends StatelessWidget {
+  AllComments({Key? key}) : super(key: key);
   final homeController = Get.find<HomeController>();
+  List<CommentModel> blogList = [];
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
       id: 'ALL_POSTS',
       builder: (_) => StreamBuilder<QuerySnapshot>(
-        // stream: FirebaseFirestore.instance
-        //     .collection('blogs')
-        //     .where('category', isEqualTo: homeController.filterCategory)
-        //     .snapshots(),
-        stream: homeController.filterPosts(),
+        stream: homeController.fetchComments(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return const Padding(
@@ -37,7 +34,8 @@ class AllBlogs extends StatelessWidget {
             );
           }
           blogList = snapshot.data!.docs.map((DocumentSnapshot document) {
-            return PostModel.fromJson(document.data() as Map<String, dynamic>);
+            return CommentModel.fromJson(
+                document.data() as Map<String, dynamic>);
           }).toList();
           logger.d("blogList", blogList.length.toString());
 
@@ -46,27 +44,12 @@ class AllBlogs extends StatelessWidget {
             physics: const ClampingScrollPhysics(),
             shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
-              // snapshot.data!.docs.map((DocumentSnapshot document) {
-              // postModel postModel =
-              // postModel.fromJson(document.data() as Map<String, dynamic>);
-              // });
-              PostModel postModel = blogList[index];
-              return PostBlock(
-                postModel: postModel,
+              CommentModel commentModel = blogList[index];
+              return CommentTemplate(
+                commentModel: commentModel,
               );
-              // return BlogTemplate(postModel: postModel);
             },
           );
-
-          // ListView(
-          //   physics: const ClampingScrollPhysics(),
-          //   shrinkWrap: true,
-          //   children: snapshot.data!.docs.map((DocumentSnapshot document) {
-          //     postModel postModel =
-          //         postModel.fromJson(document.data() as Map<String, dynamic>);
-          //     return BlogTemplate(postModel: postModel);
-          //   }).toList(),
-          // );
         },
       ),
     );
