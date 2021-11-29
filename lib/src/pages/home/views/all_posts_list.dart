@@ -16,7 +16,7 @@ class AllPostsList extends StatelessWidget {
     return GetBuilder<HomeController>(
       id: 'ALL_POSTS',
       builder: (_) => StreamBuilder<QuerySnapshot>(
-        stream: homeController.filterPosts(),
+        stream: homeController.fetchPosts(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return const Padding(

@@ -116,7 +116,6 @@ class AddPostController extends GetxController {
       // update(['ADD_BLOG_PAGE']);
       Get.back();
       Get.back();
-      homeController.changeFilter("All Posts");
     }
   }
 
