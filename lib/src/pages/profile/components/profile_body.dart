@@ -47,10 +47,11 @@ class ProfileBody extends StatelessWidget {
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: BuildSwiper(
-                      picList: postList[index].picList,
-                    ));
+                  padding: const EdgeInsets.all(8.0),
+                  child: BuildSwiper(
+                    picList: postList[index].picList,
+                  ),
+                );
               },
             );
           }),

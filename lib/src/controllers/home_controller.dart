@@ -27,31 +27,30 @@ class HomeController extends GetxController {
         .snapshots();
   }
 
-  Future<bool> onLikeButtonTapped(
-      {bool isLiked = false, String docId = ''}) async {
-    /// send your request here
-    // final bool success= await sendRequest();
+  // Future onLikeButtonTapped({bool isLiked = false, String docId = ''}) async {
+  //   /// send your request here
+  //   // final bool success= await sendRequest();
 
-    /// if failed, you can do nothing
-    // return success? !isLiked:isLiked;
-    logger.d('onLikeButtonTapped');
-    if (!isLiked) {
-      FirebaseFirestore.instance.collection("blogs").doc(docId).update({
-        "likes": FieldValue.arrayUnion([userController.appUser.id])
-      }).then((value) {
-        return isLiked = true;
-      }).onError((error, stackTrace) {
-        logger.d('liking error $error');
-        return isLiked = false;
-      });
-    } else {
-      FirebaseFirestore.instance.collection("blogs").doc(docId).update({
-        "likes": FieldValue.arrayRemove([userController.appUser.id])
-      }).then((value) => isLiked = false);
-    }
-
-    return isLiked;
-  }
+  //   /// if failed, you can do nothing
+  //   // return success? !isLiked:isLiked;
+  //   logger.d('onLikeButtonTapped');
+  //   if (!isLiked) {
+  //     FirebaseFirestore.instance.collection("blogs").doc(docId).update({
+  //       "likes": FieldValue.arrayUnion([userController.appUser.id])
+  //     }).then((value) {
+  //       return isLiked = true;
+  //     }).onError((error, stackTrace) {
+  //       logger.d('liking error $error');
+  //       return isLiked = false;
+  //     });
+  //   } else {
+  //     FirebaseFirestore.instance.collection("blogs").doc(docId).update({
+  //       "likes": FieldValue.arrayRemove([userController.appUser.id])
+  //     }).then((value) => isLiked = false);
+  //   }
+  //   update(['LIKE_BUTTON']);
+  //   // return isLiked;
+  // }
 
   Future<bool> onLikeButtonTapped2(bool isLiked) async {
     /// send your request here
@@ -79,9 +78,12 @@ class HomeController extends GetxController {
   }
 
   bool checkIfLiked(PostModel postModel) {
+    logger.d("checkIfLiked");
     if (postModel.postLikesArray.contains(userController.appUser.id)) {
+      logger.d("liked");
       return true;
     }
+    logger.d("not liked");
     return false;
   }
 

@@ -28,7 +28,7 @@ class PostModel {
   UserModel postedBy;
   DateTime postedOn;
   String postId;
-  List<String> postLikesArray;
+  List<dynamic> postLikesArray;
   String uploaderId;
 
   factory PostModel.fromJson(Map<String, dynamic> json, DocumentSnapshot doc) =>

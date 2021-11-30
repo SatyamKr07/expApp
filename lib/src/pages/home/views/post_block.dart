@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:commentor/src/central/services/my_logger.dart';
 import 'package:commentor/src/central/services/user_controller.dart';
 import 'package:commentor/src/central/shared/dimensions.dart';
 import 'package:commentor/src/central/widgets/build_swiper.dart';
@@ -18,11 +20,46 @@ class PostBlock extends StatelessWidget {
   bool isLiked = false;
   final userController = Get.find<UserController>();
   checkIfLiked(PostModel postModel) {
+    logger.d("checkIfLiked post ${postModel.postId}");
     if (postModel.postLikesArray.contains(userController.appUser.id)) {
       isLiked = true;
     } else {
       isLiked = false;
     }
+  }
+
+  Future onLikeButtonTapped({String docId = ''}) async {
+    /// send your request here
+    // final bool success= await sendRequest();
+
+    /// if failed, you can do nothing
+    // return success? !isLiked:isLiked;
+    logger.d('onLikeButtonTapped');
+    if (!isLiked) {
+      FirebaseFirestore.instance.collection("blogs").doc(docId).update({
+        "postLikesArray": FieldValue.arrayUnion([userController.appUser.id])
+      }).then((value) {
+        isLiked = true;
+        logger.d("liked successfully : $isLiked");
+      }).onError((error, stackTrace) {
+        logger.d('liking error $error');
+        // isLiked = false;
+      });
+    } else {
+      FirebaseFirestore.instance.collection("blogs").doc(docId).update({
+        "postLikesArray": FieldValue.arrayRemove([userController.appUser.id])
+      }).then(
+        (value) {
+          isLiked = false;
+          logger.d("liked successfully : $isLiked");
+        },
+      ).onError((error, stackTrace) {
+        logger.d('unliking error $error');
+        // isLiked = false;
+      });
+    }
+    homeController.update(['LIKE_BUTTON']);
+    // return isLiked;
   }
 
   @override
@@ -141,32 +178,34 @@ class PostBlock extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(8.0)),
                         color: Colors.black54.withOpacity(.4),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          children: [
-                            // Icon(
-                            //   FontAwesomeIcons.heart,
-                            //   size: 18,
-                            //   color: Colors.red,
-                            //   // color: KConstantColors.conditionalColor(context: context),
-                            // ),
-                            GetBuilder<HomeController>(
-                              // init: HomeController(),
-                              id: 'LIKE_BUTTON',
-                              initState: (_) {
-                                isLiked =
-                                    homeController.checkIfLiked(postModel);
-                              },
-                              builder: (_) {
-                                return InkWell(
-                                  onTap: () {
-                                    homeController.onLikeButtonTapped(
-                                      isLiked: isLiked,
-                                      docId: postModel.postId,
-                                    );
-                                  },
-                                  child: Column(
+                      child: InkWell(
+                        onTap: () {
+                          onLikeButtonTapped(
+                            docId: postModel.postId,
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Row(
+                            children: [
+                              // Icon(
+                              //   FontAwesomeIcons.heart,
+                              //   size: 18,
+                              //   color: Colors.red,
+                              //   // color: KConstantColors.conditionalColor(context: context),
+                              // ),
+                              GetBuilder<HomeController>(
+                                // init: HomeController(),
+                                id: 'LIKE_BUTTON',
+                                initState: (_) {
+                                  WidgetsBinding.instance!
+                                      .addPostFrameCallback((_) {
+                                    isLiked = checkIfLiked(postModel);
+                                    homeController.update(['LIKE_BUTTON']);
+                                  });
+                                },
+                                builder: (_) {
+                                  return Column(
                                     children: [
                                       if (isLiked)
                                         const Icon(FontAwesomeIcons.solidHeart,
@@ -182,25 +221,20 @@ class PostBlock extends StatelessWidget {
                                           // color: KConstantColors.conditionalColor(context: context),
                                         )
                                     ],
-                                  ),
-
-                                  // LikeButton(
-                                  //   isLiked: isLiked,
-                                  //   // onTap: homeController.onLikeButtonTapped2,
-                                  // ),
-                                );
-                              },
-                            ),
-                            hSizedBox2,
-                            const Text(
-                              "1234",
-                              // style: KCustomTextstyle.kMedium(context, 10),
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
+                                  );
+                                },
                               ),
-                            )
-                          ],
+                              hSizedBox2,
+                              const Text(
+                                "1234",
+                                // style: KCustomTextstyle.kMedium(context, 10),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
