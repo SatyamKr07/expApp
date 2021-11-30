@@ -9,14 +9,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'user_model.dart';
 
 class PostModel {
-  PostModel(
-      {this.title = "",
-      this.description = "",
-      required this.picList,
-      this.category = "",
-      required this.postedBy,
-      required this.postedOn,
-      this.postId = ''});
+  PostModel({
+    this.title = "",
+    this.description = "",
+    required this.picList,
+    this.category = "",
+    required this.postedBy,
+    required this.postedOn,
+    this.postId = '',
+    required this.postLikesArray,
+  });
 
   String title;
   String description;
@@ -25,6 +27,7 @@ class PostModel {
   UserModel postedBy;
   DateTime postedOn;
   String postId;
+  List<String> postLikesArray;
 
   factory PostModel.fromJson(Map<String, dynamic> json, DocumentSnapshot doc) =>
       PostModel(
@@ -35,6 +38,7 @@ class PostModel {
         postedBy: UserModel.fromJson(json['postedBy']),
         postedOn: json['postedOn'].toDate(),
         postId: doc.id,
+        postLikesArray: json['postLikesArray'] ?? [],
       );
 
   Map<String, dynamic> toJson() => {
@@ -44,5 +48,6 @@ class PostModel {
         "category": category,
         "postedBy": postedBy.toJson(),
         "postedOn": postedOn,
+        "postLikesArray": postLikesArray,
       };
 }

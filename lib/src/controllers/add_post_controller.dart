@@ -20,6 +20,7 @@ class AddPostController extends GetxController {
     category: "*choose category",
     postedBy: UserModel(),
     postedOn: DateTime.now(),
+    postLikesArray: [],
   );
 
   CommentModel commentModel = CommentModel(
@@ -111,6 +112,7 @@ class AddPostController extends GetxController {
         category: "*choose category",
         postedBy: UserModel(),
         postedOn: DateTime.now(),
+        postLikesArray: [],
       );
       isUploading = false;
       // update(['ADD_BLOG_PAGE']);
