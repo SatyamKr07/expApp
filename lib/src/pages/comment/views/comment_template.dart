@@ -15,7 +15,35 @@ class CommentTemplate extends StatelessWidget {
       ),
       title: Text(commentModel.postedBy.displayName),
       subtitle: Text(commentModel.commentText),
-      trailing: const Icon(Icons.link),
+      trailing: Icon(
+        FontAwesomeIcons.heart,
+        size: 18,
+        color: Colors.grey,
+        // color: KConstantColors.conditionalColor(context: context),
+      ),
+      // Row(
+      //   mainAxisSize: MainAxisSize.min,
+      //   children: const [
+      //     Expanded(
+      //       child: Icon(
+      //         FontAwesomeIcons.heart,
+      //         size: 18,
+      //         color: Colors.grey,
+      //         // color: KConstantColors.conditionalColor(context: context),
+      //       ),
+      //     ),
+      //     Expanded(
+      //       child: Text(
+      //         "1234",
+      //         // style: KCustomTextstyle.kMedium(context, 10),
+      //         style: TextStyle(
+      //           color: Colors.white,
+      //           fontWeight: FontWeight.bold,
+      //         ),
+      //       ),
+      //     )
+      //   ],
+      // ),
     );
   }
 }

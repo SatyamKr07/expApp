@@ -9,18 +9,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'user_model.dart';
 
 class CommentModel {
-  CommentModel(
-      {this.commentText = "",
-      required this.postId,
-      required this.timestamp,
-      this.likes = 0,
-      required this.postedBy});
+  CommentModel({
+    this.commentText = "",
+    required this.postId,
+    required this.timestamp,
+    this.likes = 0,
+    required this.postedBy,
+    this.commentId = '',
+  });
 
   String commentText;
   String postId;
   DateTime timestamp;
   int likes;
   UserModel postedBy;
+  String commentId;
 
   factory CommentModel.fromJson(
           Map<String, dynamic> json, DocumentSnapshot doc) =>
@@ -29,7 +32,8 @@ class CommentModel {
         timestamp: json['timestamp'].toDate(),
         likes: json["likes"],
         postedBy: UserModel.fromJson(json['postedBy']),
-        postId: doc.id,
+        postId: json["postId"],
+        commentId: doc.id,
       );
 
   Map<String, dynamic> toJson() => {

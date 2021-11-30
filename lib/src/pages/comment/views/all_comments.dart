@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:commentor/src/central/services/my_logger.dart';
+import 'package:commentor/src/central/services/user_controller.dart';
 import 'package:commentor/src/controllers/home_controller.dart';
 import 'package:commentor/src/models/comment_model.dart';
 import 'package:commentor/src/models/post_model.dart';
@@ -14,6 +15,24 @@ class AllComments extends StatelessWidget {
   final homeController = Get.find<HomeController>();
   String postId;
   List<CommentModel> blogList = [];
+  final userController = Get.find<UserController>();
+
+  Widget secondarystackBehindDismiss() {
+    return Container(
+      color: Colors.red,
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: const [
+            Icon(Icons.delete, color: Colors.white),
+            // Text('Move to trash', style: TextStyle(color: Colors.white)),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
@@ -48,8 +67,28 @@ class AllComments extends StatelessWidget {
             shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
               CommentModel commentModel = blogList[index];
-              return CommentTemplate(
-                commentModel: commentModel,
+              return Column(
+                children: [
+                  if (userController.appUser.id == blogList[index].postedBy.id)
+                    Dismissible(
+                      direction: DismissDirection.endToStart,
+                      background: SizedBox.shrink(),
+                      secondaryBackground: secondarystackBehindDismiss(),
+                      onDismissed: (direction) {
+                        homeController.handleDeleteComment(
+                          docId: blogList[index].commentId,
+                        );
+                      },
+                      key: Key(blogList[index].commentId),
+                      child: CommentTemplate(
+                        commentModel: commentModel,
+                      ),
+                    )
+                  else
+                    CommentTemplate(
+                      commentModel: commentModel,
+                    ),
+                ],
               );
             },
           );

@@ -163,14 +163,14 @@ class PostBlock extends StatelessWidget {
                                   child: Column(
                                     children: [
                                       if (isLiked)
-                                        const Icon(FontAwesomeIcons.heartbeat,
+                                        const Icon(FontAwesomeIcons.solidHeart,
                                             size: 18, color: Colors.red
 
                                             // color: KConstantColors.conditionalColor(context: context),
                                             )
                                       else
                                         const Icon(
-                                          FontAwesomeIcons.heartbeat,
+                                          FontAwesomeIcons.heart,
                                           size: 18,
                                           color: Colors.grey,
                                           // color: KConstantColors.conditionalColor(context: context),

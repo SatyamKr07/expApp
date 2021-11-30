@@ -84,4 +84,13 @@ class HomeController extends GetxController {
     }
     return false;
   }
+
+  handleDeleteComment({required String docId}) async {
+    FirebaseFirestore.instance
+        .collection('comments')
+        .doc(docId) // <-- Doc ID to be deleted.
+        .delete() // <-- Delete
+        .then((_) => logger.d('Deleted comment with id $docId'))
+        .catchError((error) => logger.e('Delete failed: $error'));
+  }
 }

@@ -149,7 +149,7 @@ class AddPostController extends GetxController {
         commentModel = CommentModel(
             timestamp: DateTime.now(),
             postedBy: userController.appUser,
-            postId: '');
+            postId: '', commentId: '');
         commentTextCtrl.text = "";
       }).catchError((error) {
         logger.e('firestore error $error');
