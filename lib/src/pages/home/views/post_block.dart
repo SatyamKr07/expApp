@@ -13,12 +13,27 @@ import 'package:like_button/like_button.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class PostBlock extends StatelessWidget {
+class PostBlock extends StatefulWidget {
   PostModel postModel;
   PostBlock({Key? key, required this.postModel}) : super(key: key);
+
+  @override
+  State<PostBlock> createState() => _PostBlockState();
+}
+
+class _PostBlockState extends State<PostBlock> {
   final homeController = Get.find<HomeController>();
+
   bool isLiked = false;
+
   final userController = Get.find<UserController>();
+
+  @override
+  void initState() {
+    super.initState();
+    checkIfLiked(widget.postModel);
+  }
+
   checkIfLiked(PostModel postModel) {
     logger.d("checkIfLiked post ${postModel.postId}");
     if (postModel.postLikesArray.contains(userController.appUser.id)) {
@@ -39,7 +54,9 @@ class PostBlock extends StatelessWidget {
       FirebaseFirestore.instance.collection("blogs").doc(docId).update({
         "postLikesArray": FieldValue.arrayUnion([userController.appUser.id])
       }).then((value) {
-        isLiked = true;
+        setState(() {
+          isLiked = true;
+        });
         logger.d("liked successfully : $isLiked");
       }).onError((error, stackTrace) {
         logger.d('liking error $error');
@@ -50,7 +67,9 @@ class PostBlock extends StatelessWidget {
         "postLikesArray": FieldValue.arrayRemove([userController.appUser.id])
       }).then(
         (value) {
-          isLiked = false;
+          setState(() {
+            isLiked = false;
+          });
           logger.d("liked successfully : $isLiked");
         },
       ).onError((error, stackTrace) {
@@ -90,7 +109,7 @@ class PostBlock extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      postModel.postedBy.email,
+                      widget.postModel.postedBy.email,
                       // style: KCustomTextstyle.kMedium(context, 10),
                     ),
                     // Text(
@@ -98,7 +117,7 @@ class PostBlock extends StatelessWidget {
                     //   // style: KCustomTextstyle.kMedium(context, 10),
                     // ),
                     Text(
-                      timeago.format((postModel.postedOn)),
+                      timeago.format((widget.postModel.postedOn)),
                     ),
                   ],
                 ),
@@ -106,7 +125,7 @@ class PostBlock extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     Get.to(() => Comments(
-                          postId: postModel.postId,
+                          postId: widget.postModel.postId,
                         ));
                   },
                   child: Container(
@@ -144,7 +163,7 @@ class PostBlock extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(left: 8.0, right: 8),
               child: Text(
-                postModel.title,
+                widget.postModel.title,
                 // style: KCustomTextstyle.kBold(context, 10),
               ),
             ),
@@ -157,7 +176,7 @@ class PostBlock extends StatelessWidget {
                   ClipRRect(
                       borderRadius: BorderRadius.circular(12.0),
                       child: BuildSwiper(
-                        picList: postModel.picList,
+                        picList: widget.postModel.picList,
                         aspectRatio: 4 / 3,
                       )
 
@@ -181,7 +200,7 @@ class PostBlock extends StatelessWidget {
                       child: InkWell(
                         onTap: () {
                           onLikeButtonTapped(
-                            docId: postModel.postId,
+                            docId: widget.postModel.postId,
                           );
                         },
                         child: Padding(
@@ -194,36 +213,24 @@ class PostBlock extends StatelessWidget {
                               //   color: Colors.red,
                               //   // color: KConstantColors.conditionalColor(context: context),
                               // ),
-                              GetBuilder<HomeController>(
-                                // init: HomeController(),
-                                id: 'LIKE_BUTTON',
-                                initState: (_) {
-                                  WidgetsBinding.instance!
-                                      .addPostFrameCallback((_) {
-                                    isLiked = checkIfLiked(postModel);
-                                    homeController.update(['LIKE_BUTTON']);
-                                  });
-                                },
-                                builder: (_) {
-                                  return Column(
-                                    children: [
-                                      if (isLiked)
-                                        const Icon(FontAwesomeIcons.solidHeart,
-                                            size: 18, color: Colors.red
+                              Column(
+                                children: [
+                                  if (isLiked)
+                                    const Icon(FontAwesomeIcons.solidHeart,
+                                        size: 18, color: Colors.red
 
-                                            // color: KConstantColors.conditionalColor(context: context),
-                                            )
-                                      else
-                                        const Icon(
-                                          FontAwesomeIcons.heart,
-                                          size: 18,
-                                          color: Colors.grey,
-                                          // color: KConstantColors.conditionalColor(context: context),
+                                        // color: KConstantColors.conditionalColor(context: context),
                                         )
-                                    ],
-                                  );
-                                },
+                                  else
+                                    const Icon(
+                                      FontAwesomeIcons.heart,
+                                      size: 18,
+                                      color: Colors.grey,
+                                      // color: KConstantColors.conditionalColor(context: context),
+                                    )
+                                ],
                               ),
+
                               hSizedBox2,
                               const Text(
                                 "1234",
