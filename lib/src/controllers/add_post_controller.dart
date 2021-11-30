@@ -21,6 +21,7 @@ class AddPostController extends GetxController {
     postedBy: UserModel(),
     postedOn: DateTime.now(),
     postLikesArray: [],
+    uploaderId: '',
   );
 
   CommentModel commentModel = CommentModel(
@@ -113,6 +114,7 @@ class AddPostController extends GetxController {
         postedBy: UserModel(),
         postedOn: DateTime.now(),
         postLikesArray: [],
+        uploaderId: '',
       );
       isUploading = false;
       // update(['ADD_BLOG_PAGE']);
@@ -126,6 +128,7 @@ class AddPostController extends GetxController {
     postModel.description = descCtrl.text;
     postModel.postedBy = userController.appUser;
     postModel.postedOn = DateTime.now();
+    postModel.uploaderId = userController.appUser.id;
   }
 
   validateData() {
@@ -149,7 +152,8 @@ class AddPostController extends GetxController {
         commentModel = CommentModel(
             timestamp: DateTime.now(),
             postedBy: userController.appUser,
-            postId: '', commentId: '');
+            postId: '',
+            commentId: '');
         commentTextCtrl.text = "";
       }).catchError((error) {
         logger.e('firestore error $error');

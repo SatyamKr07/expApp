@@ -7,24 +7,11 @@ import 'my_logger.dart';
 class UserController extends GetxController {
   UserModel appUser = UserModel();
 
-  Stream<QuerySnapshot> filterUser(emailQuery) {
-    // logger.d('category $category');
-    // filterCategory = category!;
-    // WidgetsBinding.instance!.addPostFrameCallback((_) {
-    //   update(['FILTER_CATEGORY_DROPDOWN', 'ALL_POSTS']);
-    // });
-
-    if (emailQuery == "") {
-      logger.d('fetching all posts');
-      return FirebaseFirestore.instance.collection("users").snapshots();
-    } else {
-      logger.d("fetching else category = $emailQuery");
-      return FirebaseFirestore.instance
-          .collection('users')
-          .where('email', isEqualTo: emailQuery)
-          .snapshots();
-    }
-
-    // .then();
+  Stream<QuerySnapshot> fetchUserPost() {
+    return FirebaseFirestore.instance
+        .collection("blogs")
+        .where('uploaderId', isEqualTo: appUser.id)
+        .orderBy('postedOn', descending: true)
+        .snapshots();
   }
 }

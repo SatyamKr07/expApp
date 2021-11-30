@@ -28,7 +28,9 @@ class _BuildSwiperState extends State<BuildSwiper> {
   int _current = 0;
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
+      alignment: Alignment.center,
+      clipBehavior: Clip.hardEdge,
       children: [
         CarouselSlider(
           options: CarouselOptions(
@@ -146,25 +148,29 @@ class _BuildSwiperState extends State<BuildSwiper> {
           }).toList(),
         ),
         if (widget.picList.length > 1)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: widget.picList.asMap().entries.map((entry) {
-              return GestureDetector(
-                child: Container(
-                  width: 6.0,
-                  height: 6.0,
-                  margin: const EdgeInsets.symmetric(
-                      vertical: 8.0, horizontal: 4.0),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: (Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white
-                            : Colors.black)
-                        .withOpacity(_current == entry.key ? 1 : 0.4),
+          Positioned(
+            bottom: 16,
+            // left: Get.width / 2,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: widget.picList.asMap().entries.map((entry) {
+                return GestureDetector(
+                  child: Container(
+                    width: 6.0,
+                    height: 6.0,
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 4.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: (Theme.of(context).brightness == Brightness.dark
+                              ? Colors.white
+                              : Colors.black)
+                          .withOpacity(_current == entry.key ? 1 : 0.4),
+                    ),
                   ),
-                ),
-              );
-            }).toList(),
+                );
+              }).toList(),
+            ),
           ),
       ],
     );

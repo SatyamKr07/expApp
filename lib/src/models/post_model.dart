@@ -18,6 +18,7 @@ class PostModel {
     required this.postedOn,
     this.postId = '',
     required this.postLikesArray,
+    required this.uploaderId,
   });
 
   String title;
@@ -28,6 +29,7 @@ class PostModel {
   DateTime postedOn;
   String postId;
   List<String> postLikesArray;
+  String uploaderId;
 
   factory PostModel.fromJson(Map<String, dynamic> json, DocumentSnapshot doc) =>
       PostModel(
@@ -39,6 +41,7 @@ class PostModel {
         postedOn: json['postedOn'].toDate(),
         postId: doc.id,
         postLikesArray: json['postLikesArray'] ?? [],
+        uploaderId: json['uploaderId'] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -49,5 +52,6 @@ class PostModel {
         "postedBy": postedBy.toJson(),
         "postedOn": postedOn,
         "postLikesArray": postLikesArray,
+        "uploaderId": uploaderId,
       };
 }

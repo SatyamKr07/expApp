@@ -1,5 +1,6 @@
 import 'package:commentor/src/central/services/user_controller.dart';
 import 'package:commentor/src/central/shared/dimensions.dart';
+import 'package:commentor/src/central/widgets/build_swiper.dart';
 import 'package:commentor/src/controllers/home_controller.dart';
 import 'package:commentor/src/models/post_model.dart';
 import 'package:commentor/src/pages/comment/comments.dart';
@@ -117,16 +118,21 @@ class PostBlock extends StatelessWidget {
               child: Stack(
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(12.0),
-                    child: Image.network(
-                      // "https://im0-tub-ru.yandex.net/i?id=84dbd50839c3d640ebfc0de20994c30d&n=27&h=480&w=480g",
-                      postModel.picList[0],
-                      height: Get.width * 3 / 4,
-                      width: Get.width,
-                      fit: BoxFit.cover,
-                    ),
-                    // child: Image.network(data['imageUrl']),
-                  ),
+                      borderRadius: BorderRadius.circular(12.0),
+                      child: BuildSwiper(
+                        picList: postModel.picList,
+                        aspectRatio: 4 / 3,
+                      )
+
+                      //  Image.network(
+                      //   // "https://im0-tub-ru.yandex.net/i?id=84dbd50839c3d640ebfc0de20994c30d&n=27&h=480&w=480g",
+                      //   postModel.picList[0],
+                      //   height: Get.width * 3 / 4,
+                      //   width: Get.width,
+                      //   fit: BoxFit.cover,
+                      // ),
+                      // child: Image.network(data['imageUrl']),
+                      ),
                   Positioned(
                     bottom: 16,
                     right: 16,

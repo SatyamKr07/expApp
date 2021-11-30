@@ -1,6 +1,7 @@
 import 'package:commentor/src/central/shared/colors.dart';
 import 'package:commentor/src/central/shared/textstyles.dart';
 import 'package:commentor/src/pages/home/home.dart';
+import 'package:commentor/src/pages/profile/profile.view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -59,7 +60,7 @@ class _MyBottomBarState extends State<MyBottomBar> {
             body: Container(
               child: PersistentTabView(context,
                   controller: pageController,
-                  screens: [Home(), Scaffold(), Scaffold(), Scaffold()],
+                  screens: [Home(), Scaffold(), Scaffold(), ProfileView()],
                   items: _navBarsItems(),
                   popAllScreensOnTapOfSelectedTab: true,
                   popActionScreens: PopActionScreensType.all,
