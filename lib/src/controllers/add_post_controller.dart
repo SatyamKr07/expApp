@@ -4,6 +4,7 @@ import 'package:commentor/src/central/services/image_service.dart';
 import 'package:commentor/src/central/services/my_logger.dart';
 import 'package:commentor/src/central/services/user_controller.dart';
 import 'package:commentor/src/models/comment_model.dart';
+import 'package:commentor/src/models/media_model.dart';
 import 'package:commentor/src/models/post_model.dart';
 import 'package:commentor/src/models/user_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,6 +23,7 @@ class AddPostController extends GetxController {
     postedOn: DateTime.now(),
     postLikesArray: [],
     uploaderId: '',
+    mediaList: [],
   );
 
   CommentModel commentModel = CommentModel(
@@ -45,43 +47,56 @@ class AddPostController extends GetxController {
 
   List<XFile>? multiImages = [];
   List<String> imagesPath = [];
+  List<MediaModel> mediaList = [];
 
   TextEditingController commentTextCtrl = TextEditingController();
   final CollectionReference _commentCollection =
       FirebaseFirestore.instance.collection('comments');
 
-  Future pickBlogImageFromGallery() async {
-    multiImages = (await imageService.getImagesFromGallery());
-    // multiImages!.addAll(await imageService.getImagesFromGallery());
-    if (multiImages != null) {
-      for (var element in multiImages!) {
-        imagesPath.add(element.path);
-        // postModel.picList.add(element.path);
-      }
-      logger.d('exchangeImages ${postModel.picList}');
-      update(['ADD_IMAGES_SWIPER']);
+  Future pickImageFromGallery() async {
+    List<XFile> multiImages = await imageService.getImagesFromGallery();
+    // List multiImages = await myUtils.pickMultiImages();
+    // images.addAll(multiImages);
+    for (var element in multiImages) {
+      MediaModel media = MediaModel()..url = element.path;
+      mediaList.add(media);
     }
+
+    // exchangeModel.post!.mediaList.addAll(iterable)
+    logger.d('pickedImages');
+    update(['ADD_IMAGES_SWIPER']);
   }
 
-  Future clickBlogPhoto() async {
-    multiImages!.last = (await imageService.getPhotoFromCamera());
-    if (multiImages != null) {
-      imagesPath.add(multiImages!.last.path);
-      update(['ADD_IMAGES_SWIPER']);
-    }
-  }
+  // Future clickBlogPhoto() async {
+  //   multiImages!.last = (await imageService.getPhotoFromCamera());
+  //   if (multiImages != null) {
+  //     imagesPath.add(multiImages!.last.path);
+  //     update(['ADD_IMAGES_SWIPER']);
+  //   }
+  // }
 
   void selectCategory(String? category) {
     postModel.category = category!;
     update(['CATEGORY_DROPDOWN']);
   }
 
+  Future pickVideoFromGallery() async {
+    final XFile? video = await imageService.getVideoFromGallery();
+
+    if (video != null) {
+      MediaModel videoMedia = MediaModel()
+        ..type = "video"
+        ..url = video.path;
+      // images.add(video);
+      mediaList.add(videoMedia);
+      update(['ADD_IMAGES_SWIPER']);
+    }
+  }
+
   Future uploadImages() async {
     try {
       await firebaseServices.uploadImageToFirebaseStorage(
-        imagesPath: imagesPath,
-        imagesUrlToStore: postModel.picList,
-      );
+          mediaPath: mediaList, mediaUrlWithTypeToStore: postModel.mediaList);
     } catch (e) {
       logger.e('error in uploading images $e');
     } finally {}
@@ -115,6 +130,7 @@ class AddPostController extends GetxController {
         postedOn: DateTime.now(),
         postLikesArray: [],
         uploaderId: '',
+        mediaList: [],
       );
       isUploading = false;
       // update(['ADD_BLOG_PAGE']);
@@ -134,7 +150,7 @@ class AddPostController extends GetxController {
   validateData() {
     if (postModel.title == "" ||
         postModel.description == "" ||
-        imagesPath.isEmpty ||
+        mediaList.isEmpty ||
         postModel.category == "*choose category") {
       return false;
     }

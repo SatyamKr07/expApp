@@ -49,7 +49,9 @@ class ProfileBody extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: BuildSwiper(
-                    picList: postList[index].picList,
+                    // picList: postList[index].picList,
+                    imageUrls: const [],
+                    mediaList: const [],
                   ),
                 );
               },

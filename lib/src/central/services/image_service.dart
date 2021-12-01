@@ -57,4 +57,14 @@ class ImageService extends GetxController {
       return galleryImagesList;
     }
   }
+
+  Future getVideoFromGallery() async {
+    final XFile? video = await _picker.pickVideo(
+      source: ImageSource.gallery,
+      maxDuration: const Duration(seconds: 30),
+    );
+    if (video != null) {
+      return video;
+    }
+  }
 }

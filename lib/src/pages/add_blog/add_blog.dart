@@ -44,8 +44,12 @@ class AddBlog extends StatelessWidget {
                       GetBuilder<AddPostController>(
                         id: "ADD_IMAGES_SWIPER",
                         builder: (_) => BuildSwiper(
-                          picList: addBlogController.imagesPath,
+                          imageUrls: const [],
                           editPage: true,
+                          aspectRatio: 4 / 3,
+                          mediaList: addBlogController.mediaList,
+
+                          // imagesCount: addExchangeCtrl.imagesCount,
                         ),
                       )
                     ],

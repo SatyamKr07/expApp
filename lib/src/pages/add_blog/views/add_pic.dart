@@ -17,7 +17,7 @@ class AddPic extends StatelessWidget {
           children: <Widget>[
             IconButton(
               onPressed: () async {
-                await addBlogController.pickBlogImageFromGallery();
+                await addBlogController.pickImageFromGallery();
               },
               icon: const Icon(
                 Icons.photo_outlined,
@@ -27,14 +27,25 @@ class AddPic extends StatelessWidget {
             ),
             IconButton(
               onPressed: () async {
-                await addBlogController.clickBlogPhoto();
+                // await addExchangeCtrl.pickMultiFiles();
+                await addBlogController.pickVideoFromGallery();
               },
               icon: const Icon(
-                Icons.camera_alt_outlined,
+                Icons.video_collection,
                 color: Colors.black,
                 size: 32,
               ),
             ),
+            // IconButton(
+            //   onPressed: () async {
+            //     await addBlogController.clickBlogPhoto();
+            //   },
+            //   icon: const Icon(
+            //     Icons.camera_alt_outlined,
+            //     color: Colors.black,
+            //     size: 32,
+            //   ),
+            // ),
           ],
         ),
       ),

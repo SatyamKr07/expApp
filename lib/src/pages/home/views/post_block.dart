@@ -176,9 +176,14 @@ class _PostBlockState extends State<PostBlock> {
                   ClipRRect(
                       borderRadius: BorderRadius.circular(12.0),
                       child: BuildSwiper(
-                        picList: widget.postModel.picList,
                         aspectRatio: 4 / 3,
+                        imageUrls: const [],
+                        mediaList: widget.postModel.mediaList,
                       )
+                      //  BuildSwiper(
+                      //   picList: widget.postModel.picList,
+                      //   aspectRatio: 4 / 3,
+                      // )
 
                       //  Image.network(
                       //   // "https://im0-tub-ru.yandex.net/i?id=84dbd50839c3d640ebfc0de20994c30d&n=27&h=480&w=480g",

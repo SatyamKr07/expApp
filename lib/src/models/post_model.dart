@@ -6,6 +6,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'media_model.dart';
 import 'user_model.dart';
 
 class PostModel {
@@ -19,6 +20,7 @@ class PostModel {
     this.postId = '',
     required this.postLikesArray,
     required this.uploaderId,
+    required this.mediaList,
   });
 
   String title;
@@ -30,6 +32,7 @@ class PostModel {
   String postId;
   List<dynamic> postLikesArray;
   String uploaderId;
+  List<MediaModel> mediaList;
 
   factory PostModel.fromJson(Map<String, dynamic> json, DocumentSnapshot doc) =>
       PostModel(
@@ -42,6 +45,9 @@ class PostModel {
         postId: doc.id,
         postLikesArray: json['postLikesArray'] ?? [],
         uploaderId: json['uploaderId'] ?? '',
+        mediaList: json["mediaList"] == null
+            ? []
+            : List<MediaModel>.from(json["mediaList"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -53,5 +59,6 @@ class PostModel {
         "postedOn": postedOn,
         "postLikesArray": postLikesArray,
         "uploaderId": uploaderId,
+        "mediaList": List<MediaModel>.from(mediaList.map((x) => x)),
       };
 }
