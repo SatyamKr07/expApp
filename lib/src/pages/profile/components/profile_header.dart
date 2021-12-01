@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:commentor/src/central/services/user_controller.dart';
 import 'package:commentor/src/central/shared/dimensions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -117,9 +118,13 @@ class ProfileHeader extends StatelessWidget {
                       borderRadius: BorderRadius.circular(50)),
                 ),
               ),
-              CircleAvatar(
-                radius: 40,
-                child: Icon(Icons.person),
+              ClipOval(
+                child: CircleAvatar(
+                  radius: 40,
+                  child: CachedNetworkImage(
+                    imageUrl: userController.appUser.profilePic,
+                  ),
+                ),
               )
             ],
           ),
