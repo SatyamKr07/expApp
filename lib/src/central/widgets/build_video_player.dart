@@ -20,6 +20,7 @@ class _BuildVideoPlayerState extends State<BuildVideoPlayer> {
   void initState() {
     super.initState();
     if (widget.isEditPage) {
+      logger.d("local video file");
       _videoPlayerController = VideoPlayerController.file(File(widget.videoUrl))
         ..initialize().then((_) {
           // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
@@ -31,8 +32,9 @@ class _BuildVideoPlayerState extends State<BuildVideoPlayer> {
           });
         });
     } else {
-      _videoPlayerController = VideoPlayerController.network(
-          'https://www.youtube.com/watch?v=IT09vWWesqg')
+      logger.d("network video");
+      var parsedVideoUrl = (widget.videoUrl);
+      _videoPlayerController = VideoPlayerController.network(parsedVideoUrl)
         ..initialize().then((_) {
           // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
           setState(() {

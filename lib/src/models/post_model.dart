@@ -47,7 +47,8 @@ class PostModel {
         uploaderId: json['uploaderId'] ?? '',
         mediaList: json["mediaList"] == null
             ? []
-            : List<MediaModel>.from(json["mediaList"].map((x) => x)),
+            : List<MediaModel>.from(
+                json["mediaList"].map((x) => MediaModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -59,6 +60,6 @@ class PostModel {
         "postedOn": postedOn,
         "postLikesArray": postLikesArray,
         "uploaderId": uploaderId,
-        "mediaList": List<MediaModel>.from(mediaList.map((x) => x)),
+        "mediaList": List<dynamic>.from(mediaList.map((x) => x.toJson())),
       };
 }

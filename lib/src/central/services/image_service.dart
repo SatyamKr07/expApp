@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:video_compress/video_compress.dart';
 
 import 'my_logger.dart';
 
@@ -61,9 +62,20 @@ class ImageService extends GetxController {
   Future getVideoFromGallery() async {
     final XFile? video = await _picker.pickVideo(
       source: ImageSource.gallery,
-      maxDuration: const Duration(seconds: 30),
+      maxDuration: const Duration(seconds: 5),
     );
     if (video != null) {
+      // try {
+      //   MediaInfo? mediaInfo = await VideoCompress.compressVideo(
+      //     video.path,
+      //     quality: VideoQuality.MediumQuality,
+      //     includeAudio: true,
+      //     deleteOrigin: true, // It's false by default
+      //   );
+      // } catch (e) {
+      //   logger.e('compression error $e');
+      //   VideoCompress.cancelCompression();
+      // }
       return video;
     }
   }

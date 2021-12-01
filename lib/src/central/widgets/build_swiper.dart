@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:commentor/src/central/widgets/build_better_player.dart';
 import 'package:commentor/src/models/media_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -61,31 +62,41 @@ class _BuildSwiperState extends State<BuildSwiper> {
                       Expanded(
                         child: InkWell(
                           child: Container(
+                            width: Get.width,
+                            height: Get.width * 3 / 4,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(0),
                                 color: Colors.grey[200]),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(0),
                               child: ConstrainedBox(
-                                constraints:
-                                    BoxConstraints(maxHeight: Get.width),
-                                child: CachedNetworkImage(
-                                  fit: BoxFit.contain,
-                                  imageUrl: media.url,
-                                  progressIndicatorBuilder:
-                                      (context, url, downloadProgress) =>
-                                          const Center(
-                                    child: MyLoadingWidget(),
+                                  constraints:
+                                      BoxConstraints(maxHeight: Get.width),
+                                  child: (media.type == "image")
+                                      ? CachedNetworkImage(
+                                          fit: BoxFit.cover,
+                                          imageUrl: media.url,
+                                          progressIndicatorBuilder: (context,
+                                                  url, downloadProgress) =>
+                                              const Center(
+                                            child: MyLoadingWidget(),
+                                          ),
+                                          errorWidget: (context, url, error) =>
+                                              IconButton(
+                                            icon: const Icon(
+                                                Icons.replay_outlined),
+                                            onPressed: () {
+                                              setState(() {});
+                                            },
+                                          ),
+                                        )
+                                      : BuildBetterPlayer(videoUrl: media.url)
+
+                                  // BuildVideoPlayer(
+                                  //     videoUrl: media.url,
+                                  //     isEditPage: false,
+                                  //   ),
                                   ),
-                                  errorWidget: (context, url, error) =>
-                                      IconButton(
-                                    icon: const Icon(Icons.replay_outlined),
-                                    onPressed: () {
-                                      setState(() {});
-                                    },
-                                  ),
-                                ),
-                              ),
                             ),
                           ),
                         ),
@@ -103,22 +114,27 @@ class _BuildSwiperState extends State<BuildSwiper> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(0),
                                 child: ConstrainedBox(
-                                  constraints:
-                                      BoxConstraints(maxHeight: Get.width),
-                                  // child: BuildVideoPlayer(
-                                  //   videoUrl: media.url,
-                                  // ),
-                                  child: (media.type == "image")
-                                      ? Image.file(
-                                          File(media.url),
-                                          // File(media.url),
-                                          fit: BoxFit.cover,
-                                        )
-                                      : BuildVideoPlayer(
-                                          videoUrl: media.url,
-                                          isEditPage: true,
-                                        ),
-                                ),
+                                    constraints:
+                                        BoxConstraints(maxHeight: Get.width),
+                                    // child: BuildVideoPlayer(
+                                    //   videoUrl: media.url,
+                                    // ),
+                                    child: (media.type == "image")
+                                        ? Image.file(
+                                            File(media.url),
+                                            // File(media.url),
+                                            fit: BoxFit.cover,
+                                          )
+                                        : BuildBetterPlayer(
+                                            videoUrl: media.url,
+                                            isEditPage: true,
+                                          )
+
+                                    // BuildVideoPlayer(
+                                    //     videoUrl: media.url,
+                                    //     isEditPage: true,
+                                    //   ),
+                                    ),
                               ),
                             ),
                             GestureDetector(

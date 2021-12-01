@@ -179,6 +179,7 @@ class _PostBlockState extends State<PostBlock> {
                         aspectRatio: 4 / 3,
                         imageUrls: const [],
                         mediaList: widget.postModel.mediaList,
+                        editPage: false,
                       )
                       //  BuildSwiper(
                       //   picList: widget.postModel.picList,
