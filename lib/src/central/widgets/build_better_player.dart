@@ -1,4 +1,5 @@
 import 'package:better_player/better_player.dart';
+import 'package:commentor/src/central/services/my_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 
@@ -17,7 +18,7 @@ class _BuildBetterPlayerState extends State<BuildBetterPlayer> {
   @override
   void initState() {
     super.initState();
-
+    logger.d("better_player initState");
     BetterPlayerDataSource betterPlayerDataSource = BetterPlayerDataSource(
       widget.isEditPage
           ? BetterPlayerDataSourceType.file
@@ -47,6 +48,13 @@ class _BuildBetterPlayerState extends State<BuildBetterPlayer> {
       ),
       betterPlayerDataSource: betterPlayerDataSource,
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    logger.d("better_player dispose");
+    _betterPlayerController.dispose();
   }
 
   @override
