@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:commentor/src/central/services/my_logger.dart';
 import 'package:commentor/src/central/services/user_controller.dart';
@@ -109,12 +110,12 @@ class _PostBlockState extends State<PostBlock> {
             Row(
               children: [
                 hSizedBox1,
-                const CircleAvatar(
-                  radius: 16,
-                  backgroundColor: CupertinoColors.systemPurple,
-                  child: Icon(
-                    CupertinoIcons.person,
-                    // color: KConstantColors.conditionalColor(context: context),
+                ClipOval(
+                  child: CircleAvatar(
+                    radius: 20,
+                    child: CachedNetworkImage(
+                      imageUrl: widget.postModel.uploaderPic,
+                    ),
                   ),
                 ),
                 hSizedBox2,
@@ -122,17 +123,19 @@ class _PostBlockState extends State<PostBlock> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.postModel.uploaderName,
-                      // style: KCustomTextstyle.kMedium(context, 10),
-                    ),
+                    Text(widget.postModel.uploaderName,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        )
+                        // style: KCustomTextstyle.kMedium(context, 10),
+                        ),
                     // Text(
                     //   "satyamismyname@gmail.com",
                     //   // style: KCustomTextstyle.kMedium(context, 10),
                     // ),
-                    Text(
-                      timeago.format((widget.postModel.postedOn)),
-                    ),
+                    Text(timeago.format((widget.postModel.postedOn)),
+                        style: TextStyle(color: CupertinoColors.systemPurple)),
                   ],
                 ),
                 Spacer(),

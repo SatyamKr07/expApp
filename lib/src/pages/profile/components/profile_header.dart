@@ -125,7 +125,7 @@ class ProfileHeader extends StatelessWidget {
                     imageUrl: userController.appUser.profilePic,
                   ),
                 ),
-              )
+              ),
             ],
           ),
           vSizedBox2,
