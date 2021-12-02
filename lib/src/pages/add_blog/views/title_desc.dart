@@ -12,24 +12,24 @@ class TitleDesc extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          TextFormField(
-            controller: addBlogController.titleCtrl,
-            textCapitalization: TextCapitalization.sentences,
-            maxLines: null,
-            decoration: InputDecoration(
-              labelStyle: const TextStyle(
-                color: Colors.grey,
-                fontSize: 14,
-              ),
-              labelText: "*Title",
-              // hintText: "Title",
-              hintStyle: TextStyle(
-                color: Colors.grey[500],
-                fontSize: 14,
-                fontWeight: FontWeight.normal,
-              ),
-            ),
-          ),
+          // TextFormField(
+          //   controller: addBlogController.titleCtrl,
+          //   textCapitalization: TextCapitalization.sentences,
+          //   maxLines: null,
+          //   decoration: InputDecoration(
+          //     labelStyle: const TextStyle(
+          //       color: Colors.grey,
+          //       fontSize: 14,
+          //     ),
+          //     labelText: "*Title",
+          //     // hintText: "Title",
+          //     hintStyle: TextStyle(
+          //       color: Colors.grey[500],
+          //       fontSize: 14,
+          //       fontWeight: FontWeight.normal,
+          //     ),
+          //   ),
+          // ),
           TextFormField(
             controller: addBlogController.descCtrl,
             textCapitalization: TextCapitalization.sentences,

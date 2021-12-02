@@ -36,7 +36,7 @@ class _PostBlockState extends State<PostBlock> {
 
   checkIfLiked(PostModel postModel) {
     logger.d("checkIfLiked post ${postModel.postId}");
-    if (postModel.postLikesArray.contains(userController.appUser.id)) {
+    if (postModel.likesArray.contains(userController.appUser.id)) {
       isLiked = true;
     } else {
       isLiked = false;
@@ -50,34 +50,48 @@ class _PostBlockState extends State<PostBlock> {
     /// if failed, you can do nothing
     // return success? !isLiked:isLiked;
     logger.d('onLikeButtonTapped');
-    if (!isLiked) {
-      FirebaseFirestore.instance.collection("blogs").doc(docId).update({
-        "postLikesArray": FieldValue.arrayUnion([userController.appUser.id])
-      }).then((value) {
-        setState(() {
-          isLiked = true;
-        });
-        logger.d("liked successfully : $isLiked");
-      }).onError((error, stackTrace) {
-        logger.d('liking error $error');
-        // isLiked = false;
-      });
-    } else {
-      FirebaseFirestore.instance.collection("blogs").doc(docId).update({
-        "postLikesArray": FieldValue.arrayRemove([userController.appUser.id])
-      }).then(
-        (value) {
+    try {
+      if (!isLiked) {
+        // widget.postModel.likesCount++;
+        int l = widget.postModel.likesCount;
+        FirebaseFirestore.instance.collection("posts").doc(docId).update({
+          "likesArray": FieldValue.arrayUnion([userController.appUser.id]),
+          "likesCount": l += 1,
+        }).then((value) {
           setState(() {
-            isLiked = false;
+            isLiked = true;
+            widget.postModel.likesCount = l;
           });
           logger.d("liked successfully : $isLiked");
-        },
-      ).onError((error, stackTrace) {
-        logger.d('unliking error $error');
-        // isLiked = false;
-      });
+        }).onError((error, stackTrace) {
+          // widget.postModel.likesCount--;
+          logger.d('liking error $error');
+          // isLiked = false;
+        });
+      } else {
+        // widget.postModel.likesCount--;
+        int l = widget.postModel.likesCount;
+        FirebaseFirestore.instance.collection("posts").doc(docId).update({
+          "likesArray": FieldValue.arrayRemove([userController.appUser.id]),
+          "likesCount": l -= 1,
+        }).then(
+          (value) {
+            setState(() {
+              isLiked = false;
+              widget.postModel.likesCount = l;
+            });
+            logger.d("unliked successfully :liked value is $isLiked");
+          },
+        ).onError((error, stackTrace) {
+          // widget.postModel.likesCount++;
+          logger.d('unliking error $error');
+          // isLiked = false;
+        });
+      }
+      homeController.update(['LIKE_BUTTON']);
+    } catch (e) {
+      logger.e('catch like error $e');
     }
-    homeController.update(['LIKE_BUTTON']);
     // return isLiked;
   }
 
@@ -109,7 +123,7 @@ class _PostBlockState extends State<PostBlock> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.postModel.postedBy.email,
+                      widget.postModel.uploaderName,
                       // style: KCustomTextstyle.kMedium(context, 10),
                     ),
                     // Text(
@@ -163,7 +177,7 @@ class _PostBlockState extends State<PostBlock> {
             Padding(
               padding: EdgeInsets.only(left: 8.0, right: 8),
               child: Text(
-                widget.postModel.title,
+                widget.postModel.description,
                 // style: KCustomTextstyle.kBold(context, 10),
               ),
             ),
@@ -238,10 +252,10 @@ class _PostBlockState extends State<PostBlock> {
                               ),
 
                               hSizedBox2,
-                              const Text(
-                                "1234",
+                              Text(
+                                widget.postModel.likesCount.toString(),
                                 // style: KCustomTextstyle.kMedium(context, 10),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                 ),

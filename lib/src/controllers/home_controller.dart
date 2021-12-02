@@ -13,7 +13,7 @@ class HomeController extends GetxController {
 
   Stream<QuerySnapshot> fetchPosts() {
     return FirebaseFirestore.instance
-        .collection("blogs")
+        .collection("posts")
         .orderBy('postedOn', descending: true)
         .snapshots();
   }
@@ -60,7 +60,7 @@ class HomeController extends GetxController {
     // return success? !isLiked:isLiked;
     logger.d('onLikeButtonTapped2');
     if (!isLiked) {
-      FirebaseFirestore.instance.collection("blogs").doc("docId").update({
+      FirebaseFirestore.instance.collection("posts").doc("docId").update({
         "likes": FieldValue.arrayUnion([userController.appUser.id])
       }).then((value) {
         return isLiked = true;
@@ -69,7 +69,7 @@ class HomeController extends GetxController {
         return isLiked = false;
       });
     } else {
-      FirebaseFirestore.instance.collection("blogs").doc("docId").update({
+      FirebaseFirestore.instance.collection("posts").doc("docId").update({
         "likes": FieldValue.arrayRemove([userController.appUser.id])
       }).then((value) => isLiked = false);
     }
@@ -79,7 +79,7 @@ class HomeController extends GetxController {
 
   bool checkIfLiked(PostModel postModel) {
     logger.d("checkIfLiked");
-    if (postModel.postLikesArray.contains(userController.appUser.id)) {
+    if (postModel.likesArray.contains(userController.appUser.id)) {
       logger.d("liked");
       return true;
     }

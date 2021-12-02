@@ -2,7 +2,6 @@ import 'package:commentor/src/central/services/my_logger.dart';
 import 'package:commentor/src/central/widgets/build_swiper.dart';
 import 'package:commentor/src/controllers/add_post_controller.dart';
 import 'package:commentor/src/pages/add_blog/views/add_pic.dart';
-import 'package:commentor/src/pages/add_blog/views/category_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -35,10 +34,9 @@ class AddBlog extends StatelessWidget {
                   body: ListView(
                     children: [
                       TitleDesc(),
-                      CategoryDropdown(),
                       const Padding(
                         padding: EdgeInsets.only(left: 16.0),
-                        child: Text("*Choose/Click pics"),
+                        child: Text("*Choose pics / video"),
                       ),
                       AddPic(),
                       GetBuilder<AddPostController>(

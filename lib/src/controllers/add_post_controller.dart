@@ -17,13 +17,9 @@ import 'home_controller.dart';
 
 class AddPostController extends GetxController {
   PostModel postModel = PostModel(
-    picList: [],
-    category: "*choose category",
-    postedBy: UserModel(),
-    postedOn: DateTime.now(),
-    postLikesArray: [],
-    uploaderId: '',
+    likesArray: [],
     mediaList: [],
+    postedOn: DateTime.now(),
   );
 
   CommentModel commentModel = CommentModel(
@@ -40,7 +36,7 @@ class AddPostController extends GetxController {
   bool isUploading = false;
 
   final CollectionReference _mainCollection =
-      FirebaseFirestore.instance.collection('blogs');
+      FirebaseFirestore.instance.collection('posts');
 
   final userController = Get.find<UserController>();
   final homeController = Get.find<HomeController>();
@@ -74,11 +70,6 @@ class AddPostController extends GetxController {
   //     update(['ADD_IMAGES_SWIPER']);
   //   }
   // }
-
-  void selectCategory(String? category) {
-    postModel.category = category!;
-    update(['CATEGORY_DROPDOWN']);
-  }
 
   Future pickVideoFromGallery() async {
     final XFile? video = await imageService.getVideoFromGallery();
@@ -124,13 +115,9 @@ class AddPostController extends GetxController {
       update(['ADD_BLOG_PAGE']);
     } finally {
       postModel = PostModel(
-        picList: [],
-        category: "*choose category",
-        postedBy: UserModel(),
         postedOn: DateTime.now(),
-        postLikesArray: [],
-        uploaderId: '',
         mediaList: [],
+        likesArray: [],
       );
       isUploading = false;
       // update(['ADD_BLOG_PAGE']);
@@ -140,18 +127,15 @@ class AddPostController extends GetxController {
   }
 
   feedBlogData() {
-    postModel.title = titleCtrl.text;
-    postModel.description = descCtrl.text;
-    postModel.postedBy = userController.appUser;
-    postModel.postedOn = DateTime.now();
     postModel.uploaderId = userController.appUser.id;
+    postModel.uploaderName = userController.appUser.displayName;
+    postModel.uploaderPic = userController.appUser.profilePic;
+    postModel.description = descCtrl.text;
+    postModel.postedOn = DateTime.now();
   }
 
   validateData() {
-    if (postModel.title == "" ||
-        postModel.description == "" ||
-        mediaList.isEmpty ||
-        postModel.category == "*choose category") {
+    if (postModel.description == "" || mediaList.isEmpty) {
       return false;
     }
     return true;
@@ -165,6 +149,9 @@ class AddPostController extends GetxController {
     commentModel.postId = postId;
     try {
       _commentCollection.add(commentModel.toJson()).then((docRef) {
+        _mainCollection
+            .doc(postId)
+            .update({"commentsCount": postModel.commentsCount += 1});
         commentModel = CommentModel(
             timestamp: DateTime.now(),
             postedBy: userController.appUser,
