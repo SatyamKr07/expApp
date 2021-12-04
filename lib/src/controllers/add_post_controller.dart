@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:commentor/src/central/services/firebase_services.dart';
 import 'package:commentor/src/central/services/image_service.dart';
 import 'package:commentor/src/central/services/my_logger.dart';
-import 'package:commentor/src/central/services/user_controller.dart';
+import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/models/comment_model.dart';
 import 'package:commentor/src/models/media_model.dart';
 import 'package:commentor/src/models/post_model.dart';

@@ -1,6 +1,6 @@
 import 'package:commentor/src/central/shared/dimensions.dart';
 import 'package:commentor/src/pages/add_blog/add_blog.dart';
-import 'package:commentor/src/central/services/user_controller.dart';
+import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/controllers/home_controller.dart';
 import 'package:commentor/src/pages/home/views/all_posts_list.dart';
 import 'package:commentor/src/settings/settings_view.dart';

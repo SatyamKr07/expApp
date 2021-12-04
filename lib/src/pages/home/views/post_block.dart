@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:commentor/src/central/services/my_logger.dart';
-import 'package:commentor/src/central/services/user_controller.dart';
+import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/central/shared/dimensions.dart';
 import 'package:commentor/src/central/widgets/build_swiper.dart';
 import 'package:commentor/src/controllers/home_controller.dart';

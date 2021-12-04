@@ -1,7 +1,9 @@
 import 'package:commentor/src/central/services/auth_ctrl.dart';
+import 'package:commentor/src/pages/bottom_bar/my_bottom_bar.dart';
 import 'package:commentor/src/pages/home/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 
 class GoogleSignInButton extends StatefulWidget {
   @override
@@ -46,9 +48,10 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                   if (await authentication.checkUserExistsInDb() == false) {
                     await authentication.createUserDb();
                   }
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => Home()),
-                  );
+                  // Navigator.of(context).pushReplacement(
+                  //   MaterialPageRoute(builder: (context) => Home()),
+                  // );
+                  Get.offAll(() => MyBottomBar());
                 }
               },
               child: const Padding(

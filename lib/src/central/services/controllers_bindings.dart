@@ -1,5 +1,5 @@
 import 'package:commentor/src/central/services/image_service.dart';
-import 'package:commentor/src/central/services/user_controller.dart';
+import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/controllers/add_post_controller.dart';
 import 'package:commentor/src/controllers/home_controller.dart';
 import 'package:get/instance_manager.dart';

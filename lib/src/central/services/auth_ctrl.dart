@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:commentor/src/central/services/user_controller.dart';
+import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/models/user_model.dart';
 import 'package:commentor/src/pages/bottom_bar/my_bottom_bar.dart';
 import 'package:commentor/src/pages/sign_in_screen/sign_in_screen.dart';
@@ -70,7 +70,7 @@ class AuthCtrl extends GetxController {
         user = userCredential.user;
         feedUserData(user);
       } catch (e) {
-        print(e);
+        logger.e(e);
       }
     } else {
       final GoogleSignIn googleSignIn = GoogleSignIn();
