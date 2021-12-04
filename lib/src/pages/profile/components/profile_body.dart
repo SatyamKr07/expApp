@@ -15,48 +15,49 @@ class ProfileBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: StreamBuilder<QuerySnapshot>(
-          stream: userController.fetchUserPost(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text('Something went wrong'),
-              );
-            }
-
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Center(child: Text("Loading...")),
-              );
-            }
-            postList = snapshot.data!.docs.map((DocumentSnapshot document) {
-              // PostModel postModel;
-              return PostModel.fromJson(
-                document.data() as Map<String, dynamic>,
-                document,
-              );
-            }).toList();
-
-            logger.d("postList", postList.length.toString());
-            return GridView.builder(
-              physics: ClampingScrollPhysics(),
-              shrinkWrap: true,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3),
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: BuildSwiper(
-                    // picList: postList[index].picList,
-                    imageUrls: const [],
-                    mediaList: postList[index].mediaList,
-                  ),
-                );
-              },
+        stream: userController.fetchUserPost(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text('Something went wrong'),
             );
-          }),
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Center(child: Text("Loading...")),
+            );
+          }
+          postList = snapshot.data!.docs.map((DocumentSnapshot document) {
+            // PostModel postModel;
+            return PostModel.fromJson(
+              document.data() as Map<String, dynamic>,
+              document,
+            );
+          }).toList();
+
+          logger.d("postList", postList.length.toString());
+          return GridView.builder(
+            physics: ClampingScrollPhysics(),
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3),
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: BuildSwiper(
+                  // picList: postList[index].picList,
+                  imageUrls: const [],
+                  mediaList: postList[index].mediaList,
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

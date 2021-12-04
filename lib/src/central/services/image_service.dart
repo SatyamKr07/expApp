@@ -59,6 +59,16 @@ class ImageService extends GetxController {
     }
   }
 
+  Future pickSingleImageFromGallery() async {
+    final XFile? singleImage = await _picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 50,
+    );
+    if (singleImage != null) {
+      return singleImage;
+    }
+  }
+
   Future getVideoFromGallery() async {
     final XFile? video = await _picker.pickVideo(
       source: ImageSource.gallery,

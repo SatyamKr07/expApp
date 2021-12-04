@@ -86,7 +86,7 @@ class AddPostController extends GetxController {
 
   Future uploadImages() async {
     try {
-      await firebaseServices.uploadImageToFirebaseStorage(
+      await firebaseServices.uploadMediaToFirebaseStorage(
           mediaPath: mediaList, mediaUrlWithTypeToStore: postModel.mediaList);
     } catch (e) {
       logger.e('error in uploading images $e');

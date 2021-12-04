@@ -1,4 +1,5 @@
 import 'package:commentor/src/central/services/image_service.dart';
+import 'package:commentor/src/controllers/edit_profile_controller.dart';
 import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/controllers/add_post_controller.dart';
 import 'package:commentor/src/controllers/home_controller.dart';
@@ -14,6 +15,8 @@ class ControllerBinding extends Bindings {
     Get.lazyPut<HomeController>(() => HomeController(), fenix: true);
     Get.lazyPut<ImageService>(() => ImageService(), fenix: true);
     Get.lazyPut<FirebaseStorageService>(() => FirebaseStorageService(),
+        fenix: true);
+    Get.lazyPut<EditProfileController>(() => EditProfileController(),
         fenix: true);
   }
 }

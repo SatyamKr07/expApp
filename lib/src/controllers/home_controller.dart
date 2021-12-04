@@ -52,30 +52,30 @@ class HomeController extends GetxController {
   //   // return isLiked;
   // }
 
-  Future<bool> onLikeButtonTapped2(bool isLiked) async {
-    /// send your request here
-    // final bool success= await sendRequest();
+  // Future<bool> onLikeButtonTapped2(bool isLiked) async {
+  //   /// send your request here
+  //   // final bool success= await sendRequest();
 
-    /// if failed, you can do nothing
-    // return success? !isLiked:isLiked;
-    logger.d('onLikeButtonTapped2');
-    if (!isLiked) {
-      FirebaseFirestore.instance.collection("posts").doc("docId").update({
-        "likes": FieldValue.arrayUnion([userController.appUser.id])
-      }).then((value) {
-        return isLiked = true;
-      }).onError((error, stackTrace) {
-        logger.d('liking error $error');
-        return isLiked = false;
-      });
-    } else {
-      FirebaseFirestore.instance.collection("posts").doc("docId").update({
-        "likes": FieldValue.arrayRemove([userController.appUser.id])
-      }).then((value) => isLiked = false);
-    }
+  //   /// if failed, you can do nothing
+  //   // return success? !isLiked:isLiked;
+  //   logger.d('onLikeButtonTapped2');
+  //   if (!isLiked) {
+  //     FirebaseFirestore.instance.collection("posts").doc("docId").update({
+  //       "likes": FieldValue.arrayUnion([userController.appUser.id])
+  //     }).then((value) {
+  //       return isLiked = true;
+  //     }).onError((error, stackTrace) {
+  //       logger.d('liking error $error');
+  //       return isLiked = false;
+  //     });
+  //   } else {
+  //     FirebaseFirestore.instance.collection("posts").doc("docId").update({
+  //       "likes": FieldValue.arrayRemove([userController.appUser.id])
+  //     }).then((value) => isLiked = false);
+  //   }
 
-    return isLiked;
-  }
+  //   return isLiked;
+  // }
 
   bool checkIfLiked(PostModel postModel) {
     logger.d("checkIfLiked");

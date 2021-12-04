@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/central/shared/dimensions.dart';
+import 'package:commentor/src/pages/edit_profile/edit_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/instance_manager.dart';
 import 'package:sizer/sizer.dart';
 
@@ -41,7 +43,9 @@ class ProfileHeader extends StatelessWidget {
               //           child: CircularProgressIndicator());
               //     }),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(() => EditProfile());
+                },
                 icon: Icon(
                   Icons.edit,
                   // color: KConstantColors.whiteColor,
@@ -123,6 +127,8 @@ class ProfileHeader extends StatelessWidget {
                   radius: 40,
                   child: CachedNetworkImage(
                     imageUrl: userController.appUser.profilePic,
+                    // errorWidget: Image.asset(
+                    //               'assets/images/default_profile_pic.png'),
                   ),
                 ),
               ),

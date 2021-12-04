@@ -45,6 +45,8 @@ class AuthCtrl extends GetxController {
         logger.d("user email is verified. checking user exists in db");
         if (await checkUserExistsInDb() == false) {
           await createUserDb();
+        } else {
+          await deserializeUserInApp(user);
         }
 
         logger.d("User exists in db. Nav to MyBottomBar()");
@@ -54,6 +56,14 @@ class AuthCtrl extends GetxController {
       logger.d("user is singout");
       Get.offAll(() => SignInScreen());
     }
+  }
+
+  deserializeUserInApp(User user) {
+    usersCol.doc(user.uid).get().then(
+          (value) => userCtrl.appUser = UserModel.fromJson(
+            value.data() as Map<String, dynamic>,
+          ),
+        );
   }
 
   static Future<User?> signInWithGoogle({required BuildContext context}) async {

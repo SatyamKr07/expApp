@@ -6,16 +6,19 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
 
+import 'my_logger.dart';
+
 class FirebaseStorageService extends GetxController {
   firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
   late firebase_storage.Reference ref;
 
-  Future uploadImageToFirebaseStorage({
+  Future uploadMediaToFirebaseStorage({
     required List<MediaModel> mediaPath,
     required List<MediaModel> mediaUrlWithTypeToStore,
   }) async {
     for (var media in mediaPath) {
+      logger.d("uploadMediaToFirebaseStorage mediaToUpload : ${media.url}");
       String filename = DateTime.now().millisecondsSinceEpoch.toString() +
           Path.basename(media.url);
       ref = firebase_storage.FirebaseStorage.instance
@@ -32,11 +35,15 @@ class FirebaseStorageService extends GetxController {
         await ref.getDownloadURL().then((value) {
           downloadedMedia.url = value;
           mediaUrlWithTypeToStore.add(downloadedMedia);
+          logger.d("FirebaseStorage mediaToUploaded : ${media.url}");
+        }).onError((error, stackTrace) {
+          logger.e('error uploading media');
         });
       });
     }
   }
-  //  Future uploadImageToFirebaseStorage({
+
+  // Future uploadImageToFirebaseStorage({
   //   required List<String> imagesPath,
   //   required List<String> imagesUrlToStore,
   // }) async {
