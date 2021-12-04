@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/instance_manager.dart';
 import 'package:sizer/sizer.dart';
 
@@ -69,12 +70,14 @@ class ProfileHeader extends StatelessWidget {
           ),
           vSizedBox3,
           Stack(
+            clipBehavior: Clip.none,
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 24.0),
                 child: Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    // mainAxisSize: MainAxisSize.max,
                     children: [
                       hSizedBox4,
                       hSizedBox2,
@@ -118,20 +121,70 @@ class ProfileHeader extends StatelessWidget {
                   ),
                   height: 10.h,
                   decoration: BoxDecoration(
+                      color: Colors.black,
                       // color: KConstantColors.bgColorFaint,
-                      borderRadius: BorderRadius.circular(50)),
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(50),
+                          bottomRight: Radius.circular(50),
+                          topLeft: Radius.circular(40),
+                          bottomLeft: Radius.circular(40))),
                 ),
               ),
-              ClipOval(
-                child: CircleAvatar(
-                  radius: 40,
-                  child: CachedNetworkImage(
-                    imageUrl: userController.appUser.profilePic,
-                    // errorWidget: Image.asset(
-                    //               'assets/images/default_profile_pic.png'),
-                  ),
+
+              Positioned(
+                top: 0,
+                left: 0,
+                child: GetBuilder<UserController>(
+                  id: "PROFILE_PAGE",
+                  builder: (_) {
+                    return userController.appUser.profilePic == ""
+                        ? const ClipOval(
+                            child: CircleAvatar(
+                              radius: 37,
+                              backgroundImage: AssetImage(
+                                  'assets/images/default_profile_pic.png'),
+                            ),
+                          )
+                        : CachedNetworkImage(
+                            imageUrl: userController.appUser.profilePic,
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                            imageBuilder: (context, imageProvider) => Container(
+                              width: 76.0,
+                              height: 76.0,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: imageProvider, fit: BoxFit.cover),
+                              ),
+                            ),
+                            // errorWidget: Image.asset(
+                            //               'assets/images/default_profile_pic.png'),
+                          );
+                  },
                 ),
               ),
+              // ClipOval(
+              //   child: GetBuilder<UserController>(
+              //     id: "PROFILE_PAGE",
+              //     builder: (_) {
+              //       return CircleAvatar(
+              //         radius: 40,
+              //         backgroundImage: userController.appUser.profilePic == ""
+              //             ? Image.asset('assets/images/default_profile_pic.png')
+              //                 as ImageProvider
+              //             : CachedNetworkImageProvider(
+              //                 userController.appUser.profilePic,
+
+              //                 // errorWidget: Image.asset(
+              //                 //               'assets/images/default_profile_pic.png'),
+              //               ),
+              //       );
+              //     },
+              //   ),
+              // ),
             ],
           ),
           vSizedBox2,
@@ -142,12 +195,12 @@ class ProfileHeader extends StatelessWidget {
               children: [
                 Text(userController.appUser.displayName,
                     // style: KCustomTextstyle.kBold(context, 14),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     )),
                 Text(
-                  "Some bio",
+                  userController.appUser.bio,
                   // style: KCustomTextstyle.kMedium(context, 10),
                 ),
                 vSizedBox2,

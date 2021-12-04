@@ -19,6 +19,7 @@ class EditProfileController extends GetxController {
   bool isProfilePicPickedFromGallery = false;
   String profilePicPath = "";
   final firebaseServices = Get.find<FirebaseStorageService>();
+  String updateStatus = "NOT_UPDATING";
   @override
   void onInit() {
     // TODO: implement onInit
@@ -30,6 +31,7 @@ class EditProfileController extends GetxController {
     displayNameCtrl.text = userController.appUser.displayName;
     userNameCtrl.text = userController.appUser.username;
     bioCtrl.text = userController.appUser.bio;
+    userModel.profilePic = userController.appUser.profilePic;
   }
 
   getImagesFromGallery() async {
@@ -46,11 +48,13 @@ class EditProfileController extends GetxController {
   }
 
   Future updateDetails() async {
+    updateStatus = "UPDATING";
+    update(['PROFILE_PAGE']);
     detailsToUpdate();
     if (profilePicPath != "") {
       await uploadProfilePicToStorage();
     }
-    FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection("users")
         .doc(userController.appUser.id)
         .update({
@@ -60,14 +64,27 @@ class EditProfileController extends GetxController {
       "bio": userModel.bio,
     }).then((value) {
       logger.d("profile updated successfully");
+      updateStatus = "UPDATED";
+      profilePicPath = "";
+      update(['PROFILE_PAGE']);
+      userController.appUser.displayName = userModel.displayName;
+      userController.appUser.username = userModel.username;
+      userController.appUser.bio = userModel.bio;
+
+      if (userModel.profilePic != "") {
+        userController.appUser.profilePic = userModel.profilePic;
+        userController.update(['PROFILE_PAGE']);
+      }
     }).onError(
       (error, stackTrace) {
         logger.e('error update profile details $error');
+        updateStatus = "ERROR";
       },
     );
   }
 
   uploadProfilePicToStorage() async {
+    logger.d("uploadProfilePicToStorage");
     List<MediaModel> tempMedia = [MediaModel()];
     List<MediaModel> urlStore = [];
     tempMedia[0].url = profilePicPath;
