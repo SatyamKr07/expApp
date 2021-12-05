@@ -6,6 +6,7 @@ import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/models/comment_model.dart';
 import 'package:commentor/src/models/media_model.dart';
 import 'package:commentor/src/models/post_model.dart';
+import 'package:commentor/src/models/story_model.dart';
 import 'package:commentor/src/models/user_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
@@ -38,12 +39,17 @@ class AddPostController extends GetxController {
   final CollectionReference _mainCollection =
       FirebaseFirestore.instance.collection('posts');
 
+  final CollectionReference _usersCollection =
+      FirebaseFirestore.instance.collection('users');
+
   final userController = Get.find<UserController>();
   final homeController = Get.find<HomeController>();
 
   List<XFile>? multiImages = [];
   List<String> imagesPath = [];
   List<MediaModel> mediaList = [];
+
+  List<StoryModel> storiesList=[];
 
   TextEditingController commentTextCtrl = TextEditingController();
   final CollectionReference _commentCollection =
@@ -93,8 +99,37 @@ class AddPostController extends GetxController {
     } finally {}
   }
 
-  Future postBlog() async {
-    feedBlogData();
+  Future uploadStories() async {
+    isUploading = true;
+    update(['ADD_STORY_PAGE']);
+    try {
+      await uploadImages();
+      _usersCollection
+          .doc(userController.appUser.id)
+          .update(postModel.toJson())
+          .then((docRef) {})
+          .catchError((error) {
+        logger.e('firestore error $error');
+      });
+    } catch (e) {
+      logger.e(e);
+      isUploading = false;
+      update(['ADD_STORY_PAGE']);
+    } finally {
+      // postModel = PostModel(
+      //   postedOn: DateTime.now(),
+      //   mediaList: [],
+      //   likesArray: [],
+      // );
+      isUploading = false;
+      // update(['ADD_BLOG_PAGE']);
+      Get.back();
+      Get.back();
+    }
+  }
+
+  Future uploadPost() async {
+    feedPostData();
     if (!validateData()) {
       Get.snackbar("Opps!", "All *marked fields are compusory");
       return;
@@ -126,7 +161,7 @@ class AddPostController extends GetxController {
     }
   }
 
-  feedBlogData() {
+  feedPostData() {
     postModel.uploaderId = userController.appUser.id;
     postModel.uploaderName = userController.appUser.displayName;
     postModel.uploaderPic = userController.appUser.profilePic;

@@ -5,10 +5,8 @@ import 'package:commentor/src/pages/add_blog/views/add_pic.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'views/title_desc.dart';
-
-class AddBlog extends StatelessWidget {
-  AddBlog({Key? key}) : super(key: key);
+class AddStory extends StatelessWidget {
+  AddStory({Key? key}) : super(key: key);
   final addBlogController = Get.find<AddPostController>();
   @override
   Widget build(BuildContext context) {
@@ -33,7 +31,6 @@ class AddBlog extends StatelessWidget {
                   ),
                   body: ListView(
                     children: [
-                      TitleDesc(),
                       const Padding(
                         padding: EdgeInsets.only(left: 16.0),
                         child: Text("*Choose pics / video"),

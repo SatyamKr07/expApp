@@ -1,46 +1,46 @@
-import 'package:commentor/src/data/users.dart';
-import 'package:commentor/src/models/user.dart';
-import 'package:flutter/material.dart';
+// import 'package:commentor/src/data/users.dart';
+// import 'package:commentor/src/models/user.dart';
+// import 'package:flutter/material.dart';
 
-import 'widgets/story_widget.dart';
+// import 'widgets/story_widget.dart';
 
-class StoryPage extends StatefulWidget {
-  final User user;
+// class StoryPage extends StatefulWidget {
+//   final User user;
 
-  const StoryPage({
-    required this.user,
-    Key? key,
-  }) : super(key: key);
+//   const StoryPage({
+//     required this.user,
+//     Key? key,
+//   }) : super(key: key);
 
-  @override
-  _StoryPageState createState() => _StoryPageState();
-}
+//   @override
+//   _StoryPageState createState() => _StoryPageState();
+// }
 
-class _StoryPageState extends State<StoryPage> {
-  late PageController controller;
+// class _StoryPageState extends State<StoryPage> {
+//   late PageController controller;
 
-  @override
-  void initState() {
-    super.initState();
+//   @override
+//   void initState() {
+//     super.initState();
 
-    final initialPage = users.indexOf(widget.user);
-    controller = PageController(initialPage: initialPage);
-  }
+//     final initialPage = users.indexOf(widget.user);
+//     controller = PageController(initialPage: initialPage);
+//   }
 
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
+//   @override
+//   void dispose() {
+//     controller.dispose();
+//     super.dispose();
+//   }
 
-  @override
-  Widget build(BuildContext context) => PageView(
-        controller: controller,
-        children: users
-            .map((user) => StoryWidget(
-                  user: user,
-                  controller: controller,
-                ))
-            .toList(),
-      );
-}
+//   @override
+//   Widget build(BuildContext context) => PageView(
+//         controller: controller,
+//         children: users
+//             .map((user) => StoryWidget(
+//                   user: user,
+//                   controller: controller,
+//                 ))
+//             .toList(),
+//       );
+// }

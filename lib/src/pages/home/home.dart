@@ -2,6 +2,7 @@ import 'package:commentor/src/central/shared/dimensions.dart';
 import 'package:commentor/src/pages/add_blog/add_blog.dart';
 import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/controllers/home_controller.dart';
+import 'package:commentor/src/pages/add_story/add_story.dart';
 import 'package:commentor/src/pages/home/views/all_posts_list.dart';
 import 'package:commentor/src/pages/story/story_list_page.dart';
 import 'package:commentor/src/settings/settings_view.dart';
@@ -27,7 +28,11 @@ class Home extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () {}, icon: const Icon(FontAwesomeIcons.bell)),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+            IconButton(
+                onPressed: () {
+                  Get.to(() => AddStory());
+                },
+                icon: const Icon(Icons.add)),
             IconButton(
                 onPressed: () {
                   Get.toNamed("/settings");

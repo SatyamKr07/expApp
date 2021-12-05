@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'story_model.dart';
+
 UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 
 String userModelToJson(UserModel data) => json.encode(data.toJson());
@@ -23,6 +25,7 @@ class UserModel {
     this.totalCommentsCount = 0,
     this.totalLikesCount = 0,
     this.totalPostsCount = 0,
+    this.storiesList,
   });
 
   String id;
@@ -38,6 +41,7 @@ class UserModel {
   int totalCommentsCount;
   int totalLikesCount;
   int totalPostsCount;
+  List<StoryModel>? storiesList;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json["id"] ?? '',
@@ -53,6 +57,10 @@ class UserModel {
         totalCommentsCount: json["totalCommentsCount"] ?? 0,
         totalLikesCount: json["totalLikesCount"] ?? 0,
         totalPostsCount: json["totalPostsCount"] ?? 0,
+        storiesList: json["storiesList"] == null
+            ? []
+            : List<StoryModel>.from(
+                json["mediaList"].map((x) => StoryModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

@@ -1,5 +1,6 @@
 import 'package:commentor/src/central/services/image_service.dart';
 import 'package:commentor/src/controllers/edit_profile_controller.dart';
+import 'package:commentor/src/controllers/story_controller.dart';
 import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/controllers/add_post_controller.dart';
 import 'package:commentor/src/controllers/home_controller.dart';
@@ -18,5 +19,6 @@ class ControllerBinding extends Bindings {
         fenix: true);
     Get.lazyPut<EditProfileController>(() => EditProfileController(),
         fenix: true);
+    Get.lazyPut<StoryController>(() => StoryController(), fenix: true);
   }
 }
