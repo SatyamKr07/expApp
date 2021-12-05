@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:commentor/src/central/services/auth_ctrl.dart';
 import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/central/shared/dimensions.dart';
 import 'package:commentor/src/pages/edit_profile/edit_profile.dart';
+import 'package:commentor/src/pages/sign_in_screen/sign_in_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -61,7 +63,10 @@ class ProfileHeader extends StatelessWidget {
                     // color: KConstantColors.whiteColor,
                   )),
               IconButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await AuthCtrl.signOut(context: context);
+                    Get.offAll(() => SignInScreen());
+                  },
                   icon: Icon(
                     Icons.grid_3x3,
                     // color: KConstantColors.whiteColor,
