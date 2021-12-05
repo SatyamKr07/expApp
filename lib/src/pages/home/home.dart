@@ -3,12 +3,14 @@ import 'package:commentor/src/pages/add_blog/add_blog.dart';
 import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/controllers/home_controller.dart';
 import 'package:commentor/src/pages/home/views/all_posts_list.dart';
+import 'package:commentor/src/pages/story/story_list_page.dart';
 import 'package:commentor/src/settings/settings_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/route_manager.dart';
+import 'package:sizer/sizer.dart';
 
 import 'views/all_posts_list.dart';
 import 'views/story_list.dart';
@@ -72,7 +74,11 @@ class Home extends StatelessWidget {
           // ),
           Padding(
             padding: const EdgeInsets.only(top: 24.0, bottom: 24),
-            child: StoryListView(),
+            child: SizedBox(
+              height: 8.h,
+              child: StoryListPage(),
+            ),
+            // child: StoryListView(),
           ),
 
           AllPostsList(),
