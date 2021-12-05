@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 
 class AddStory extends StatelessWidget {
   AddStory({Key? key}) : super(key: key);
-  final storyController = Get.find<StoryController>();
+  final storyController = Get.find<DisplayStoryController>();
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AddPostController>(
@@ -46,7 +46,7 @@ class AddStory extends StatelessWidget {
                           size: 32,
                         ),
                       ),
-                      GetBuilder<StoryController>(
+                      GetBuilder<DisplayStoryController>(
                         id: "ADD_IMAGES_SWIPER",
                         builder: (_) => BuildSwiper(
                           imageUrls: const [],

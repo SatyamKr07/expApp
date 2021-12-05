@@ -60,7 +60,7 @@ class UserModel {
         storiesList: json["storiesList"] == null
             ? []
             : List<StoryModel>.from(
-                json["mediaList"].map((x) => StoryModel.fromJson(x))),
+                json["storiesList"].map((x) => StoryModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

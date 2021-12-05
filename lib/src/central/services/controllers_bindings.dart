@@ -19,6 +19,6 @@ class ControllerBinding extends Bindings {
         fenix: true);
     Get.lazyPut<EditProfileController>(() => EditProfileController(),
         fenix: true);
-    Get.lazyPut<StoryController>(() => StoryController(), fenix: true);
+    Get.lazyPut<DisplayStoryController>(() => DisplayStoryController(), fenix: true);
   }
 }

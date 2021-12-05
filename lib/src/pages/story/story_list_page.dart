@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:commentor/src/controllers/story_controller.dart';
-import 'package:commentor/src/data/users.dart';
 import 'package:commentor/src/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +9,7 @@ import 'package:sizer/sizer.dart';
 import 'story_page.dart';
 
 class StoryListPage extends StatelessWidget {
-  final storyController = Get.find<StoryController>();
+  final storyController = Get.find<DisplayStoryController>();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,6 +24,7 @@ class StoryListPage extends StatelessWidget {
               return UserModel.fromJson(
                   document.data() as Map<String, dynamic>);
             }).toList();
+
             return usersListView(storyController.usersList);
           } else if (snapshot.hasError) {
             return const Text("Some error occured");
@@ -41,13 +41,13 @@ class StoryListPage extends StatelessWidget {
       //   physics: const ClampingScrollPhysics(),
       //   itemBuilder: (BuildContext context, int index) {
       //     return GestureDetector(
-      //       onTap: () {
-      //         Navigator.of(context).push(
-      //           MaterialPageRoute(
-      //             builder: (context) => StoryPage(user: users[index]),
-      //           ),
-      //         );
-      //       },
+      // onTap: () {
+      //   Navigator.of(context).push(
+      //     MaterialPageRoute(
+      //       builder: (context) => StoryPage(user: users[index]),
+      //     ),
+      //   );
+      // },
       //       child: Padding(
       //         padding: const EdgeInsets.symmetric(horizontal: 4),
       //         child:
@@ -71,20 +71,29 @@ class StoryListPage extends StatelessWidget {
       itemCount: usersList.length,
       itemBuilder: (BuildContext context, int index) {
         UserModel user = usersList[index];
-        return CachedNetworkImage(
-          imageUrl: user.profilePic,
-          placeholder: (context, url) => CircularProgressIndicator(),
-          errorWidget: (context, url, error) => Icon(Icons.error),
-          imageBuilder: (context, imageProvider) => Container(
-            width: 76.0,
-            height: 76.0,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+        return InkWell(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => StoryPage(userModel: usersList[index]),
+              ),
+            );
+          },
+          child: CachedNetworkImage(
+            imageUrl: user.profilePic,
+            placeholder: (context, url) => CircularProgressIndicator(),
+            errorWidget: (context, url, error) => Icon(Icons.error),
+            imageBuilder: (context, imageProvider) => Container(
+              width: 76.0,
+              height: 76.0,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+              ),
             ),
+            // errorWidget: Image.asset(
+            //               'assets/images/default_profile_pic.png'),
           ),
-          // errorWidget: Image.asset(
-          //               'assets/images/default_profile_pic.png'),
         );
       },
     );

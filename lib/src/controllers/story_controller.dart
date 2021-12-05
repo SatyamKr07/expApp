@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:commentor/src/central/services/firebase_services.dart';
 import 'package:image_picker/image_picker.dart';
 
-class StoryController extends GetxController {
+class DisplayStoryController extends GetxController {
   //get all users list for stories
   List usersList = [];
   Stream<QuerySnapshot> filterUser(emailQuery) {
@@ -19,7 +19,10 @@ class StoryController extends GetxController {
     // });
 
     logger.d('fetching all posts');
-    return FirebaseFirestore.instance.collection("users").snapshots();
+    return FirebaseFirestore.instance.collection("users").where(
+      "storiesList",
+      isNotEqualTo: [],
+    ).snapshots();
   }
 
   bool isUploading = false;
@@ -62,7 +65,7 @@ class StoryController extends GetxController {
       }
       await _usersCollection
           .doc(userController.appUser.id)
-          .update({"stories": storiesList})
+          .update({"storiesList": storiesList})
           .then((docRef) {})
           .catchError((error) {
             logger.e('firestore error $error');

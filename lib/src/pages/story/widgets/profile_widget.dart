@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:commentor/src/models/user.dart';
+import 'package:commentor/src/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class ProfileWidget extends StatelessWidget {
-  final User user;
+  final UserModel user;
   final String date;
 
   const ProfileWidget({
@@ -19,9 +21,21 @@ class ProfileWidget extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              CircleAvatar(
-                radius: 24,
-                backgroundImage: AssetImage(user.imgUrl),
+              CachedNetworkImage(
+                imageUrl: user.profilePic,
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+                imageBuilder: (context, imageProvider) => Container(
+                  width: 76.0,
+                  height: 76.0,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: imageProvider, fit: BoxFit.cover),
+                  ),
+                ),
+                // errorWidget: Image.asset(
+                //               'assets/images/default_profile_pic.png'),
               ),
               SizedBox(width: 16),
               Expanded(
@@ -29,7 +43,7 @@ class ProfileWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      user.name,
+                      user.displayName,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

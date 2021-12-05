@@ -1,6 +1,5 @@
 import 'package:commentor/src/central/shared/colors.dart';
 import 'package:commentor/src/central/shared/textstyles.dart';
-import 'package:commentor/src/data/users.dart';
 import 'package:commentor/src/pages/home/home.dart';
 import 'package:commentor/src/pages/profile/profile.view.dart';
 import 'package:commentor/src/pages/story/story_list_page.dart';
