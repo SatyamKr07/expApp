@@ -80,7 +80,7 @@ class Home extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 24.0, bottom: 24),
             child: SizedBox(
-              height: 8.h,
+              height: 50,
               child: StoryListPage(),
             ),
             // child: StoryListView(),

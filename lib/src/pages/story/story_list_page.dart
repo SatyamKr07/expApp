@@ -13,7 +13,7 @@ class StoryListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(0.0),
       child: StreamBuilder(
         stream: storyController.filterUser(""),
         // initialData: initialData,
@@ -79,20 +79,24 @@ class StoryListPage extends StatelessWidget {
               ),
             );
           },
-          child: CachedNetworkImage(
-            imageUrl: user.profilePic,
-            placeholder: (context, url) => CircularProgressIndicator(),
-            errorWidget: (context, url, error) => Icon(Icons.error),
-            imageBuilder: (context, imageProvider) => Container(
-              width: 76.0,
-              height: 76.0,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 12.0),
+            child: CachedNetworkImage(
+              imageUrl: user.profilePic,
+              placeholder: (context, url) => CircularProgressIndicator(),
+              errorWidget: (context, url, error) => Icon(Icons.error),
+              imageBuilder: (context, imageProvider) => Container(
+                width: 40.0,
+                height: 40.0,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image:
+                      DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                ),
               ),
+              // errorWidget: Image.asset(
+              //               'assets/images/default_profile_pic.png'),
             ),
-            // errorWidget: Image.asset(
-            //               'assets/images/default_profile_pic.png'),
           ),
         );
       },

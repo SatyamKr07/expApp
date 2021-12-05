@@ -26,8 +26,8 @@ class ProfileWidget extends StatelessWidget {
                 placeholder: (context, url) => CircularProgressIndicator(),
                 errorWidget: (context, url, error) => Icon(Icons.error),
                 imageBuilder: (context, imageProvider) => Container(
-                  width: 76.0,
-                  height: 76.0,
+                  width: 40.0,
+                  height: 40.0,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
