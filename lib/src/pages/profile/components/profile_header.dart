@@ -68,7 +68,7 @@ class ProfileHeader extends StatelessWidget {
                     Get.offAll(() => SignInScreen());
                   },
                   icon: Icon(
-                    Icons.grid_3x3,
+                    Icons.logout,
                     // color: KConstantColors.whiteColor,
                   ))
             ],
