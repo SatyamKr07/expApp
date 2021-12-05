@@ -1,6 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:commentor/src/central/services/image_service.dart';
 import 'package:commentor/src/central/services/my_logger.dart';
+import 'package:commentor/src/controllers/user_controller.dart';
+import 'package:commentor/src/models/media_model.dart';
+import 'package:commentor/src/models/story_model.dart';
 import 'package:get/get.dart';
+import 'package:commentor/src/central/services/firebase_services.dart';
+import 'package:image_picker/image_picker.dart';
 
 class StoryController extends GetxController {
   //get all users list for stories
@@ -14,5 +20,68 @@ class StoryController extends GetxController {
 
     logger.d('fetching all posts');
     return FirebaseFirestore.instance.collection("users").snapshots();
+  }
+
+  bool isUploading = false;
+  List<dynamic> storiesList = [];
+  List<String> storyImgPaths = [];
+  List<MediaModel> mediaList = [];
+  final imageService = Get.find<ImageService>();
+  final firebaseServices = Get.find<FirebaseStorageService>();
+
+  final CollectionReference _usersCollection =
+      FirebaseFirestore.instance.collection('users');
+
+  final userController = Get.find<UserController>();
+
+  Future pickStory() async {
+    List<XFile> multiImages = await imageService.getImagesFromGallery();
+    // List multiImages = await myUtils.pickMultiImages();
+    // images.addAll(multiImages);
+    for (var element in multiImages) {
+      MediaModel media = MediaModel()..url = element.path;
+      mediaList.add(media);
+      storyImgPaths.add(element.path);
+    }
+
+    // exchangeModel.post!.mediaList.addAll(iterable)
+    logger.d('pickedImages');
+    update(['ADD_IMAGES_SWIPER']);
+  }
+
+  Future uploadStories() async {
+    isUploading = true;
+    update(['ADD_STORY_PAGE']);
+
+    try {
+      for (var imgPath in storyImgPaths) {
+        String downloadUrl = await firebaseServices
+            .uploadImageToFirebaseStorage(imagePath: imgPath);
+        StoryModel storyModel = StoryModel(imageUrl: downloadUrl);
+        storiesList.add(storyModel.toJson());
+      }
+      await _usersCollection
+          .doc(userController.appUser.id)
+          .update({"stories": storiesList})
+          .then((docRef) {})
+          .catchError((error) {
+            logger.e('firestore error $error');
+          });
+    } catch (e) {
+      logger.e(e);
+      isUploading = false;
+      update(['ADD_STORY_PAGE']);
+    } finally {
+      storiesList = [];
+      // postModel = PostModel(
+      //   postedOn: DateTime.now(),
+      //   mediaList: [],
+      //   likesArray: [],
+      // );
+      isUploading = false;
+      // update(['ADD_BLOG_PAGE']);
+      // Get.back();
+      // Get.back();
+    }
   }
 }

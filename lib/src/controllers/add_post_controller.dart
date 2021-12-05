@@ -49,8 +49,6 @@ class AddPostController extends GetxController {
   List<String> imagesPath = [];
   List<MediaModel> mediaList = [];
 
-  List<StoryModel> storiesList=[];
-
   TextEditingController commentTextCtrl = TextEditingController();
   final CollectionReference _commentCollection =
       FirebaseFirestore.instance.collection('comments');
@@ -99,35 +97,6 @@ class AddPostController extends GetxController {
     } finally {}
   }
 
-  Future uploadStories() async {
-    isUploading = true;
-    update(['ADD_STORY_PAGE']);
-    try {
-      await uploadImages();
-      _usersCollection
-          .doc(userController.appUser.id)
-          .update(postModel.toJson())
-          .then((docRef) {})
-          .catchError((error) {
-        logger.e('firestore error $error');
-      });
-    } catch (e) {
-      logger.e(e);
-      isUploading = false;
-      update(['ADD_STORY_PAGE']);
-    } finally {
-      // postModel = PostModel(
-      //   postedOn: DateTime.now(),
-      //   mediaList: [],
-      //   likesArray: [],
-      // );
-      isUploading = false;
-      // update(['ADD_BLOG_PAGE']);
-      Get.back();
-      Get.back();
-    }
-  }
-
   Future uploadPost() async {
     feedPostData();
     if (!validateData()) {
@@ -138,7 +107,7 @@ class AddPostController extends GetxController {
     update(['ADD_BLOG_PAGE']);
     try {
       await uploadImages();
-      _mainCollection
+      await _mainCollection
           .add(postModel.toJson())
           .then((docRef) {})
           .catchError((error) {

@@ -1,20 +1,16 @@
 class StoryModel {
   StoryModel({
     this.imageUrl = "",
-    required this.postedOn,
   });
 
   String imageUrl;
-  DateTime postedOn;
 
   factory StoryModel.fromJson(Map<String, dynamic> json) => StoryModel(
         imageUrl: json["imageUrl"],
-        postedOn: json["postedOn"],
       );
 
   Map<String, dynamic> toJson() => {
         "imageUrl": imageUrl,
-        "postedOn": postedOn,
       };
 }
 

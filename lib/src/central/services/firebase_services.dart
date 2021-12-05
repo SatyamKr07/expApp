@@ -43,22 +43,23 @@ class FirebaseStorageService extends GetxController {
     }
   }
 
-  // Future uploadImageToFirebaseStorage({
-  //   required List<String> imagesPath,
-  //   required List<String> imagesUrlToStore,
-  // }) async {
-  //   for (var imgPath in imagesPath) {
-  //     String filename = DateTime.now().millisecondsSinceEpoch.toString() +
-  //         Path.basename(imgPath);
-  //     ref = firebase_storage.FirebaseStorage.instance
-  //         .ref()
-  //         .child('images/$filename');
-  //     // .child('images/${Path.basename(imgPath)}');
-  //     await ref.putFile(File(imgPath)).whenComplete(() async {
-  //       await ref.getDownloadURL().then((value) {
-  //         imagesUrlToStore.add(value);
-  //       });
-  //     });
-  //   }
-  // }
+  Future<String> uploadImageToFirebaseStorage({
+    required String imagePath,
+  }) async {
+    String downloadUrl = "";
+    logger.d("uploadImageToFirebaseStorage");
+    String filename = DateTime.now().millisecondsSinceEpoch.toString() +
+        Path.basename(imagePath);
+    ref = firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('images/$filename');
+    // .child('images/${Path.basename(imgPath)}');
+    await ref.putFile(File(imagePath)).whenComplete(() async {
+      await ref.getDownloadURL().then((value) {
+        downloadUrl = value;
+        logger.d('download url : $downloadUrl');
+      });
+    });
+    return downloadUrl;
+  }
 }
