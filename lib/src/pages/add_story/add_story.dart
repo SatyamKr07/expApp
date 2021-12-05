@@ -11,8 +11,8 @@ class AddStory extends StatelessWidget {
   final storyController = Get.find<DisplayStoryController>();
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AddPostController>(
-        id: 'ADD_STORY',
+    return GetBuilder<DisplayStoryController>(
+        id: 'ADD_STORY_PAGE',
         builder: (_) {
           return _.isUploading == true
               ? Material(child: Center(child: CircularProgressIndicator()))
