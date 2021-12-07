@@ -26,7 +26,16 @@ class UserController extends GetxController {
     // return userModelFuture;
   }
 
-  Future handleFollow({required String userId}) async{
-    
+  Stream<QuerySnapshot> filterUser(emailQuery) {
+    if (emailQuery == "") {
+      logger.d('fetching all posts');
+      return FirebaseFirestore.instance.collection("users").snapshots();
+    } else {
+      logger.d("fetching else category = $emailQuery");
+      return FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: emailQuery)
+          .snapshots();
+    }
   }
 }
