@@ -26,6 +26,8 @@ class UserModel {
     this.totalLikesCount = 0,
     this.totalPostsCount = 0,
     this.storiesList,
+    this.followingList,
+    this.followersList,
   });
 
   String id;
@@ -42,6 +44,8 @@ class UserModel {
   int totalLikesCount;
   int totalPostsCount;
   List<StoryModel>? storiesList;
+  List<dynamic>? followingList;
+  List<dynamic>? followersList;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json["id"] ?? '',
@@ -61,6 +65,8 @@ class UserModel {
             ? []
             : List<StoryModel>.from(
                 json["storiesList"].map((x) => StoryModel.fromJson(x))),
+        followingList: json["followingList"] ?? [],
+        followersList: json['followersList'] ?? [],
       );
 
   Map<String, dynamic> toJson() => {

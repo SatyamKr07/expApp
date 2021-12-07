@@ -4,6 +4,7 @@ import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/central/shared/dimensions.dart';
 import 'package:commentor/src/models/user_model.dart';
 import 'package:commentor/src/pages/edit_profile/edit_profile.dart';
+import 'package:commentor/src/pages/profile/components/follow_widget.dart';
 import 'package:commentor/src/pages/sign_in_screen/sign_in_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -199,12 +200,10 @@ class ProfileHeader extends StatelessWidget {
                         ),
                       ),
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        userController.handleFollow(userId: userModel.id);
-                      },
-                      child: Text("Follow"),
-                    )
+                    if (userController.appUser.id != userModel.id)
+                      FollowWidget(
+                        userModel: userModel,
+                      ),
                   ],
                 ),
                 Text(
