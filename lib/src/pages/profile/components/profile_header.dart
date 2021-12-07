@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:commentor/src/central/services/auth_ctrl.dart';
 import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/central/shared/dimensions.dart';
+import 'package:commentor/src/models/user_model.dart';
 import 'package:commentor/src/pages/edit_profile/edit_profile.dart';
 import 'package:commentor/src/pages/sign_in_screen/sign_in_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,6 +14,8 @@ import 'package:get/instance_manager.dart';
 import 'package:sizer/sizer.dart';
 
 class ProfileHeader extends StatelessWidget {
+  UserModel userModel;
+  ProfileHeader({Key? key, required this.userModel}) : super(key: key);
   final userController = Get.find<UserController>();
   @override
   Widget build(BuildContext context) {
@@ -65,6 +68,7 @@ class ProfileHeader extends StatelessWidget {
               IconButton(
                   onPressed: () async {
                     await AuthCtrl.signOut(context: context);
+                    userController.appUser = UserModel();
                     Get.offAll(() => SignInScreen());
                   },
                   icon: Icon(
@@ -142,7 +146,7 @@ class ProfileHeader extends StatelessWidget {
                 child: GetBuilder<UserController>(
                   id: "PROFILE_PAGE",
                   builder: (_) {
-                    return userController.appUser.profilePic == ""
+                    return userModel.profilePic == ""
                         ? const ClipOval(
                             child: CircleAvatar(
                               radius: 37,
@@ -151,7 +155,7 @@ class ProfileHeader extends StatelessWidget {
                             ),
                           )
                         : CachedNetworkImage(
-                            imageUrl: userController.appUser.profilePic,
+                            imageUrl: userModel.profilePic,
                             placeholder: (context, url) =>
                                 CircularProgressIndicator(),
                             errorWidget: (context, url, error) =>
@@ -177,11 +181,11 @@ class ProfileHeader extends StatelessWidget {
               //     builder: (_) {
               //       return CircleAvatar(
               //         radius: 40,
-              //         backgroundImage: userController.appUser.profilePic == ""
+              //         backgroundImage: userModel.profilePic == ""
               //             ? Image.asset('assets/images/default_profile_pic.png')
               //                 as ImageProvider
               //             : CachedNetworkImageProvider(
-              //                 userController.appUser.profilePic,
+              //                 userModel.profilePic,
 
               //                 // errorWidget: Image.asset(
               //                 //               'assets/images/default_profile_pic.png'),
@@ -198,14 +202,14 @@ class ProfileHeader extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(userController.appUser.displayName,
+                Text(userModel.displayName,
                     // style: KCustomTextstyle.kBold(context, 14),
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     )),
                 Text(
-                  userController.appUser.bio,
+                  userModel.bio,
                   // style: KCustomTextstyle.kMedium(context, 10),
                 ),
                 vSizedBox2,

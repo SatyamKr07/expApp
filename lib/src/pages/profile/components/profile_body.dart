@@ -3,11 +3,13 @@ import 'package:commentor/src/central/services/my_logger.dart';
 import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/central/widgets/build_swiper.dart';
 import 'package:commentor/src/models/post_model.dart';
+import 'package:commentor/src/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProfileBody extends StatelessWidget {
-  ProfileBody({Key? key}) : super(key: key);
+  UserModel userModel;
+  ProfileBody({Key? key, required this.userModel}) : super(key: key);
   final userController = Get.find<UserController>();
   List<PostModel> postList = [];
 
@@ -15,7 +17,7 @@ class ProfileBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: StreamBuilder<QuerySnapshot>(
-        stream: userController.fetchUserPost(),
+        stream: userController.fetchUserPost(userId: userModel.id),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Padding(

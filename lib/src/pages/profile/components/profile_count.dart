@@ -1,7 +1,9 @@
+import 'package:commentor/src/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class ProfileCount extends StatelessWidget {
-  const ProfileCount({Key? key}) : super(key: key);
+  UserModel userModel;
+  ProfileCount({Key? key, required this.userModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

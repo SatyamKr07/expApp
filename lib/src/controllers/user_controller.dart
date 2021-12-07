@@ -7,10 +7,10 @@ import '../central/services/my_logger.dart';
 class UserController extends GetxController {
   UserModel appUser = UserModel();
 
-  Stream<QuerySnapshot> fetchUserPost() {
+  Stream<QuerySnapshot> fetchUserPost({required String userId}) {
     return FirebaseFirestore.instance
         .collection("posts")
-        .where('uploaderId', isEqualTo: appUser.id)
+        .where('uploaderId', isEqualTo: userId)
         .orderBy('postedOn', descending: true)
         .snapshots();
   }

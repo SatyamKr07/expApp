@@ -1,16 +1,32 @@
 import 'package:commentor/src/central/shared/dimensions.dart';
+import 'package:commentor/src/controllers/user_controller.dart';
+import 'package:commentor/src/models/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
 
 import 'components/profile_body.dart';
 import 'components/profile_count.dart';
 import 'components/profile_header.dart';
 
 class ProfileView extends StatefulWidget {
+  String userId;
+  ProfileView({Key? key, required this.userId}) : super(key: key);
+
   @override
   State<ProfileView> createState() => _ProfileViewState();
 }
 
 class _ProfileViewState extends State<ProfileView> {
+  final userController = Get.find<UserController>();
+  UserModel userModel = UserModel();
+  @override
+  void initState() {
+    super.initState();
+    if (widget.userId == userController.appUser.id) {
+      userModel = userController.appUser;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     _divider() {
@@ -38,13 +54,19 @@ class _ProfileViewState extends State<ProfileView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   vSizedBox1,
-                  ProfileHeader(),
+                  ProfileHeader(
+                    userModel: userModel,
+                  ),
                   // _divider(),
                   vSizedBox1,
-                  ProfileCount(),
+                  ProfileCount(
+                    userModel: userModel,
+                  ),
                   vSizedBox1,
                   _divider(),
-                  ProfileBody()
+                  ProfileBody(
+                    userModel: userModel,
+                  )
                 ]),
           ),
         ),
