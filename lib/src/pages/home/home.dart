@@ -16,9 +16,16 @@ import 'package:sizer/sizer.dart';
 import 'views/all_posts_list.dart';
 import 'views/story_list.dart';
 
-class Home extends StatelessWidget {
-  Home({Key? key}) : super(key: key);
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   final userController = Get.find<UserController>();
+
   final homeController = Get.find<HomeController>();
 
   @override
@@ -51,46 +58,63 @@ class Home extends StatelessWidget {
             )
           ]),
           backgroundColor: Theme.of(context).backgroundColor),
-      body: ListView(
-        physics: const ClampingScrollPhysics(),
-        shrinkWrap: true,
-        children: [
-          // GetBuilder<HomeController>(
-          //   id: "FILTER_CATEGORY_DROPDOWN",
-          //   builder: (_) => DropdownButton<String>(
-          //     // value: _.blogModel.category,
-          //     value: _.filterCategory,
-          //     onChanged: _.filterPosts,
-          //     items: const [
-          //       DropdownMenuItem(
-          //         value: "All Posts",
-          //         child: Text('All Posts'),
-          //       ),
-          //       DropdownMenuItem(
-          //         value: "sports",
-          //         child: Text('Sports'),
-          //       ),
-          //       DropdownMenuItem(
-          //         value: "movies",
-          //         child: Text('Movies'),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          Padding(
-            padding: const EdgeInsets.only(top: 24.0, bottom: 24),
-            child: SizedBox(
-              height: 50,
-              child: (userController.appUser.followingList!.isEmpty ||
-                      userController.appUser.followingList == null)
-                  ? Container()
-                  : StoryListPage(),
+      body: RefreshIndicator(
+        onRefresh: () {
+          return Future.delayed(
+            Duration(seconds: 1),
+            () {
+              // homeController.update(['ALL_POSTS']);
+              setState(() {});
+              // showing snackbar
+              // _scaffoldKey.currentState.showSnackBar(
+              //   SnackBar(
+              //     content: const Text('Page Refreshed'),
+              //   ),
+              // );
+            },
+          );
+        },
+        child: ListView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          shrinkWrap: true,
+          children: [
+            // GetBuilder<HomeController>(
+            //   id: "FILTER_CATEGORY_DROPDOWN",
+            //   builder: (_) => DropdownButton<String>(
+            //     // value: _.blogModel.category,
+            //     value: _.filterCategory,
+            //     onChanged: _.filterPosts,
+            //     items: const [
+            //       DropdownMenuItem(
+            //         value: "All Posts",
+            //         child: Text('All Posts'),
+            //       ),
+            //       DropdownMenuItem(
+            //         value: "sports",
+            //         child: Text('Sports'),
+            //       ),
+            //       DropdownMenuItem(
+            //         value: "movies",
+            //         child: Text('Movies'),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            Padding(
+              padding: const EdgeInsets.only(top: 24.0, bottom: 24),
+              child: SizedBox(
+                height: 50,
+                child: (userController.appUser.followingList!.isEmpty ||
+                        userController.appUser.followingList == null)
+                    ? Container()
+                    : StoryListPage(),
+              ),
+              // child: StoryListView(),
             ),
-            // child: StoryListView(),
-          ),
 
-          AllPostsList(),
-        ],
+            AllPostsList(),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         heroTag: "ADDEXCHANGETAG",
