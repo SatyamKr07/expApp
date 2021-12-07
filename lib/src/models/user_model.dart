@@ -49,6 +49,7 @@ class UserModel {
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json["id"] ?? '',
+        followingList: json["followingList"] ?? [],
         username: json["username"] ?? '',
         displayName: json["displayName"] ?? '',
         bio: json["bio"] ?? '',
@@ -65,7 +66,6 @@ class UserModel {
             ? []
             : List<StoryModel>.from(
                 json["storiesList"].map((x) => StoryModel.fromJson(x))),
-        followingList: json["followingList"] ?? [],
         followersList: json['followersList'] ?? [],
       );
 

@@ -25,9 +25,10 @@ class _ProfileViewState extends State<ProfileView> {
     super.initState();
     if (widget.userId == userController.appUser.id) {
       userModel = userController.appUser;
-    } else {
-      userController.getUserProfile(userId: widget.userId);
-    }
+    } 
+    // else {
+    //   userController.getUserProfile(userId: widget.userId);
+    // }
   }
 
   @override

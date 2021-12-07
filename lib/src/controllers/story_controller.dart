@@ -18,7 +18,7 @@ class DisplayStoryController extends GetxController {
     //   update(['FILTER_CATEGORY_DROPDOWN', 'ALL_POSTS']);
     // });
 
-    logger.d('fetching all posts');
+    logger.d('fetching stories');
     return FirebaseFirestore.instance.collection("users").where(
       "storiesList",
       isNotEqualTo: [],

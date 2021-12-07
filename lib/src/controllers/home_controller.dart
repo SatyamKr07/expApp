@@ -11,9 +11,30 @@ class HomeController extends GetxController {
   String filterCategory = "All Posts";
   final userController = Get.find<UserController>();
 
+  // Stream<QuerySnapshot> fetchPosts() {
+  //   Stream<QuerySnapshot> q;
+  //   for (var element in userController.appUser.followingList!) {
+  //     q = FirebaseFirestore.instance
+  //         .collection("posts")
+  //         .where(
+  //           "uploaderId",
+  //           isEqualTo: element,
+  //         )
+  //         .orderBy('postedOn', descending: true)
+  //         .snapshots();
+  //   }
+  // }
+
   Stream<QuerySnapshot> fetchPosts() {
+    logger.d('fetchPosts');
+    logger.d('followingList : ${userController.appUser.followingList}');
+    logger.d('userId : ${userController.appUser.id}');
     return FirebaseFirestore.instance
         .collection("posts")
+        .where(
+          "uploaderId",
+          whereIn: userController.appUser.followingList,
+        )
         .orderBy('postedOn', descending: true)
         .snapshots();
   }

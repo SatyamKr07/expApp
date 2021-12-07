@@ -58,8 +58,8 @@ class AuthCtrl extends GetxController {
     }
   }
 
-  deserializeUserInApp(User user) {
-    usersCol.doc(user.uid).get().then(
+  deserializeUserInApp(User user) async {
+    await usersCol.doc(user.uid).get().then(
           (value) => userCtrl.appUser = UserModel.fromJson(
             value.data() as Map<String, dynamic>,
           ),

@@ -36,7 +36,7 @@ class AllComments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
-      id: 'ALL_POSTS',
+      id: 'ALL_COMMENTS',
       builder: (_) => StreamBuilder<QuerySnapshot>(
         stream: homeController.fetchComments(postId: postId),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
