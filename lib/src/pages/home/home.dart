@@ -81,7 +81,10 @@ class Home extends StatelessWidget {
             padding: const EdgeInsets.only(top: 24.0, bottom: 24),
             child: SizedBox(
               height: 50,
-              child: StoryListPage(),
+              child: (userController.appUser.followingList!.isEmpty ||
+                      userController.appUser.followingList == null)
+                  ? Container()
+                  : StoryListPage(),
             ),
             // child: StoryListView(),
           ),

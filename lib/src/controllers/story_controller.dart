@@ -19,7 +19,10 @@ class DisplayStoryController extends GetxController {
     // });
 
     logger.d('fetching stories');
-    return FirebaseFirestore.instance.collection("users").where(
+    return FirebaseFirestore.instance
+        .collection("users")
+        .where("id", whereIn: userController.appUser.followingList)
+        .where(
       "storiesList",
       isNotEqualTo: [],
     ).snapshots();
