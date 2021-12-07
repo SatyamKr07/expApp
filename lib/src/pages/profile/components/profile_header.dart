@@ -29,35 +29,17 @@ class ProfileHeader extends StatelessWidget {
         children: [
           Row(
             children: [
-              // FutureBuilder(
-              //     future: authenticationCubit.fetchLoggedUser(context: context),
-              //     builder: (context, snapshot) {
-              //       if (snapshot.connectionState == ConnectionState.waiting) {
-              //         return SizedBox(
-              //             height: 20,
-              //             width: 20,
-              //             child: CircularProgressIndicator());
-              //       }
-              //       if (snapshot.hasData) {
-              //         User user = snapshot.data as User;
-              //         return Text(user.email.toString(),
-              //             style: KCustomTextstyle.kBold(context, 12));
-              //       }
-              //       return SizedBox(
-              //           height: 20,
-              //           width: 20,
-              //           child: CircularProgressIndicator());
-              //     }),
-              IconButton(
-                onPressed: () {
-                  Get.to(() => EditProfile());
-                },
-                icon: Icon(
-                  Icons.edit,
-                  // color: KConstantColors.whiteColor,
-                  size: 16,
+              if (userController.appUser.id == userModel.id)
+                IconButton(
+                  onPressed: () {
+                    Get.to(() => EditProfile());
+                  },
+                  icon: Icon(
+                    Icons.edit,
+                    // color: KConstantColors.whiteColor,
+                    size: 16,
+                  ),
                 ),
-              ),
               Spacer(),
               IconButton(
                   onPressed: () {},
@@ -202,12 +184,29 @@ class ProfileHeader extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(userModel.displayName,
-                    // style: KCustomTextstyle.kBold(context, 14),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    )),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        userModel.displayName,
+
+                        // style: KCustomTextstyle.kBold(context, 14),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        userController.handleFollow(userId: userModel.id);
+                      },
+                      child: Text("Follow"),
+                    )
+                  ],
+                ),
                 Text(
                   userModel.bio,
                   // style: KCustomTextstyle.kMedium(context, 10),

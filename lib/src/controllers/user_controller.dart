@@ -6,6 +6,7 @@ import '../central/services/my_logger.dart';
 
 class UserController extends GetxController {
   UserModel appUser = UserModel();
+  // late Future<QuerySnapshot> userModelFuture;
 
   Stream<QuerySnapshot> fetchUserPost({required String userId}) {
     return FirebaseFirestore.instance
@@ -13,5 +14,19 @@ class UserController extends GetxController {
         .where('uploaderId', isEqualTo: userId)
         .orderBy('postedOn', descending: true)
         .snapshots();
+  }
+
+  Future<DocumentSnapshot> getUserProfile({required String userId}) async {
+    // userModelFuture =
+    return await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .get();
+
+    // return userModelFuture;
+  }
+
+  Future handleFollow({required String userId}) async{
+    
   }
 }

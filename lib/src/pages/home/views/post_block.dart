@@ -7,6 +7,7 @@ import 'package:commentor/src/central/widgets/build_swiper.dart';
 import 'package:commentor/src/controllers/home_controller.dart';
 import 'package:commentor/src/models/post_model.dart';
 import 'package:commentor/src/pages/comment/comments.dart';
+import 'package:commentor/src/pages/profile/profile.view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -119,24 +120,31 @@ class _PostBlockState extends State<PostBlock> {
                   ),
                 ),
                 hSizedBox2,
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(widget.postModel.uploaderName,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        )
-                        // style: KCustomTextstyle.kMedium(context, 10),
-                        ),
-                    // Text(
-                    //   "satyamismyname@gmail.com",
-                    //   // style: KCustomTextstyle.kMedium(context, 10),
-                    // ),
-                    Text(timeago.format((widget.postModel.postedOn)),
-                        style: TextStyle(color: CupertinoColors.systemPurple)),
-                  ],
+                InkWell(
+                  onTap: () {
+                    Get.to(
+                        () => ProfileView(userId: widget.postModel.uploaderId));
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(widget.postModel.uploaderName,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          )
+                          // style: KCustomTextstyle.kMedium(context, 10),
+                          ),
+                      // Text(
+                      //   "satyamismyname@gmail.com",
+                      //   // style: KCustomTextstyle.kMedium(context, 10),
+                      // ),
+                      Text(timeago.format((widget.postModel.postedOn)),
+                          style:
+                              TextStyle(color: CupertinoColors.systemPurple)),
+                    ],
+                  ),
                 ),
                 Spacer(),
                 InkWell(
