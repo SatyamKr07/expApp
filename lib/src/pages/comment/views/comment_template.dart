@@ -9,13 +9,20 @@ class CommentTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: ClipOval(
-        child: CircleAvatar(
-          radius: 40,
-          child: CachedNetworkImage(
-            imageUrl: commentModel.postedBy.profilePic,
+      leading: CachedNetworkImage(
+        imageUrl: commentModel.postedBy.profilePic,
+        placeholder: (context, url) => CircularProgressIndicator(),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+        imageBuilder: (context, imageProvider) => Container(
+          width: 36.0,
+          height: 36.0,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
           ),
         ),
+        // errorWidget: Image.asset(
+        //               'assets/images/default_profile_pic.png'),
       ),
 
       title: Text(commentModel.postedBy.displayName),

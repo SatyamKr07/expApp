@@ -5,6 +5,7 @@ import 'package:commentor/src/models/comment_model.dart';
 import 'package:commentor/src/models/post_model.dart';
 import 'package:commentor/src/pages/comment/views/all_comments.dart';
 import 'package:commentor/src/pages/comment/views/write_comment_area.dart';
+import 'package:commentor/src/pages/home/views/post_block.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/instance_manager.dart';
@@ -12,11 +13,12 @@ import 'package:get/instance_manager.dart';
 import 'views/comment_template.dart';
 
 class Comments extends StatelessWidget {
+  PostModel postModel;
   Comments({
     Key? key,
-    required this.postId,
+    required this.postModel,
   }) : super(key: key);
-  String postId;
+  // String postId;
   final homeController = Get.find<HomeController>();
   List<CommentModel> blogList = [];
   @override
@@ -27,9 +29,15 @@ class Comments extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Expanded(child: AllComments(postId: postId)),
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: PostBlock(
+                postModel: postModel,
+              ),
+            ),
+            Expanded(child: AllComments(postId: postModel.postId)),
             WriteCommentArea(
-              postId: postId,
+              postId: postModel.postId,
             ),
           ],
         ));

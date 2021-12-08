@@ -70,8 +70,11 @@ class AllPostsList extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     PostModel postModel = postList[index];
 
-                    return PostBlock(
-                      postModel: postModel,
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 40.0),
+                      child: PostBlock(
+                        postModel: postModel,
+                      ),
                     );
                   },
                 );

@@ -102,7 +102,7 @@ class _PostBlockState extends State<PostBlock> {
     var date = DateTime.now();
     // var date = DateTime.parse(data['created_at'].toDate().toString());
     return Padding(
-      padding: const EdgeInsets.only(left: 8, bottom: 40, right: 8),
+      padding: const EdgeInsets.only(left: 8, right: 8),
       child: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -150,7 +150,7 @@ class _PostBlockState extends State<PostBlock> {
                 InkWell(
                   onTap: () {
                     Get.to(() => Comments(
-                          postId: widget.postModel.postId,
+                          postModel: widget.postModel,
                         ));
                   },
                   child: Container(
