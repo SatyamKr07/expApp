@@ -32,6 +32,17 @@ class _ShowFollowingState extends State<ShowFollowing> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    if (!userController.appUser.followingList
+        .contains(userController.appUser.id)) {
+      // setState(() {});
+      userController.appUser.followingList.add(userController.appUser.id);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: FirebaseFirestore.instance
