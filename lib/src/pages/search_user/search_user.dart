@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/models/user_model.dart';
 import 'package:commentor/src/pages/profile/components/follow_widget.dart';
+import 'package:commentor/src/pages/profile/profile.view.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -68,10 +69,17 @@ class _SearchUserState extends State<SearchUser> {
       itemCount: usersList.length,
       itemBuilder: (BuildContext context, int index) {
         UserModel user = usersList[index];
-        return ListTile(
-          title: Text(user.email),
-          subtitle: Text(user.displayName),
-          trailing: FollowWidget(userModel: usersList[index]),
+        return InkWell(
+          onTap: () {
+            Get.to(() => ProfileView(
+                  userId: usersList[index].id,
+                ));
+          },
+          child: ListTile(
+            title: Text(user.email),
+            subtitle: Text(user.displayName),
+            trailing: FollowWidget(userModel: usersList[index]),
+          ),
         );
       },
     );

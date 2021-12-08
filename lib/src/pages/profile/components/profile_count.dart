@@ -30,19 +30,19 @@ class ProfileCount extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _profileComponent(
-          count: userController.appUser.followersCount,
+          count: userModel.followersCount,
           title: "Followers",
         ),
         _profileComponent(
-          count: userController.appUser.followingCount,
+          count: userModel.followingCount,
           title: "Following",
         ),
         _profileComponent(
-          count: userController.appUser.totalCommentsCount,
+          count: userModel.totalCommentsCount,
           title: "Comments",
         ),
         _profileComponent(
-          count: userController.appUser.totalLikesCount,
+          count: userModel.totalLikesCount,
           title: "Likes",
         ),
       ],
