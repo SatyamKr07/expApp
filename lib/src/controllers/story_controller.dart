@@ -85,9 +85,9 @@ class DisplayStoryController extends GetxController {
       //   likesArray: [],
       // );
       isUploading = false;
-      // update(['ADD_BLOG_PAGE']);
-      // Get.back();
-      // Get.back();
+      update(['ADD_STORY_PAGE']);
+      Get.back();
+      Get.back();
     }
   }
 }

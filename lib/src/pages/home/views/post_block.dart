@@ -111,14 +111,31 @@ class _PostBlockState extends State<PostBlock> {
             Row(
               children: [
                 hSizedBox1,
-                ClipOval(
-                  child: CircleAvatar(
-                    radius: 20,
-                    child: CachedNetworkImage(
-                      imageUrl: widget.postModel.uploaderPic,
-                    ),
-                  ),
-                ),
+                widget.postModel.uploaderPic == ""
+                    ? const ClipOval(
+                        child: CircleAvatar(
+                          radius: 24,
+                          backgroundImage: AssetImage(
+                              'assets/images/default_profile_pic.png'),
+                        ),
+                      )
+                    : CachedNetworkImage(
+                        imageUrl: widget.postModel.uploaderPic,
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        imageBuilder: (context, imageProvider) => Container(
+                          width: 46.0,
+                          height: 46.0,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: imageProvider, fit: BoxFit.cover),
+                          ),
+                        ),
+                        // errorWidget: Image.asset(
+                        //               'assets/images/default_profile_pic.png'),
+                      ),
                 hSizedBox2,
                 InkWell(
                   onTap: () {
