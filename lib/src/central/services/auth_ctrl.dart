@@ -16,6 +16,7 @@ import './my_logger.dart';
 class AuthCtrl extends GetxController {
   String messageStr = "";
   bool isSigningIn = false;
+  final userCtrl = Get.find<UserController>();
 
   checkUser(BuildContext context) async {
     User? user = FirebaseAuth.instance.currentUser;
@@ -64,6 +65,10 @@ class AuthCtrl extends GetxController {
             value.data() as Map<String, dynamic>,
           ),
         );
+    userCtrl.appUser.followingList.addIf(
+      !userCtrl.appUser.followingList.contains(userCtrl.appUser.id),
+      userCtrl.appUser.id,
+    );
   }
 
   static Future<User?> signInWithGoogle({required BuildContext context}) async {
@@ -134,6 +139,7 @@ class AuthCtrl extends GetxController {
 
   static feedUserData(User? user) {
     final userController = Get.find<UserController>();
+
     userController.appUser.id = user!.uid;
     userController.appUser.email = user.email!;
     userController.appUser.displayName = user.displayName ?? "";
@@ -255,9 +261,12 @@ class AuthCtrl extends GetxController {
     return userDb.exists ? true : false;
   }
 
-  final userCtrl = Get.find<UserController>();
   createUserDb() async {
     logger.d("creating createUserDb");
+    userCtrl.appUser.followingList.addIf(
+      !userCtrl.appUser.followingList.contains(userCtrl.appUser.id),
+      userCtrl.appUser.id,
+    );
     await usersCol.doc(userCtrl.appUser.id).set(userCtrl.appUser.toJson());
   }
 }
