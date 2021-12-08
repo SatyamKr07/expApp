@@ -3,6 +3,7 @@ import 'package:commentor/src/central/services/my_logger.dart';
 import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/models/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/instance_manager.dart';
 
 class FollowWidget extends StatefulWidget {
@@ -102,12 +103,33 @@ class _FollowWidgetState extends State<FollowWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        handleFollow();
-        // userController.handleFollow(userId: userModel.id);
-      },
-      child: Text(isFollowing ? "Following" : "Follow"),
-    );
+    return !isFollowing
+        ? ElevatedButton.icon(
+            onPressed: () {
+              handleFollow();
+              // userController.handleFollow(userId: userModel.id);
+            },
+            label: Text("Follow"),
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              primary: Colors.red,
+            ),
+            icon: Icon(Icons.add),
+          )
+        : ElevatedButton(
+            onPressed: () {
+              handleFollow();
+              // userController.handleFollow(userId: userModel.id);
+            },
+            child: Text("Following"),
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              primary: Colors.red,
+            ),
+          );
   }
 }
