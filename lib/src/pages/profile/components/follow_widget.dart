@@ -24,7 +24,7 @@ class _FollowWidgetState extends State<FollowWidget> {
   late bool isFollowing;
   checkIfFollowing() {
     logger.d("checkIfFollowing");
-    if (userController.appUser.followingList!.contains(widget.userModel.id)) {
+    if (userController.appUser.followingList.contains(widget.userModel.id)) {
       isFollowing = true;
     } else {
       isFollowing = false;
@@ -53,7 +53,7 @@ class _FollowWidgetState extends State<FollowWidget> {
           });
           setState(() {
             isFollowing = true;
-            userController.appUser.followingList!.add(widget.userModel.id);
+            userController.appUser.followingList.add(widget.userModel.id);
             userController.appUser.followingCount = l;
           });
           logger.d("liked successfully : $isFollowing");
@@ -83,7 +83,7 @@ class _FollowWidgetState extends State<FollowWidget> {
             });
             setState(() {
               isFollowing = false;
-              userController.appUser.followingList!.remove(widget.userModel.id);
+              userController.appUser.followingList.remove(widget.userModel.id);
               userController.appUser.followingCount = l;
             });
             logger.d(

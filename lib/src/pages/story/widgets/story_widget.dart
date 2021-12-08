@@ -29,7 +29,7 @@ class _StoryWidgetState extends State<StoryWidget> {
   final storyController = Get.find<DisplayStoryController>();
 
   void addStoryItems() {
-    for (final story in widget.userModel.storiesList!) {
+    for (final story in widget.userModel.storiesList) {
       logger.d("addStoryItems story is $story");
       storyItems.add(StoryItem.pageImage(
         url: story.imageUrl,

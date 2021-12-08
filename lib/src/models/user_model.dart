@@ -25,9 +25,9 @@ class UserModel {
     this.totalCommentsCount = 0,
     this.totalLikesCount = 0,
     this.totalPostsCount = 0,
-    this.storiesList,
-    this.followingList,
-    this.followersList,
+    required this.storiesList,
+    required this.followingList,
+    required this.followersList,
   });
 
   String id;
@@ -43,9 +43,9 @@ class UserModel {
   int totalCommentsCount;
   int totalLikesCount;
   int totalPostsCount;
-  List<StoryModel>? storiesList;
-  List<dynamic>? followingList;
-  List<dynamic>? followersList;
+  List<StoryModel> storiesList;
+  List<dynamic> followingList;
+  List<dynamic> followersList;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json["id"] ?? '',
@@ -83,5 +83,7 @@ class UserModel {
         "totalCommentsCount": totalCommentsCount,
         "totalLikesCount": totalLikesCount,
         "totalPostsCount": totalPostsCount,
+        "followingList": followingList,
+        "followersList": followersList,
       };
 }

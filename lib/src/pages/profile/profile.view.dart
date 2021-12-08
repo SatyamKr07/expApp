@@ -19,7 +19,7 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   final userController = Get.find<UserController>();
-  UserModel userModel = UserModel();
+  UserModel userModel = UserModel(followersList: [], followingList: [], storiesList: []);
   @override
   void initState() {
     super.initState();

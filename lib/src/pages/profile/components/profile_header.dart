@@ -51,7 +51,8 @@ class ProfileHeader extends StatelessWidget {
               IconButton(
                   onPressed: () async {
                     await AuthCtrl.signOut(context: context);
-                    userController.appUser = UserModel();
+                    userController.appUser = UserModel(
+                        followersList: [], followingList: [], storiesList: []);
                     Get.offAll(() => SignInScreen());
                   },
                   icon: Icon(

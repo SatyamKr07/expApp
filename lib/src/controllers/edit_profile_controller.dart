@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfileController extends GetxController {
-  UserModel userModel = UserModel();
+  UserModel userModel = UserModel(followersList: [], followingList: [], storiesList: []);
   TextEditingController displayNameCtrl = TextEditingController();
   TextEditingController userNameCtrl = TextEditingController();
   TextEditingController bioCtrl = TextEditingController();

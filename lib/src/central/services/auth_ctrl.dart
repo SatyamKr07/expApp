@@ -148,7 +148,7 @@ class AuthCtrl extends GetxController {
         await googleSignIn.signOut();
       }
       await FirebaseAuth.instance.signOut();
-      UserModel myUser = UserModel();
+      UserModel myUser = UserModel(followersList: [], followingList: [], storiesList: []);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         AuthCtrl.customSnackBar(

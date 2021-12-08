@@ -104,7 +104,7 @@ class _HomeState extends State<Home> {
               padding: const EdgeInsets.only(top: 24.0, bottom: 24),
               child: SizedBox(
                 height: 50,
-                child: (userController.appUser.followingList!.isEmpty ||
+                child: (userController.appUser.followingList.isEmpty ||
                         userController.appUser.followingList == null)
                     ? Container()
                     : StoryListPage(),

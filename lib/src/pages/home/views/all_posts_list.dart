@@ -20,8 +20,7 @@ class AllPostsList extends StatelessWidget {
 
     return GetBuilder<HomeController>(
       id: 'ALL_POSTS',
-      builder: (_) => (userController.appUser.followingList!.isEmpty ||
-              userController.appUser.followingList == null)
+      builder: (_) => (userController.appUser.followingList.isEmpty)
           ? Padding(
               padding: EdgeInsets.all(8.0),
               child: SizedBox(

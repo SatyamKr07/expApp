@@ -25,7 +25,7 @@ class AddPostController extends GetxController {
 
   CommentModel commentModel = CommentModel(
     timestamp: DateTime.now(),
-    postedBy: UserModel(),
+    postedBy: UserModel(followersList: [], followingList: [], storiesList: []),
     postId: '',
   );
 
