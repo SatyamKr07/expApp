@@ -1,5 +1,6 @@
 import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/models/user_model.dart';
+import 'package:commentor/src/pages/profile/components/show_followers.dart';
 import 'package:commentor/src/pages/profile/components/show_following.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
@@ -31,13 +32,18 @@ class ProfileCount extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _profileComponent(
-          count: userModel.followersCount,
-          title: "Followers",
+        InkWell(
+          onTap: () {
+            Get.to(() => ShowFollowers());
+          },
+          child: _profileComponent(
+            count: userModel.followersCount,
+            title: "Followers",
+          ),
         ),
         InkWell(
           onTap: () {
-            Get.to(()=>ShowFollowing());
+            Get.to(() => ShowFollowing());
           },
           child: _profileComponent(
             count: userModel.followingCount,
