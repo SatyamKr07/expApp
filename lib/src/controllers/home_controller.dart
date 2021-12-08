@@ -10,6 +10,7 @@ import 'package:get/state_manager.dart';
 class HomeController extends GetxController {
   String filterCategory = "All Posts";
   final userController = Get.find<UserController>();
+  bool isDeleting = false;
 
   // Stream<QuerySnapshot> fetchPosts() {
   //   Stream<QuerySnapshot> q;
@@ -108,12 +109,36 @@ class HomeController extends GetxController {
     return false;
   }
 
-  handleDeleteComment({required String docId}) async {
-    FirebaseFirestore.instance
-        .collection('comments')
+  handleDeleteDoc({required String colName, required String docId}) async {
+    await FirebaseFirestore.instance
+        .collection(colName)
         .doc(docId) // <-- Doc ID to be deleted.
         .delete() // <-- Delete
-        .then((_) => logger.d('Deleted comment with id $docId'))
-        .catchError((error) => logger.e('Delete failed: $error'));
+        .then((_) {
+      logger.d('Deleted doc with id $docId');
+    }).catchError((error) => logger.e('Delete failed: $error'));
   }
+
+  handleDeletePost({required String colName, required String docId}) async {
+    isDeleting = true;
+    update(['DELETE_POST_BTN']);
+    // await Future.delayed(Duration(seconds: 3));
+    // isDeleting = false;
+    // update(['DELETE_POST_BTN']);
+    await FirebaseFirestore.instance
+        .collection(colName)
+        .doc(docId) // <-- Doc ID to be deleted.
+        .delete() // <-- Delete
+        .then((_) {
+      logger.d('Deleted doc with id $docId');
+      isDeleting = false;
+      update(['DELETE_POST_BTN']);
+    }).catchError((error) {
+      logger.e('Delete failed: $error');
+      isDeleting = false;
+      update(['DELETE_POST_BTN']);
+    });
+  }
+
+  // handleDeletePost({required String docId})
 }

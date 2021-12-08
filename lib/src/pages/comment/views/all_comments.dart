@@ -75,8 +75,9 @@ class AllComments extends StatelessWidget {
                       background: SizedBox.shrink(),
                       secondaryBackground: secondarystackBehindDismiss(),
                       onDismissed: (direction) {
-                        homeController.handleDeleteComment(
+                        homeController.handleDeleteDoc(
                           docId: blogList[index].commentId,
+                          colName: 'comments',
                         );
                       },
                       key: Key(blogList[index].commentId),

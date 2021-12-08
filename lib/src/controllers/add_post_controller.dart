@@ -8,6 +8,7 @@ import 'package:commentor/src/models/media_model.dart';
 import 'package:commentor/src/models/post_model.dart';
 import 'package:commentor/src/models/story_model.dart';
 import 'package:commentor/src/models/user_model.dart';
+import 'package:commentor/src/pages/home/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -113,6 +114,9 @@ class AddPostController extends GetxController {
           .catchError((error) {
         logger.e('firestore error $error');
       });
+      isUploading = false;
+      update(['ADD_BLOG_PAGE']);
+      Get.offAll(() => Home());
     } catch (e) {
       logger.e(e);
       isUploading = false;
@@ -124,9 +128,9 @@ class AddPostController extends GetxController {
         likesArray: [],
       );
       isUploading = false;
-      // update(['ADD_BLOG_PAGE']);
-      Get.back();
-      Get.back();
+      update(['ADD_BLOG_PAGE']);
+      // Get.back();
+      // Get.back();
     }
   }
 

@@ -106,8 +106,15 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
                 vSizedBox1,
                 _divider(),
-                ProfileBody(
-                  userModel: userModel,
+                GetBuilder<UserController>(
+                  // init: UserController(),
+                  // initState: (_) {},
+                  id: "PROFILE_BODY",
+                  builder: (_) {
+                    return ProfileBody(
+                      userModel: userModel,
+                    );
+                  },
                 )
               ]),
         ),
