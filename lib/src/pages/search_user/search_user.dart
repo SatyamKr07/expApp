@@ -78,7 +78,9 @@ class _SearchUserState extends State<SearchUser> {
           child: ListTile(
             title: Text(user.email),
             subtitle: Text(user.displayName),
-            trailing: FollowWidget(userModel: usersList[index]),
+            trailing: userController.appUser.id != usersList[index].id
+                ? FollowWidget(userModel: usersList[index])
+                : const SizedBox.shrink(),
           ),
         );
       },
