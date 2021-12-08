@@ -15,7 +15,7 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(
@@ -33,11 +33,13 @@ class _SignInScreenState extends State<SignInScreen> {
                   SizedBox(height: 20),
                   Padding(
                     padding: EdgeInsets.all(16.0),
-                    child: Text(
-                      'Welcome to Commentor App!',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 40,
+                    child: Center(
+                      child: Text(
+                        'Welcome to Commentor App!',
+                        style: TextStyle(
+                          // color: Colors.black,
+                          fontSize: 32,
+                        ),
                       ),
                     ),
                   ),
