@@ -9,7 +9,10 @@ import 'views/add_pic.dart';
 import 'views/title_desc.dart';
 
 class AddPost extends StatelessWidget {
-  AddPost({Key? key}) : super(key: key);
+  bool updatePost;
+  String postId;
+  AddPost({Key? key, this.updatePost = false, this.postId = ""})
+      : super(key: key);
   final addBlogController = Get.find<AddPostController>();
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,7 @@ class AddPost extends StatelessWidget {
               ? Material(child: Center(child: CircularProgressIndicator()))
               : Scaffold(
                   appBar: AppBar(
-                    title: const Text("Add Post"),
+                    title: Text(!updatePost ? "Add Post" : "Update Post"),
                     actions: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -33,11 +36,15 @@ class AddPost extends StatelessWidget {
                             // primary: CupertinoColors.systemPurple,
                           ),
                           onPressed: () async {
-                            await addBlogController.uploadPost();
+                            if (!updatePost) {
+                              await addBlogController.uploadPost();
+                            } else {
+                              await addBlogController.updatePost(docId: postId);
+                            }
 
                             // logger.d('imagesUrl :${addBlogController.blogModel.picList}');
                           },
-                          child: const Text('Upload'),
+                          child: Text(!updatePost ? 'Upload' : "Update"),
                         ),
                       ),
                     ],
@@ -45,22 +52,24 @@ class AddPost extends StatelessWidget {
                   body: ListView(
                     children: [
                       TitleDesc(),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 16.0),
-                        child: Text("*Choose pics / video"),
-                      ),
-                      AddPic(),
-                      GetBuilder<AddPostController>(
-                        id: "ADD_IMAGES_SWIPER",
-                        builder: (_) => BuildSwiper(
-                          imageUrls: const [],
-                          editPage: true,
-                          aspectRatio: 4 / 3,
-                          mediaList: addBlogController.mediaList,
-
-                          // imagesCount: addExchangeCtrl.imagesCount,
+                      if (!updatePost) ...[
+                        const Padding(
+                          padding: EdgeInsets.only(left: 16.0),
+                          child: Text("*Choose pics / video"),
                         ),
-                      )
+                        AddPic(),
+                        GetBuilder<AddPostController>(
+                          id: "ADD_IMAGES_SWIPER",
+                          builder: (_) => BuildSwiper(
+                            imageUrls: const [],
+                            editPage: true,
+                            aspectRatio: 4 / 3,
+                            mediaList: addBlogController.mediaList,
+
+                            // imagesCount: addExchangeCtrl.imagesCount,
+                          ),
+                        )
+                      ]
                     ],
                   ),
                 );

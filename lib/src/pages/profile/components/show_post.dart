@@ -1,6 +1,8 @@
+import 'package:commentor/src/controllers/add_post_controller.dart';
 import 'package:commentor/src/controllers/home_controller.dart';
 import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/models/post_model.dart';
+import 'package:commentor/src/pages/add_post/add_post.dart';
 import 'package:commentor/src/pages/home/views/post_block.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,6 +14,7 @@ class ShowPost extends StatelessWidget {
   ShowPost({Key? key, required this.postModel}) : super(key: key);
   final homeController = Get.find<HomeController>();
   final userController = Get.find<UserController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +31,12 @@ class ShowPost extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: ElevatedButton(
                   onPressed: () {
+                    final addPostController = Get.find<AddPostController>();
+                    addPostController.descCtrl.text = postModel.description;
+                    Get.to(() => AddPost(
+                          updatePost: true,
+                          postId: postModel.postId,
+                        ));
                     // handleFollow();
                     // userController.handleFollow(userId: userModel.id);
                   },

@@ -37,7 +37,7 @@ class AddPostController extends GetxController {
   final firebaseServices = Get.find<FirebaseStorageService>();
   bool isUploading = false;
 
-  final CollectionReference _mainCollection =
+  final CollectionReference _postsCollection =
       FirebaseFirestore.instance.collection('posts');
 
   final CollectionReference _usersCollection =
@@ -108,7 +108,7 @@ class AddPostController extends GetxController {
     update(['ADD_POST_PAGE']);
     try {
       await uploadImages();
-      await _mainCollection
+      await _postsCollection
           .add(postModel.toJson())
           .then((docRef) {})
           .catchError((error) {
@@ -159,7 +159,7 @@ class AddPostController extends GetxController {
     commentModel.postId = postId;
     try {
       _commentCollection.add(commentModel.toJson()).then((docRef) {
-        _mainCollection
+        _postsCollection
             .doc(postId)
             .update({"commentsCount": postModel.commentsCount += 1});
         commentModel = CommentModel(
@@ -182,5 +182,21 @@ class AddPostController extends GetxController {
       // Get.back();
       // homeController.changeFilter("All Posts");
     }
+  }
+
+  updatePost({required String docId}) async {
+    isUploading = true;
+    update(['ADD_POST_PAGE']);
+    await _postsCollection.doc(docId).update({
+      "description": descCtrl.text,
+    }).then((docRef) {
+      logger.d("updated successfully");
+      isUploading = false;
+      update(['ADD_POST_PAGE']);
+      Get.back();
+      Get.back();
+    }).catchError((error) {
+      logger.e('firestore error $error');
+    });
   }
 }
