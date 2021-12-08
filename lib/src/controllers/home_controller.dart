@@ -6,11 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/state_manager.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class HomeController extends GetxController {
   String filterCategory = "All Posts";
   final userController = Get.find<UserController>();
   bool isDeleting = false;
+  PersistentTabController pageController = PersistentTabController();
+  changePage({required int index}) {
+    logger.d('changePage $index');
+    pageController.jumpToTab(index);
+    update(['BOTTOM_BAR']);
+  }
 
   // Stream<QuerySnapshot> fetchPosts() {
   //   Stream<QuerySnapshot> q;

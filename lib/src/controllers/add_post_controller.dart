@@ -105,7 +105,7 @@ class AddPostController extends GetxController {
       return;
     }
     isUploading = true;
-    update(['ADD_BLOG_PAGE']);
+    update(['ADD_POST_PAGE']);
     try {
       await uploadImages();
       await _mainCollection
@@ -115,12 +115,14 @@ class AddPostController extends GetxController {
         logger.e('firestore error $error');
       });
       isUploading = false;
-      update(['ADD_BLOG_PAGE']);
-      Get.offAll(() => Home());
+      update(['ADD_POST_PAGE']);
+      homeController.changePage(index: 0);
+      mediaList = [];
+      descCtrl.text = "";
     } catch (e) {
       logger.e(e);
       isUploading = false;
-      update(['ADD_BLOG_PAGE']);
+      update(['ADD_POST_PAGE']);
     } finally {
       postModel = PostModel(
         postedOn: DateTime.now(),
@@ -128,7 +130,7 @@ class AddPostController extends GetxController {
         likesArray: [],
       );
       isUploading = false;
-      update(['ADD_BLOG_PAGE']);
+      update(['ADD_POST_PAGE']);
       // Get.back();
       // Get.back();
     }
@@ -172,10 +174,10 @@ class AddPostController extends GetxController {
     } catch (e) {
       logger.e(e);
       // isUploading = false;
-      // update(['ADD_BLOG_PAGE']);
+      // update(['ADD_POST_PAGE']);
     } finally {
       // isUploading = false;
-      // // update(['ADD_BLOG_PAGE']);
+      // // update(['ADD_POST_PAGE']);
       // Get.back();
       // Get.back();
       // homeController.changeFilter("All Posts");

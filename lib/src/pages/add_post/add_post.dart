@@ -14,7 +14,7 @@ class AddPost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AddPostController>(
-        id: 'ADD_BLOG_PAGE',
+        id: 'ADD_POST_PAGE',
         builder: (_) {
           return _.isUploading == true
               ? Material(child: Center(child: CircularProgressIndicator()))

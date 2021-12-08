@@ -1,5 +1,6 @@
 import 'package:commentor/src/central/shared/colors.dart';
 import 'package:commentor/src/central/shared/textstyles.dart';
+import 'package:commentor/src/controllers/home_controller.dart';
 import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/pages/add_post/add_post.dart';
 import 'package:commentor/src/pages/home/home.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/instance_manager.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
@@ -20,7 +22,7 @@ class MyBottomBar extends StatefulWidget {
 }
 
 class _MyBottomBarState extends State<MyBottomBar> {
-  PersistentTabController pageController = PersistentTabController();
+  // PersistentTabController pageController = PersistentTabController();
 
   @override
   Widget build(BuildContext context) {
@@ -62,47 +64,52 @@ class _MyBottomBarState extends State<MyBottomBar> {
         color: Colors.black,
         // color: Theme.of(context).backgroundColor,
         child: SafeArea(
-          child: Scaffold(
-            // floatingActionButton: FloatingActionButton(
-            //   child: Icon(Icons.add),
-            //   onPressed: () {
-            //     Navigator.of(context).pushNamed("/add-post");
-            //   },
-            // ),
-            backgroundColor: Colors.black,
-            // backgroundColor: Theme.of(context).backgroundColor,
-            body: Container(
-              color: Colors.black,
-              child: PersistentTabView(context,
-                  controller: pageController,
-                  screens: [
-                    Home(),
-                    SearchUser(),
-                    AddPost(),
-                    Scaffold(),
-                    ProfileView(
-                      userId: Get.find<UserController>().appUser.id,
-                    ),
-                  ],
-                  items: _navBarsItems(),
-                  popAllScreensOnTapOfSelectedTab: true,
-                  popActionScreens: PopActionScreensType.all,
-                  confineInSafeArea: true,
-                  // backgroundColor: Color.fromRGBO(36, 37, 38, 1),
-                  // backgroundColor: Color.fromRGBO(36, 37, 38, 1),
-                  backgroundColor: Colors.grey[800]!,
-                  // backgroundColor: KConstantColors.bgColorFaint,
-                  handleAndroidBackButtonPress: true,
-                  resizeToAvoidBottomInset: true,
-                  itemAnimationProperties: ItemAnimationProperties(
-                      duration: Duration(milliseconds: 200),
-                      curve: Curves.ease),
-                  screenTransitionAnimation: ScreenTransitionAnimation(
-                      animateTabTransition: true,
-                      curve: Curves.ease,
-                      duration: Duration(milliseconds: 200)),
-                  navBarStyle: NavBarStyle.style17),
-            ),
+          child: GetBuilder<HomeController>(
+            id: "BOTTOM_BAR",
+            builder: (_) {
+              return Scaffold(
+                // floatingActionButton: FloatingActionButton(
+                //   child: Icon(Icons.add),
+                //   onPressed: () {
+                //     Navigator.of(context).pushNamed("/add-post");
+                //   },
+                // ),
+                backgroundColor: Colors.black,
+                // backgroundColor: Theme.of(context).backgroundColor,
+                body: Container(
+                  color: Colors.black,
+                  child: PersistentTabView(context,
+                      controller: _.pageController,
+                      screens: [
+                        Home(),
+                        SearchUser(),
+                        AddPost(),
+                        Scaffold(),
+                        ProfileView(
+                          userId: Get.find<UserController>().appUser.id,
+                        ),
+                      ],
+                      items: _navBarsItems(),
+                      popAllScreensOnTapOfSelectedTab: true,
+                      popActionScreens: PopActionScreensType.all,
+                      confineInSafeArea: true,
+                      // backgroundColor: Color.fromRGBO(36, 37, 38, 1),
+                      // backgroundColor: Color.fromRGBO(36, 37, 38, 1),
+                      backgroundColor: Colors.grey[800]!,
+                      // backgroundColor: KConstantColors.bgColorFaint,
+                      handleAndroidBackButtonPress: true,
+                      resizeToAvoidBottomInset: true,
+                      itemAnimationProperties: ItemAnimationProperties(
+                          duration: Duration(milliseconds: 200),
+                          curve: Curves.ease),
+                      screenTransitionAnimation: ScreenTransitionAnimation(
+                          animateTabTransition: true,
+                          curve: Curves.ease,
+                          duration: Duration(milliseconds: 200)),
+                      navBarStyle: NavBarStyle.style17),
+                ),
+              );
+            },
           ),
         ),
       ),
