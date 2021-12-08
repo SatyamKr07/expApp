@@ -37,7 +37,7 @@ class _MyBottomBarState extends State<MyBottomBar> {
             activeColorPrimary: CupertinoColors.systemPurple,
             inactiveColorPrimary: CupertinoColors.white),
         PersistentBottomNavBarItem(
-          icon: Icon(Icons.add),
+          icon: Icon(Icons.add, color: Colors.white),
           // title: ("Settings"),
           activeColorPrimary: CupertinoColors.systemPurple,
           inactiveColorPrimary: CupertinoColors.white,

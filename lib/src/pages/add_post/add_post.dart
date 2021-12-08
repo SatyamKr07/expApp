@@ -1,6 +1,7 @@
 import 'package:commentor/src/central/services/my_logger.dart';
 import 'package:commentor/src/central/widgets/build_swiper.dart';
 import 'package:commentor/src/controllers/add_post_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,6 +25,13 @@ class AddPost extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            primary: Colors.black,
+                            // primary: CupertinoColors.systemPurple,
+                          ),
                           onPressed: () async {
                             await addBlogController.uploadPost();
 
