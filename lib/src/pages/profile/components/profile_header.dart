@@ -181,40 +181,45 @@ class ProfileHeader extends StatelessWidget {
             ],
           ),
           vSizedBox2,
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+          GetBuilder<UserController>(
+            id: "PROFILE_PAGE",
+            builder: (_) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: Text(
-                        userModel.displayName,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            userModel.displayName,
 
-                        // style: KCustomTextstyle.kBold(context, 14),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                            // style: KCustomTextstyle.kBold(context, 14),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
                         ),
-                      ),
+                        if (userController.appUser.id != userModel.id)
+                          FollowWidget(
+                            userModel: userModel,
+                          ),
+                      ],
                     ),
-                    if (userController.appUser.id != userModel.id)
-                      FollowWidget(
-                        userModel: userModel,
-                      ),
+                    Text(
+                      userModel.bio,
+                      // style: KCustomTextstyle.kMedium(context, 10),
+                    ),
+                    vSizedBox2,
+                    Divider(),
                   ],
                 ),
-                Text(
-                  userModel.bio,
-                  // style: KCustomTextstyle.kMedium(context, 10),
-                ),
-                vSizedBox2,
-                Divider(),
-              ],
-            ),
+              );
+            },
           ),
           // vSizedBox2,
         ],

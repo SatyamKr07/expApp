@@ -148,7 +148,8 @@ class AuthCtrl extends GetxController {
         await googleSignIn.signOut();
       }
       await FirebaseAuth.instance.signOut();
-      UserModel myUser = UserModel(followersList: [], followingList: [], storiesList: []);
+      UserModel myUser =
+          UserModel(followersList: [], followingList: [], storiesList: []);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         AuthCtrl.customSnackBar(
@@ -185,6 +186,8 @@ class AuthCtrl extends GetxController {
           return;
         }
         logger.d("navigating to BottomBar()");
+        // feedUserData(userCredential.user);
+        // await createUserDb();
         Get.offAll(() => MyBottomBar());
       }
     } on FirebaseAuthException catch (e) {
@@ -210,6 +213,7 @@ class AuthCtrl extends GetxController {
 
       if (userCredential.user != null) {
         feedUserData(userCredential.user);
+
         if (!userCredential.user!.emailVerified) {
           logger.d("user email not verified, sending verification email");
           messageStr =
@@ -220,6 +224,7 @@ class AuthCtrl extends GetxController {
           debugPrint("verification link sent");
           return;
         }
+        await createUserDb();
         logger.d("navigating to MyBottomBar()");
         messageStr = "";
         update(["authMsgId"]);

@@ -10,7 +10,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfileController extends GetxController {
-  UserModel userModel = UserModel(followersList: [], followingList: [], storiesList: []);
+  UserModel userModel =
+      UserModel(followersList: [], followingList: [], storiesList: []);
   TextEditingController displayNameCtrl = TextEditingController();
   TextEditingController userNameCtrl = TextEditingController();
   TextEditingController bioCtrl = TextEditingController();
@@ -20,6 +21,7 @@ class EditProfileController extends GetxController {
   String profilePicPath = "";
   final firebaseServices = Get.find<FirebaseStorageService>();
   String updateStatus = "NOT_UPDATING";
+
   @override
   void onInit() {
     // TODO: implement onInit
@@ -66,7 +68,7 @@ class EditProfileController extends GetxController {
       logger.d("profile updated successfully");
       updateStatus = "UPDATED";
       profilePicPath = "";
-      update(['PROFILE_PAGE']);
+      userController.update(['PROFILE_PAGE']);
       userController.appUser.displayName = userModel.displayName;
       userController.appUser.username = userModel.username;
       userController.appUser.bio = userModel.bio;

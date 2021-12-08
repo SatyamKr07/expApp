@@ -3,6 +3,7 @@ import 'package:commentor/src/central/shared/dimensions.dart';
 import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/models/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/instance_manager.dart';
 
 import 'components/profile_body.dart';
@@ -19,13 +20,14 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   final userController = Get.find<UserController>();
-  UserModel userModel = UserModel(followersList: [], followingList: [], storiesList: []);
+  UserModel userModel =
+      UserModel(followersList: [], followingList: [], storiesList: []);
   @override
   void initState() {
     super.initState();
     if (widget.userId == userController.appUser.id) {
       userModel = userController.appUser;
-    } 
+    }
     // else {
     //   userController.getUserProfile(userId: widget.userId);
     // }
@@ -96,6 +98,7 @@ class _ProfileViewState extends State<ProfileView> {
                 ProfileHeader(
                   userModel: userModel,
                 ),
+
                 // _divider(),
                 vSizedBox1,
                 ProfileCount(
