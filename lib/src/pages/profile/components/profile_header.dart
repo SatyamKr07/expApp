@@ -35,10 +35,21 @@ class ProfileHeader extends StatelessWidget {
                   onPressed: () {
                     Get.to(() => EditProfile());
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.edit,
                     // color: KConstantColors.whiteColor,
                     size: 16,
+                  ),
+                )
+              else
+                IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    // color: KConstantColors.whiteColor,
+                    size: 24,
                   ),
                 ),
               Spacer(),
