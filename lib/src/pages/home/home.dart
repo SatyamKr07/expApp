@@ -119,13 +119,6 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: "ADDEXCHANGETAG",
-        onPressed: () async {
-          Get.to(() => AddPost());
-        },
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }
