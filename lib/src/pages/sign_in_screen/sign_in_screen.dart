@@ -114,6 +114,12 @@ class _SignInScreenState extends State<SignInScreen> {
                         child: CircularProgressIndicator(color: Colors.blue))
                     : ElevatedButton(
                         child: const Text("Login/Create Account"),
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          primary: Colors.red,
+                        ),
                         onPressed: () {
                           // Authentication authentication = Authentication();
 

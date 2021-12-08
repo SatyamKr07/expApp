@@ -24,9 +24,10 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
               ),
             )
-          : OutlinedButton(
+          : ElevatedButton.icon(
+              icon: Icon(Icons.login),
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.white),
+                backgroundColor: MaterialStateProperty.all(Colors.black),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(40),
@@ -54,13 +55,13 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                   Get.offAll(() => MyBottomBar());
                 }
               },
-              child: const Padding(
+              label: const Padding(
                 padding: EdgeInsets.only(left: 10),
                 child: Text(
                   'Sign in with Google',
                   style: TextStyle(
                     fontSize: 20,
-                    color: Colors.black54,
+                    color: Colors.white,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
