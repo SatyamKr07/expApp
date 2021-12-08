@@ -23,56 +23,60 @@ class ShowPost extends StatelessWidget {
             PostBlock(
               postModel: postModel,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  // handleFollow();
-                  // userController.handleFollow(userId: userModel.id);
-                },
-                child: Text("Update"),
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+            if (postModel.uploaderId == userController.appUser.id) ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    // handleFollow();
+                    // userController.handleFollow(userId: userModel.id);
+                  },
+                  child: Text("Update"),
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    primary: Colors.black,
                   ),
-                  primary: Colors.black,
                 ),
               ),
-            ),
-            GetBuilder<HomeController>(
-              // init: HomeController(),
-              // initState: (_) {},
-              id: "DELETE_POST_BTN",
-              builder: (_) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: ElevatedButton.icon(
-                    onPressed: homeController.isDeleting
-                        ? null
-                        : () async {
-                            await homeController.handleDeletePost(
-                              colName: "posts",
-                              docId: postModel.postId,
-                            );
-                            Get.back();
+              GetBuilder<HomeController>(
+                // init: HomeController(),
+                // initState: (_) {},
+                id: "DELETE_POST_BTN",
+                builder: (_) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: ElevatedButton.icon(
+                      onPressed: homeController.isDeleting
+                          ? null
+                          : () async {
+                              await homeController.handleDeletePost(
+                                colName: "posts",
+                                docId: postModel.postId,
+                              );
+                              Get.back();
 
-                            // handleFollow();
-                            userController.update(['PROFILE_BODY']);
-                          },
-                    label: Text(
-                      homeController.isDeleting ? "Deleting Post..." : "Delete",
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                              // handleFollow();
+                              userController.update(['PROFILE_BODY']);
+                            },
+                      label: Text(
+                        homeController.isDeleting
+                            ? "Deleting Post..."
+                            : "Delete",
                       ),
-                      primary: Colors.red,
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        primary: Colors.red,
+                      ),
+                      icon: Icon(Icons.delete_forever),
                     ),
-                    icon: Icon(Icons.delete_forever),
-                  ),
-                );
-              },
-            ),
+                  );
+                },
+              ),
+            ]
           ],
         ),
       ),
