@@ -1,7 +1,7 @@
 import 'package:commentor/src/central/shared/colors.dart';
 import 'package:commentor/src/central/shared/textstyles.dart';
 import 'package:commentor/src/controllers/user_controller.dart';
-import 'package:commentor/src/pages/add_blog/add_blog.dart';
+import 'package:commentor/src/pages/add_post/add_post.dart';
 import 'package:commentor/src/pages/home/home.dart';
 import 'package:commentor/src/pages/profile/profile.view.dart';
 import 'package:commentor/src/pages/search_user/search_user.dart';

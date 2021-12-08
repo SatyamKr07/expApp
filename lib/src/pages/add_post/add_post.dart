@@ -1,10 +1,10 @@
 import 'package:commentor/src/central/services/my_logger.dart';
 import 'package:commentor/src/central/widgets/build_swiper.dart';
 import 'package:commentor/src/controllers/add_post_controller.dart';
-import 'package:commentor/src/pages/add_blog/views/add_pic.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'views/add_pic.dart';
 import 'views/title_desc.dart';
 
 class AddPost extends StatelessWidget {
