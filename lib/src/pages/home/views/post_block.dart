@@ -62,7 +62,14 @@ class _PostBlockState extends State<PostBlock> {
         }).then((value) {
           setState(() {
             isLiked = true;
+
             widget.postModel.likesCount = l;
+            FirebaseFirestore.instance
+                .collection("users")
+                .doc(widget.postModel.uploaderId)
+                .update({
+              "totalLikesCount": userController.appUser.totalLikesCount += 1,
+            });
           });
           logger.d("liked successfully : $isLiked");
         }).onError((error, stackTrace) {
@@ -81,6 +88,12 @@ class _PostBlockState extends State<PostBlock> {
             setState(() {
               isLiked = false;
               widget.postModel.likesCount = l;
+              FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(widget.postModel.uploaderId)
+                  .update({
+                "totalLikesCount": userController.appUser.totalLikesCount -= 1,
+              });
             });
             logger.d("unliked successfully :liked value is $isLiked");
           },

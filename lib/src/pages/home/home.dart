@@ -78,7 +78,7 @@ class _HomeState extends State<Home> {
         },
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          shrinkWrap: true,
+          // shrinkWrap: true,
           children: [
             // GetBuilder<HomeController>(
             //   id: "FILTER_CATEGORY_DROPDOWN",
