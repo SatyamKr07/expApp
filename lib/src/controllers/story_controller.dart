@@ -90,4 +90,14 @@ class DisplayStoryController extends GetxController {
       Get.back();
     }
   }
+
+  deleteStory({required String userId})async{
+      await FirebaseFirestore.instance
+        .collection("users")
+        .doc(userId)
+        .update({
+          "storiesList":FieldValue.arrayRemove([])
+      
+    });
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:commentor/src/central/services/my_logger.dart';
 import 'package:commentor/src/controllers/story_controller.dart';
+import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/models/story_model.dart';
 import 'package:commentor/src/models/user.dart';
 import 'package:commentor/src/models/user_model.dart';
@@ -26,7 +27,8 @@ class _StoryWidgetState extends State<StoryWidget> {
   final storyItems = <StoryItem>[];
   late StoryController controller;
   String date = '';
-  final storyController = Get.find<DisplayStoryController>();
+  final myStoryController = Get.find<DisplayStoryController>();
+  int storyIndex = 0;
 
   void addStoryItems() {
     for (final story in widget.userModel.storiesList) {
@@ -63,13 +65,15 @@ class _StoryWidgetState extends State<StoryWidget> {
       curve: Curves.easeIn,
     );
 
-    final currentIndex = storyController.usersList.indexOf(widget.userModel);
-    final isLastPage = storyController.usersList.length - 1 == currentIndex;
+    final currentIndex = myStoryController.usersList.indexOf(widget.userModel);
+    final isLastPage = myStoryController.usersList.length - 1 == currentIndex;
 
     if (isLastPage) {
       Navigator.of(context).pop();
     }
   }
+
+  final userController = Get.find<UserController>();
 
   @override
   Widget build(BuildContext context) {
@@ -78,17 +82,6 @@ class _StoryWidgetState extends State<StoryWidget> {
         children: <Widget>[
           StoryView(
             storyItems: storyItems,
-            // storyItems: [
-            //   StoryItem.pageImage(
-            //     url:
-            //         "https://firebasestorage.googleapis.com/v0/b/cool-blog-54040.appspot.com/o/media%2F1638632979684scaled_image_picker6454576566595141795.jpg?alt=media&token=4efd6316-1618-4f52-a17e-6c3c82461832",
-            //     controller: controller,
-            //     caption: "",
-            //     duration: const Duration(
-            //       seconds: 3,
-            //     ),
-            //   )
-            // ],
             controller: controller,
             onComplete: handleCompleted,
             onVerticalSwipeComplete: (direction) {
@@ -97,18 +90,35 @@ class _StoryWidgetState extends State<StoryWidget> {
               }
             },
             onStoryShow: (storyItem) {
-              final index = storyItems.indexOf(storyItem);
-
-              if (index > 0) {
+              // storyIndex = storyItems.indexOf(storyItem);
+              if (storyIndex > 0) {
                 setState(() {
                   // date = widget.userModel.stories[index].date;
                 });
               }
             },
           ),
-          ProfileWidget(
-            user: widget.userModel,
-            date: date,
+          Stack(
+            children: [
+              ProfileWidget(
+                user: widget.userModel,
+                date: date,
+              ),
+              // if (widget.userModel.id == userController.appUser.id)
+              //   Positioned(
+              //     right: 16,
+              //     top: 36,
+              //     child: InkWell(
+              //       onTap: () {
+              //         controller.pause();
+              //         storyItems.removeAt(storyIndex);
+              //         // storyItems.
+              //         controller.play();
+              //       },
+              //       child: Icon(Icons.delete_forever, color: Colors.red),
+              //     ),
+              //   ),
+            ],
           ),
         ],
       ),

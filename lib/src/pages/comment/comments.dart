@@ -29,13 +29,7 @@ class Comments extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: PostBlock(
-                postModel: postModel,
-              ),
-            ),
-            Expanded(child: AllComments(postId: postModel.postId)),
+            Expanded(child: AllComments(postModel: postModel)),
             WriteCommentArea(
               postId: postModel.postId,
             ),
