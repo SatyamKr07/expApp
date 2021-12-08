@@ -19,15 +19,18 @@ class AddPost extends StatelessWidget {
               ? Material(child: Center(child: CircularProgressIndicator()))
               : Scaffold(
                   appBar: AppBar(
-                    title: const Text("Add Blog"),
+                    title: const Text("Add Post"),
                     actions: [
-                      ElevatedButton(
-                        onPressed: () async {
-                          await addBlogController.uploadPost();
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            await addBlogController.uploadPost();
 
-                          // logger.d('imagesUrl :${addBlogController.blogModel.picList}');
-                        },
-                        child: const Text('Upload'),
+                            // logger.d('imagesUrl :${addBlogController.blogModel.picList}');
+                          },
+                          child: const Text('Upload'),
+                        ),
                       ),
                     ],
                   ),
