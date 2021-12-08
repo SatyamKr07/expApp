@@ -7,6 +7,8 @@ import 'package:commentor/src/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'show_post.dart';
+
 class ProfileBody extends StatelessWidget {
   UserModel userModel;
   ProfileBody({Key? key, required this.userModel}) : super(key: key);
@@ -50,10 +52,17 @@ class ProfileBody extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: BuildSwiper(
-                  // picList: postList[index].picList,
-                  imageUrls: const [],
-                  mediaList: postList[index].mediaList,
+                child: InkWell(
+                  onTap: () {
+                    Get.to(() => ShowPost(
+                          postModel: postList[index],
+                        ));
+                  },
+                  child: BuildSwiper(
+                    // picList: postList[index].picList,
+                    imageUrls: const [],
+                    mediaList: postList[index].mediaList,
+                  ),
                 ),
               );
             },
