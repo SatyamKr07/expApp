@@ -31,33 +31,36 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-          actions: [
-            IconButton(
-                onPressed: () {}, icon: const Icon(FontAwesomeIcons.bell)),
-            IconButton(
-                onPressed: () {
-                  Get.to(() => AddStory());
-                },
-                icon: const Icon(Icons.add)),
-            IconButton(
-                onPressed: () {
-                  Get.toNamed("/settings");
-                  // Navigator.restorablePushNamed(
-                  //     context, SettingsView.routeName);
-                },
-                icon: Icon(Icons.settings)),
-          ],
-          automaticallyImplyLeading: false,
-          title: Row(children: [
-            const Icon(CupertinoIcons.home, size: 16),
-            hSizedBox2,
-            const Text(
-              "Home",
-              // style: KCustomTextstyle.kBold(context, 12),
-            )
-          ]),
-          backgroundColor: Theme.of(context).backgroundColor),
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(FontAwesomeIcons.bell)),
+          IconButton(
+            onPressed: () {
+              Get.to(() => AddStory());
+            },
+            icon: const Icon(Icons.add),
+          ),
+          IconButton(
+              onPressed: () {
+                Get.toNamed("/settings");
+                // Navigator.restorablePushNamed(
+                //     context, SettingsView.routeName);
+              },
+              icon: Icon(Icons.settings)),
+        ],
+        automaticallyImplyLeading: false,
+        title: Row(children: [
+          const Icon(CupertinoIcons.home, size: 16),
+          hSizedBox2,
+          const Text(
+            "Home",
+            // style: KCustomTextstyle.kBold(context, 12),
+          )
+        ]),
+        backgroundColor: Colors.black,
+        // backgroundColor: Theme.of(context).backgroundColor,
+      ),
       body: RefreshIndicator(
         onRefresh: () {
           return Future.delayed(
@@ -119,7 +122,7 @@ class _HomeState extends State<Home> {
       floatingActionButton: FloatingActionButton(
         heroTag: "ADDEXCHANGETAG",
         onPressed: () async {
-          Get.to(() => AddBlog());
+          Get.to(() => AddPost());
         },
         child: const Icon(Icons.add),
       ),

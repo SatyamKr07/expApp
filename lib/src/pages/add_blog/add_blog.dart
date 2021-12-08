@@ -7,8 +7,8 @@ import 'package:get/get.dart';
 
 import 'views/title_desc.dart';
 
-class AddBlog extends StatelessWidget {
-  AddBlog({Key? key}) : super(key: key);
+class AddPost extends StatelessWidget {
+  AddPost({Key? key}) : super(key: key);
   final addBlogController = Get.find<AddPostController>();
   @override
   Widget build(BuildContext context) {

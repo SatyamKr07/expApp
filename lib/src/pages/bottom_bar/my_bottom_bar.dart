@@ -1,6 +1,7 @@
 import 'package:commentor/src/central/shared/colors.dart';
 import 'package:commentor/src/central/shared/textstyles.dart';
 import 'package:commentor/src/controllers/user_controller.dart';
+import 'package:commentor/src/pages/add_blog/add_blog.dart';
 import 'package:commentor/src/pages/home/home.dart';
 import 'package:commentor/src/pages/profile/profile.view.dart';
 import 'package:commentor/src/pages/search_user/search_user.dart';
@@ -30,19 +31,25 @@ class _MyBottomBarState extends State<MyBottomBar> {
             textStyle: const TextStyle(color: Color.fromRGBO(25, 25, 25, 1)),
             // textStyle: KCustomTextstyle.kMedium(context, 8),
             activeColorPrimary: CupertinoColors.systemPurple,
-            inactiveColorPrimary: CupertinoColors.systemGrey),
+            inactiveColorPrimary: CupertinoColors.white),
         PersistentBottomNavBarItem(
             icon: Icon(FontAwesomeIcons.search, size: 20),
             activeColorPrimary: CupertinoColors.systemPurple,
-            inactiveColorPrimary: CupertinoColors.systemGrey),
+            inactiveColorPrimary: CupertinoColors.white),
+        PersistentBottomNavBarItem(
+          icon: Icon(Icons.add),
+          // title: ("Settings"),
+          activeColorPrimary: CupertinoColors.systemPurple,
+          inactiveColorPrimary: CupertinoColors.white,
+        ),
         PersistentBottomNavBarItem(
             icon: Icon(FontAwesomeIcons.comment, size: 20),
             activeColorPrimary: CupertinoColors.systemPurple,
-            inactiveColorPrimary: CupertinoColors.systemGrey),
+            inactiveColorPrimary: CupertinoColors.white),
         PersistentBottomNavBarItem(
             icon: Icon(CupertinoIcons.person, size: 20),
             activeColorPrimary: CupertinoColors.systemPurple,
-            inactiveColorPrimary: CupertinoColors.systemGrey),
+            inactiveColorPrimary: CupertinoColors.white),
       ];
     }
 
@@ -52,7 +59,8 @@ class _MyBottomBarState extends State<MyBottomBar> {
         return false;
       },
       child: Container(
-        color: Theme.of(context).backgroundColor,
+        color: Colors.black,
+        // color: Theme.of(context).backgroundColor,
         child: SafeArea(
           child: Scaffold(
             // floatingActionButton: FloatingActionButton(
@@ -61,22 +69,28 @@ class _MyBottomBarState extends State<MyBottomBar> {
             //     Navigator.of(context).pushNamed("/add-post");
             //   },
             // ),
-            backgroundColor: Theme.of(context).backgroundColor,
+            backgroundColor: Colors.black,
+            // backgroundColor: Theme.of(context).backgroundColor,
             body: Container(
+              color: Colors.black,
               child: PersistentTabView(context,
                   controller: pageController,
                   screens: [
                     Home(),
                     SearchUser(),
+                    AddPost(),
                     Scaffold(),
                     ProfileView(
                       userId: Get.find<UserController>().appUser.id,
-                    )
+                    ),
                   ],
                   items: _navBarsItems(),
                   popAllScreensOnTapOfSelectedTab: true,
                   popActionScreens: PopActionScreensType.all,
                   confineInSafeArea: true,
+                  // backgroundColor: Color.fromRGBO(36, 37, 38, 1),
+                  // backgroundColor: Color.fromRGBO(36, 37, 38, 1),
+                  backgroundColor: Colors.grey[800]!,
                   // backgroundColor: KConstantColors.bgColorFaint,
                   handleAndroidBackButtonPress: true,
                   resizeToAvoidBottomInset: true,
@@ -87,7 +101,7 @@ class _MyBottomBarState extends State<MyBottomBar> {
                       animateTabTransition: true,
                       curve: Curves.ease,
                       duration: Duration(milliseconds: 200)),
-                  navBarStyle: NavBarStyle.style6),
+                  navBarStyle: NavBarStyle.style17),
             ),
           ),
         ),
