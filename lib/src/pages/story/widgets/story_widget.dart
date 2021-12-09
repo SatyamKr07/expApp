@@ -1,4 +1,5 @@
 import 'package:commentor/src/central/services/my_logger.dart';
+import 'package:commentor/src/controllers/home_controller.dart';
 import 'package:commentor/src/controllers/story_controller.dart';
 import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/models/story_model.dart';
@@ -29,6 +30,7 @@ class _StoryWidgetState extends State<StoryWidget> {
   String date = '';
   final myStoryController = Get.find<DisplayStoryController>();
   int storyIndex = 0;
+  StoryModel currentStory = StoryModel();
 
   void addStoryItems() {
     for (final story in widget.userModel.storiesList) {
@@ -90,7 +92,8 @@ class _StoryWidgetState extends State<StoryWidget> {
               }
             },
             onStoryShow: (storyItem) {
-              // storyIndex = storyItems.indexOf(storyItem);
+              storyIndex = storyItems.indexOf(storyItem);
+              currentStory = widget.userModel.storiesList[storyIndex];
               if (storyIndex > 0) {
                 setState(() {
                   // date = widget.userModel.stories[index].date;
@@ -104,24 +107,72 @@ class _StoryWidgetState extends State<StoryWidget> {
                 user: widget.userModel,
                 date: date,
               ),
-              // if (widget.userModel.id == userController.appUser.id)
-              //   Positioned(
-              //     right: 16,
-              //     top: 36,
-              //     child: InkWell(
-              //       onTap: () {
-              //         controller.pause();
-              //         storyItems.removeAt(storyIndex);
-              //         // storyItems.
-              //         controller.play();
-              //       },
-              //       child: Icon(Icons.delete_forever, color: Colors.red),
-              //     ),
-              //   ),
+              if (widget.userModel.id == userController.appUser.id)
+                Positioned(
+                  right: 16,
+                  top: 36,
+                  child: InkWell(
+                    onTap: () {
+                      controller.pause();
+                      Get.bottomSheet(bms());
+                      // storyItems.removeAt(storyIndex);
+                      // // storyItems.
+                      // controller.play();
+                    },
+                    child: Icon(Icons.delete_forever, color: Colors.red),
+                  ),
+                ),
             ],
           ),
         ],
       ),
+    );
+  }
+
+  Widget bms() {
+    return GetBuilder<DisplayStoryController>(
+      // init: HomeController(),
+      // initState: (_) {},
+      id: "DELETE_STORY",
+      builder: (_) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
+          child: ElevatedButton.icon(
+            onPressed: () async {
+              logger.d('story index is $storyIndex');
+              await myStoryController.deleteStory(storyModel: currentStory);
+              // Get.back();
+              // Get.back();
+              Get.back();
+              Navigator.pop(context);
+              // controller.next();
+            },
+            // onPressed: homeController.isDeleting
+            //     ? null
+            //     : () async {
+            //         await homeController.handleDeletePost(
+            //           colName: "posts",
+            //           docId: postModel.postId,
+            //         );
+            //         Get.back();
+
+            //         // handleFollow();
+            //         userController.update(['PROFILE_BODY']);
+            //       },
+            label: Text(
+              "Delete",
+              // homeController.isDeleting ? "Deleting Post..." : "Delete",
+            ),
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              primary: Colors.red,
+            ),
+            icon: Icon(Icons.delete_forever),
+          ),
+        );
+      },
     );
   }
 }

@@ -39,7 +39,7 @@ class DisplayStoryController extends GetxController {
       FirebaseFirestore.instance.collection('users');
 
   final userController = Get.find<UserController>();
-
+  bool isDeleting = false;
   Future pickStory() async {
     List<XFile> multiImages = await imageService.getImagesFromGallery();
     // List multiImages = await myUtils.pickMultiImages();
@@ -79,6 +79,7 @@ class DisplayStoryController extends GetxController {
       update(['ADD_STORY_PAGE']);
     } finally {
       storiesList = [];
+      mediaList = [];
       // postModel = PostModel(
       //   postedOn: DateTime.now(),
       //   mediaList: [],
@@ -91,13 +92,19 @@ class DisplayStoryController extends GetxController {
     }
   }
 
-  deleteStory({required String userId})async{
-      await FirebaseFirestore.instance
+  deleteStory({required StoryModel storyModel}) async {
+    isDeleting = true;
+    update(['DELETE_STORY']);
+    await FirebaseFirestore.instance
         .collection("users")
-        .doc(userId)
+        .doc(userController.appUser.id)
         .update({
-          "storiesList":FieldValue.arrayRemove([])
-      
+      "storiesList": FieldValue.arrayRemove([storyModel.toJson()])
+    }).then((value) {
+      isDeleting = false;
+      update(['DELETE_STORY']);
+    }).onError((error, stackTrace) {
+      logger.e("error deleting story $error");
     });
   }
 }
