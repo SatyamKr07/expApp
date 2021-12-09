@@ -19,21 +19,31 @@ class AddStory extends StatelessWidget {
                   appBar: AppBar(
                     title: const Text("Add Stories"),
                     actions: [
-                      ElevatedButton(
-                        onPressed: () async {
-                          await storyController.uploadStories();
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            primary: Colors.black,
+                            // primary: CupertinoColors.systemPurple,
+                          ),
+                          onPressed: () async {
+                            await storyController.uploadStories();
 
-                          // logger.d('imagesUrl :${addBlogController.blogModel.picList}');
-                        },
-                        child: const Text('Upload'),
+                            // logger.d('imagesUrl :${addBlogController.blogModel.picList}');
+                          },
+                          child: const Text('Upload'),
+                        ),
                       ),
                     ],
                   ),
                   body: ListView(
                     children: [
                       const Padding(
-                        padding: EdgeInsets.only(left: 16.0),
-                        child: Text("*Choose pics / video"),
+                        padding: EdgeInsets.only(left: 16.0, top: 24),
+                        child: Text("*Choose pics for story"),
                       ),
                       IconButton(
                         onPressed: () async {
@@ -41,7 +51,7 @@ class AddStory extends StatelessWidget {
                         },
                         icon: const Icon(
                           Icons.photo_outlined,
-                          color: Colors.black,
+                          color: Colors.white,
                           size: 32,
                         ),
                       ),

@@ -137,40 +137,43 @@ class _StoryWidgetState extends State<StoryWidget> {
       builder: (_) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
-          child: ElevatedButton.icon(
-            onPressed: () async {
-              logger.d('story index is $storyIndex');
-              await myStoryController.deleteStory(storyModel: currentStory);
-              // Get.back();
-              // Get.back();
-              Get.back();
-              Navigator.pop(context);
-              // controller.next();
-            },
-            // onPressed: homeController.isDeleting
-            //     ? null
-            //     : () async {
-            //         await homeController.handleDeletePost(
-            //           colName: "posts",
-            //           docId: postModel.postId,
-            //         );
-            //         Get.back();
+          child: _.isDeleting
+              ? Center(child: CircularProgressIndicator())
+              : ElevatedButton.icon(
+                  onPressed: () async {
+                    logger.d('story index is $storyIndex');
+                    await myStoryController.deleteStory(
+                        storyModel: currentStory);
+                    // Get.back();
+                    // Get.back();
+                    Get.back();
+                    Navigator.pop(context);
+                    // controller.next();
+                  },
+                  // onPressed: homeController.isDeleting
+                  //     ? null
+                  //     : () async {
+                  //         await homeController.handleDeletePost(
+                  //           colName: "posts",
+                  //           docId: postModel.postId,
+                  //         );
+                  //         Get.back();
 
-            //         // handleFollow();
-            //         userController.update(['PROFILE_BODY']);
-            //       },
-            label: Text(
-              "Delete",
-              // homeController.isDeleting ? "Deleting Post..." : "Delete",
-            ),
-            style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              primary: Colors.red,
-            ),
-            icon: Icon(Icons.delete_forever),
-          ),
+                  //         // handleFollow();
+                  //         userController.update(['PROFILE_BODY']);
+                  //       },
+                  label: Text(
+                    "Delete",
+                    // homeController.isDeleting ? "Deleting Post..." : "Delete",
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    primary: Colors.red,
+                  ),
+                  icon: Icon(Icons.delete_forever),
+                ),
         );
       },
     );

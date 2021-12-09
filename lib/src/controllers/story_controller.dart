@@ -56,6 +56,10 @@ class DisplayStoryController extends GetxController {
   }
 
   Future uploadStories() async {
+    if (storyImgPaths.isEmpty) {
+      Get.snackbar("Opps!", "Please select pics for story");
+      return;
+    }
     isUploading = true;
     update(['ADD_STORY_PAGE']);
 
@@ -80,6 +84,7 @@ class DisplayStoryController extends GetxController {
     } finally {
       storiesList = [];
       mediaList = [];
+      storyImgPaths = [];
       // postModel = PostModel(
       //   postedOn: DateTime.now(),
       //   mediaList: [],
