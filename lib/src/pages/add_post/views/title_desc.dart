@@ -12,25 +12,9 @@ class TitleDesc extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          // TextFormField(
-          //   controller: addBlogController.titleCtrl,
-          //   textCapitalization: TextCapitalization.sentences,
-          //   maxLines: null,
-          //   decoration: InputDecoration(
-          //     labelStyle: const TextStyle(
-          //       color: Colors.grey,
-          //       fontSize: 14,
-          //     ),
-          //     labelText: "*Title",
-          //     // hintText: "Title",
-          //     hintStyle: TextStyle(
-          //       color: Colors.grey[500],
-          //       fontSize: 14,
-          //       fontWeight: FontWeight.normal,
-          //     ),
-          //   ),
-          // ),
-          TextFormField(
+          TextField(
+            minLines: 5,
+            maxLength: 250,
             controller: addBlogController.descCtrl,
             textCapitalization: TextCapitalization.sentences,
             maxLines: null,
@@ -39,8 +23,8 @@ class TitleDesc extends StatelessWidget {
                 color: Colors.grey,
                 fontSize: 14,
               ),
-              labelText: "*Description",
-              hintText: "Description",
+              labelText: "*Add a title",
+              hintText: "Add a title",
               hintStyle: TextStyle(
                 color: Colors.grey[500],
                 fontSize: 14,

@@ -51,6 +51,9 @@ class AddPostController extends GetxController {
   List<MediaModel> mediaList = [];
 
   TextEditingController commentTextCtrl = TextEditingController();
+  TextEditingController tag1TextCtrl = TextEditingController();
+  TextEditingController tag2TextCtrl = TextEditingController();
+  TextEditingController tag3TextCtrl = TextEditingController();
   final CollectionReference _commentCollection =
       FirebaseFirestore.instance.collection('comments');
 

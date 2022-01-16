@@ -1,6 +1,7 @@
 import 'package:commentor/src/central/services/my_logger.dart';
 import 'package:commentor/src/central/widgets/build_swiper.dart';
 import 'package:commentor/src/controllers/add_post_controller.dart';
+import 'package:commentor/src/pages/add_post/views/add_tags.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,31 +24,8 @@ class AddPost extends StatelessWidget {
               ? Material(child: Center(child: CircularProgressIndicator()))
               : Scaffold(
                   appBar: AppBar(
-                    title: Text(!updatePost ? "Add Post" : "Update Post"),
-                    actions: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            primary: Colors.black,
-                            // primary: CupertinoColors.systemPurple,
-                          ),
-                          onPressed: () async {
-                            if (!updatePost) {
-                              await addBlogController.uploadPost();
-                            } else {
-                              await addBlogController.updatePost(docId: postId);
-                            }
-
-                            // logger.d('imagesUrl :${addBlogController.blogModel.picList}');
-                          },
-                          child: Text(!updatePost ? 'Upload' : "Update"),
-                        ),
-                      ),
-                    ],
+                    title: Text(!updatePost ? "New Post" : "Update Post"),
+                    actions: const [],
                   ),
                   body: ListView(
                     children: [
@@ -68,7 +46,30 @@ class AddPost extends StatelessWidget {
 
                             // imagesCount: addExchangeCtrl.imagesCount,
                           ),
-                        )
+                        ),
+                        AddTags(),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              primary: Colors.red,
+                            ),
+                            onPressed: () async {
+                              if (!updatePost) {
+                                await addBlogController.uploadPost();
+                              } else {
+                                await addBlogController.updatePost(
+                                    docId: postId);
+                              }
+
+                              // logger.d('imagesUrl :${addBlogController.blogModel.picList}');
+                            },
+                            child: Text(!updatePost ? 'Post' : "Update"),
+                          ),
+                        ),
                       ]
                     ],
                   ),

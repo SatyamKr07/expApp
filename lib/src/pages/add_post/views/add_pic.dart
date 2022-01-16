@@ -21,7 +21,7 @@ class AddPic extends StatelessWidget {
               },
               icon: const Icon(
                 Icons.photo_outlined,
-                color: Colors.black,
+                color: Colors.white,
                 size: 32,
               ),
             ),
@@ -32,7 +32,7 @@ class AddPic extends StatelessWidget {
               },
               icon: const Icon(
                 Icons.video_collection,
-                color: Colors.black,
+                color: Colors.white,
                 size: 32,
               ),
             ),
