@@ -1,5 +1,6 @@
 import 'package:commentor/src/central/services/auth_ctrl.dart';
 import 'package:commentor/src/central/shared/dimensions.dart';
+import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/pages/bottom_bar/my_bottom_bar.dart';
 import 'package:commentor/src/pages/home/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,6 +19,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
   bool _isSigningIn = false;
   // AuthCtrl authentication = AuthCtrl();
   final authCtrl = Get.find<AuthCtrl>();
+  final userController = Get.find<UserController>();
   @override
   Widget build(BuildContext context) {
     return _isSigningIn
@@ -55,9 +57,11 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                     });
 
                     if (user != null) {
+                      userController.appUser.id = user.uid;
                       if (await authCtrl.checkUserExistsInDb() == false) {
                         await authCtrl.createUserDb();
                       }
+                      await authCtrl.deserializeUserInApp(user);
                       // Navigator.of(context).pushReplacement(
                       //   MaterialPageRoute(builder: (context) => Home()),
                       // );

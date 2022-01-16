@@ -80,28 +80,6 @@ class _HomeState extends State<Home> {
           physics: const AlwaysScrollableScrollPhysics(),
           // shrinkWrap: true,
           children: [
-            // GetBuilder<HomeController>(
-            //   id: "FILTER_CATEGORY_DROPDOWN",
-            //   builder: (_) => DropdownButton<String>(
-            //     // value: _.blogModel.category,
-            //     value: _.filterCategory,
-            //     onChanged: _.filterPosts,
-            //     items: const [
-            //       DropdownMenuItem(
-            //         value: "All Posts",
-            //         child: Text('All Posts'),
-            //       ),
-            //       DropdownMenuItem(
-            //         value: "sports",
-            //         child: Text('Sports'),
-            //       ),
-            //       DropdownMenuItem(
-            //         value: "movies",
-            //         child: Text('Movies'),
-            //       ),
-            //     ],
-            //   ),
-            // ),
             Padding(
               padding: const EdgeInsets.only(top: 24.0, bottom: 24),
               child: SizedBox(
@@ -113,7 +91,6 @@ class _HomeState extends State<Home> {
               ),
               // child: StoryListView(),
             ),
-
             AllPostsList(),
           ],
         ),

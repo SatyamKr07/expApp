@@ -84,7 +84,6 @@ class AuthCtrl extends GetxController {
               await auth.signInWithCredential(credential);
 
           user = userCredential.user;
-          // logger.d('appUser is ${userController.appUser}');
         } on FirebaseAuthException catch (e) {
           if (e.code == 'account-exists-with-different-credential') {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -108,7 +107,6 @@ class AuthCtrl extends GetxController {
             ),
           );
         }
-        feedUserData(user);
       }
 
       return user;
