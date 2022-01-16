@@ -43,19 +43,20 @@ class _FollowWidgetState extends State<FollowWidget> {
             .doc(userController.appUser.id)
             .update({
           "followingList": FieldValue.arrayUnion([widget.userModel.id]),
-          "followingCount": l += 1,
+          // "followingCount": l += 1,
         }).then((value) async {
           await FirebaseFirestore.instance
               .collection("users")
               .doc(widget.userModel.id)
               .update({
             "followersList": FieldValue.arrayUnion([userController.appUser.id]),
-            "followersCount": l,
+            // "followersCount": l,
           });
           setState(() {
             isFollowing = true;
             userController.appUser.followingList.add(widget.userModel.id);
-            userController.appUser.followingCount = l;
+            userController.update(['SHOW_FOLLOWING_COUNT']);
+            // userController.appUser.followingCount = l;
           });
           logger.d("liked successfully : $isFollowing");
         }).onError((error, stackTrace) {
@@ -71,7 +72,7 @@ class _FollowWidgetState extends State<FollowWidget> {
             .doc(userController.appUser.id)
             .update({
           "followingList": FieldValue.arrayRemove([widget.userModel.id]),
-          "followingCount": l -= 1,
+          // "followingCount": l -= 1,
         }).then(
           (value) async {
             await FirebaseFirestore.instance
@@ -80,12 +81,13 @@ class _FollowWidgetState extends State<FollowWidget> {
                 .update({
               "followersList":
                   FieldValue.arrayRemove([userController.appUser.id]),
-              "followersCount": l,
+              // "followersCount": l,
             });
             setState(() {
               isFollowing = false;
               userController.appUser.followingList.remove(widget.userModel.id);
-              userController.appUser.followingCount = l;
+              // userController.appUser.followingCount = l;
+              userController.update(['SHOW_FOLLOWING_COUNT']);
             });
             logger.d(
                 "handleFollow successfully :isFollwing value is $isFollowing");
@@ -111,10 +113,12 @@ class _FollowWidgetState extends State<FollowWidget> {
             },
             label: Text("Follow"),
             style: ElevatedButton.styleFrom(
+              primary: Color(0xff212228),
+              onPrimary: Colors.red,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(10.0),
+                side: BorderSide(color: Color(0xffEB1047)),
               ),
-              primary: Colors.red,
             ),
             icon: Icon(Icons.add),
           )
@@ -123,12 +127,14 @@ class _FollowWidgetState extends State<FollowWidget> {
               handleFollow();
               // userController.handleFollow(userId: userModel.id);
             },
-            child: Text("Following"),
+            child: Text("Unfollow"),
             style: ElevatedButton.styleFrom(
+              primary: Color(0xff1F2125),
+              onPrimary: Colors.red,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(10.0),
+                side: BorderSide(color: Color(0xffEB1047)),
               ),
-              primary: Colors.red,
             ),
           );
   }

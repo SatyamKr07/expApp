@@ -133,6 +133,10 @@ class AuthCtrl extends GetxController {
       !userCtrl.appUser.followingList.contains(userCtrl.appUser.id),
       userCtrl.appUser.id,
     );
+    userCtrl.appUser.followersList.addIf(
+      !userCtrl.appUser.followersList.contains(userCtrl.appUser.id),
+      userCtrl.appUser.id,
+    );
   }
 
   static Future<void> signOut({required BuildContext context}) async {

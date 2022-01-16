@@ -4,6 +4,7 @@ import 'package:commentor/src/pages/profile/components/show_followers.dart';
 import 'package:commentor/src/pages/profile/components/show_following.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/instance_manager.dart';
 
 class ProfileCount extends StatelessWidget {
@@ -32,23 +33,35 @@ class ProfileCount extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        InkWell(
-          onTap: () {
-            Get.to(() => ShowFollowers());
+        GetBuilder<UserController>(
+          id: 'SHOW_FOLLOWERS_COUNT',
+          builder: (_) {
+            return InkWell(
+              onTap: () {
+                Get.to(() => ShowFollowers());
+              },
+              child: _profileComponent(
+                count: userModel.followersList.length - 1,
+                // count: userModel.followersCount,
+                title: "Followers",
+              ),
+            );
           },
-          child: _profileComponent(
-            count: userModel.followersCount,
-            title: "Followers",
-          ),
         ),
-        InkWell(
-          onTap: () {
-            Get.to(() => ShowFollowing());
+        GetBuilder<UserController>(
+          id: 'SHOW_FOLLOWING_COUNT',
+          builder: (_) {
+            return InkWell(
+              onTap: () {
+                Get.to(() => ShowFollowing());
+              },
+              child: _profileComponent(
+                count: userModel.followingList.length - 1,
+                // count: userModel.followingCount,
+                title: "Following",
+              ),
+            );
           },
-          child: _profileComponent(
-            count: userModel.followingCount,
-            title: "Following",
-          ),
         ),
         _profileComponent(
           count: userModel.totalCommentsCount,

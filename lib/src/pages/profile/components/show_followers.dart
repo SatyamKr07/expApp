@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/models/user_model.dart';
@@ -24,11 +25,11 @@ class _ShowFollowersState extends State<ShowFollowers> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if (userController.appUser.followingList
-        .contains(userController.appUser.id)) {
-      // setState(() {});
-      userController.appUser.followingList.remove(userController.appUser.id);
-    }
+    // if (userController.appUser.followersList
+    //     .contains(userController.appUser.id)) {
+    //   // setState(() {});
+    //   userController.appUser.followersList.remove(userController.appUser.id);
+    // }
   }
 
   @override
@@ -73,6 +74,7 @@ class _ShowFollowersState extends State<ShowFollowers> {
 
   Widget usersListView(List usersList) {
     return Scaffold(
+      backgroundColor: Color(0xff1D1E22),
       appBar: AppBar(title: const Text("Followers")),
       body: ListView.builder(
         shrinkWrap: true,
@@ -85,11 +87,39 @@ class _ShowFollowersState extends State<ShowFollowers> {
                     userId: usersList[index].id,
                   ));
             },
-            child: ListTile(
-              title: Text(user.email),
-              subtitle: Text(user.displayName),
-              trailing: FollowWidget(userModel: usersList[index]),
-            ),
+            child: user.id == userController.appUser.id
+                ? Container()
+                : ListTile(
+                    leading: usersList[index].profilePic == ""
+                        ? const ClipOval(
+                            child: CircleAvatar(
+                              radius: 18,
+                              backgroundImage: AssetImage(
+                                  'assets/images/default_profile_pic.png'),
+                            ),
+                          )
+                        : CachedNetworkImage(
+                            imageUrl: usersList[index].profilePic,
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                            imageBuilder: (context, imageProvider) => Container(
+                              width: 36.0,
+                              height: 36.0,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: imageProvider, fit: BoxFit.cover),
+                              ),
+                            ),
+                            // errorWidget: Image.asset(
+                            //               'assets/images/default_profile_pic.png'),
+                          ),
+                    title: Text(user.displayName),
+                    subtitle: Text(user.username),
+                    trailing: FollowWidget(userModel: usersList[index]),
+                  ),
           );
         },
       ),
