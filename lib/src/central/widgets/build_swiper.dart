@@ -44,11 +44,21 @@ class _BuildSwiperState extends State<BuildSwiper> {
                 color: Color(0xff1C1E21),
               ),
               child: Center(
-                child: Text(
-                  "Add photos/videos",
-                  style: TextStyle(
-                    color: Color(0xff6485AC),
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(
+                      Icons.image_rounded,
+                      color: Color(0xff6485AC),
+                      size: 48,
+                    ),
+                    Text(
+                      "Add photos/videos",
+                      style: TextStyle(
+                        color: Color(0xff6485AC),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

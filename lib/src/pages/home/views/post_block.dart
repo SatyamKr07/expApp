@@ -138,8 +138,8 @@ class _PostBlockState extends State<PostBlock> {
                             CircularProgressIndicator(),
                         errorWidget: (context, url, error) => Icon(Icons.error),
                         imageBuilder: (context, imageProvider) => Container(
-                          width: 46.0,
-                          height: 46.0,
+                          width: 40.0,
+                          height: 40.0,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
