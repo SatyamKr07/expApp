@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/models/user_model.dart';
 import 'package:commentor/src/pages/bottom_bar/my_bottom_bar.dart';
-import 'package:commentor/src/pages/sign_in_screen/sign_in_screen.dart';
+import 'package:commentor/src/pages/sign_in_screen/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +40,7 @@ class AuthCtrl extends GetxController {
           messageStr = e.toString();
           update(["authMsgId"]);
         } finally {
-          Get.offAll(() => SignInScreen());
+          Get.offAll(() => LoginScreen());
         }
       } else {
         logger.d("user email is verified. checking user exists in db");
@@ -55,7 +55,7 @@ class AuthCtrl extends GetxController {
       }
     } else {
       logger.d("user is singout");
-      Get.offAll(() => SignInScreen());
+      Get.offAll(() => LoginScreen());
     }
   }
 

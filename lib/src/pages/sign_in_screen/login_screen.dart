@@ -1,21 +1,22 @@
 import 'package:commentor/src/central/services/auth_ctrl.dart';
+import 'package:commentor/src/central/shared/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'google_signin_btn.dart';
 
-class SignInScreen extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   @override
-  _SignInScreenState createState() => _SignInScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   final authCtrl = Get.find<AuthCtrl>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.white,
+      backgroundColor: Color(0xff1A1C1E),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(
@@ -30,25 +31,13 @@ class _SignInScreenState extends State<SignInScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
-                  SizedBox(height: 20),
-                  Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Center(
-                      child: Text(
-                        'Welcome to Commentor App!',
-                        style: TextStyle(
-                          // color: Colors.black,
-                          fontSize: 32,
-                        ),
-                      ),
-                    ),
-                  ),
+                  SizedBox(height: 100),
                   Padding(
                     padding: EdgeInsets.all(16.0),
                     child: Text(
-                      'Please Sign in!',
+                      'Login',
                       style: TextStyle(
-                        color: Colors.orange,
+                        color: Colors.white,
                         fontSize: 40,
                       ),
                     ),
@@ -59,7 +48,36 @@ class _SignInScreenState extends State<SignInScreen> {
               emailPasswordTextField(),
               const SizedBox(height: 32),
 
-              GoogleSignInButton()
+              GoogleSignInButton(),
+              vSizedBox2,
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  width: Get.width,
+                  decoration: BoxDecoration(
+                    color: Color(0xff22242B),
+                  ),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'New to Commentor ? ',
+                          // style: DefaultTextStyle.of(context).style,
+                          children: const <TextSpan>[
+                            TextSpan(
+                                text: 'Register',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff722FF8),
+                                )),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
               // FutureBuilder(
               //   future: Authentication.initializeFirebase(context: context),
               //   builder: (context, snapshot) {
@@ -90,15 +108,22 @@ class _SignInScreenState extends State<SignInScreen> {
       child: Column(
         children: [
           TextField(
-            decoration: const InputDecoration(hintText: 'Email'),
+            decoration: const InputDecoration(
+              prefixIcon: Icon(Icons.alternate_email_sharp),
+              hintText: 'Email',
+            ),
             onChanged: (val) {
               email = val;
             },
           ),
+          vSizedBox3,
           TextField(
             obscuringCharacter: "*",
             obscureText: true,
-            decoration: const InputDecoration(hintText: 'Password'),
+            decoration: const InputDecoration(
+              prefixIcon: Icon(Icons.lock),
+              hintText: 'Password',
+            ),
             onChanged: (val) {
               password = val;
             },
@@ -112,20 +137,27 @@ class _SignInScreenState extends State<SignInScreen> {
                 return _.isSigningIn
                     ? Center(
                         child: CircularProgressIndicator(color: Colors.blue))
-                    : ElevatedButton(
-                        child: const Text("Login/Create Account"),
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          primary: Colors.red,
-                        ),
-                        onPressed: () {
-                          // Authentication authentication = Authentication();
+                    : SizedBox(
+                        width: Get.width,
+                        child: ElevatedButton(
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: const Text("Login",
+                                  style: TextStyle(fontSize: 16)),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              primary: Colors.red,
+                            ),
+                            onPressed: () {
+                              // Authentication authentication = Authentication();
 
-                          authCtrl.singInUsingEmail(email, password);
-                        });
-              })
+                              authCtrl.singInUsingEmail(email, password);
+                            }),
+                      );
+              }),
         ],
       ),
     );

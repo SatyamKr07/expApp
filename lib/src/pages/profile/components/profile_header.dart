@@ -5,7 +5,7 @@ import 'package:commentor/src/central/shared/dimensions.dart';
 import 'package:commentor/src/models/user_model.dart';
 import 'package:commentor/src/pages/edit_profile/edit_profile.dart';
 import 'package:commentor/src/pages/profile/components/follow_widget.dart';
-import 'package:commentor/src/pages/sign_in_screen/sign_in_screen.dart';
+import 'package:commentor/src/pages/sign_in_screen/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -64,7 +64,7 @@ class ProfileHeader extends StatelessWidget {
                     await AuthCtrl.signOut(context: context);
                     userController.appUser = UserModel(
                         followersList: [], followingList: [], storiesList: []);
-                    Get.offAll(() => SignInScreen());
+                    Get.offAll(() => LoginScreen());
                   },
                   icon: Icon(
                     Icons.logout,
