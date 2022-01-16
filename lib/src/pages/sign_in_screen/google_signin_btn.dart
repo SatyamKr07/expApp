@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 
 class GoogleSignInButton extends StatefulWidget {
+  String text;
+  GoogleSignInButton({Key? key, required this.text});
   @override
   _GoogleSignInButtonState createState() => _GoogleSignInButtonState();
 }
@@ -17,72 +19,64 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16.0,
-      ),
-      child: _isSigningIn
-          ? Center(
-              child: const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-              ),
-            )
-          : Column(
-              children: [
-                Text("Or, login with..."),
-                vSizedBox2,
-                SizedBox(
-                  width: Get.width,
-                  child: ElevatedButton.icon(
-                    icon: Icon(
-                      Icons.email,
+    return _isSigningIn
+        ? Center(
+            child: const CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+            ),
+          )
+        : Column(
+            children: [
+              SizedBox(
+                width: Get.width,
+                child: ElevatedButton.icon(
+                  icon: Icon(
+                    Icons.email,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xff212228),
+                    onPrimary: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0),
+                      side: BorderSide(color: Color(0xffEB1047)),
                     ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xff212228),
-                      onPrimary: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(32.0),
-                        side: BorderSide(color: Color(0xffEB1047)),
-                      ),
-                    ),
-                    onPressed: () async {
-                      setState(() {
-                        _isSigningIn = true;
-                      });
+                  ),
+                  onPressed: () async {
+                    setState(() {
+                      _isSigningIn = true;
+                    });
 
-                      User? user =
-                          await AuthCtrl.signInWithGoogle(context: context);
+                    User? user =
+                        await AuthCtrl.signInWithGoogle(context: context);
 
-                      setState(() {
-                        _isSigningIn = false;
-                      });
+                    setState(() {
+                      _isSigningIn = false;
+                    });
 
-                      if (user != null) {
-                        if (await authentication.checkUserExistsInDb() ==
-                            false) {
-                          await authentication.createUserDb();
-                        }
-                        // Navigator.of(context).pushReplacement(
-                        //   MaterialPageRoute(builder: (context) => Home()),
-                        // );
-                        Get.offAll(() => MyBottomBar());
+                    if (user != null) {
+                      if (await authentication.checkUserExistsInDb() == false) {
+                        await authentication.createUserDb();
                       }
-                    },
-                    label: const Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Text(
-                        'Login with GMail',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      // Navigator.of(context).pushReplacement(
+                      //   MaterialPageRoute(builder: (context) => Home()),
+                      // );
+                      Get.offAll(() => MyBottomBar());
+                    }
+                  },
+                  label: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Text(
+                      widget.text,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
                 ),
-              ],
-            ),
-    );
+              ),
+            ],
+          );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:commentor/src/central/services/auth_ctrl.dart';
 import 'package:commentor/src/central/shared/dimensions.dart';
+import 'package:commentor/src/pages/sign_in_screen/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -39,6 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 40,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -47,31 +49,39 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 64),
               emailPasswordTextField(),
               const SizedBox(height: 32),
-
-              GoogleSignInButton(),
-              vSizedBox2,
+              Center(child: Text("Or Login with...")),
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Container(
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                    color: Color(0xff22242B),
-                  ),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'New to Commentor ? ',
-                          // style: DefaultTextStyle.of(context).style,
-                          children: const <TextSpan>[
-                            TextSpan(
-                                text: 'Register',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xff722FF8),
-                                )),
-                          ],
+                child: GoogleSignInButton(text: "Login with Gmail"),
+              ),
+              vSizedBox2,
+              InkWell(
+                onTap: () {
+                  Get.to(() => SignInScreen());
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Container(
+                    width: Get.width,
+                    decoration: BoxDecoration(
+                      color: Color(0xff22242B),
+                    ),
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: RichText(
+                          text: TextSpan(
+                            text: 'New to Commentor ? ',
+                            // style: DefaultTextStyle.of(context).style,
+                            children: const <TextSpan>[
+                              TextSpan(
+                                  text: 'Register',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xff722FF8),
+                                  )),
+                            ],
+                          ),
                         ),
                       ),
                     ),
