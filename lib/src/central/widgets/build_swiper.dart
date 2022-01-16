@@ -53,7 +53,7 @@ class _BuildSwiperState extends State<BuildSwiper> {
                       size: 48,
                     ),
                     Text(
-                      "Add photos/videos",
+                      "Add media",
                       style: TextStyle(
                         color: Color(0xff6485AC),
                       ),
