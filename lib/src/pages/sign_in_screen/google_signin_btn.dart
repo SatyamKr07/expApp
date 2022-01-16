@@ -4,6 +4,7 @@ import 'package:commentor/src/pages/bottom_bar/my_bottom_bar.dart';
 import 'package:commentor/src/pages/home/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/route_manager.dart';
 
 class GoogleSignInButton extends StatefulWidget {
@@ -15,8 +16,8 @@ class GoogleSignInButton extends StatefulWidget {
 
 class _GoogleSignInButtonState extends State<GoogleSignInButton> {
   bool _isSigningIn = false;
-  AuthCtrl authentication = AuthCtrl();
-
+  // AuthCtrl authentication = AuthCtrl();
+  final authCtrl = Get.find<AuthCtrl>();
   @override
   Widget build(BuildContext context) {
     return _isSigningIn
@@ -47,15 +48,15 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                     });
 
                     User? user =
-                        await AuthCtrl.signInWithGoogle(context: context);
+                        await authCtrl.signInWithGoogle(context: context);
 
                     setState(() {
                       _isSigningIn = false;
                     });
 
                     if (user != null) {
-                      if (await authentication.checkUserExistsInDb() == false) {
-                        await authentication.createUserDb();
+                      if (await authCtrl.checkUserExistsInDb() == false) {
+                        await authCtrl.createUserDb();
                       }
                       // Navigator.of(context).pushReplacement(
                       //   MaterialPageRoute(builder: (context) => Home()),

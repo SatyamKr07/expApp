@@ -18,60 +18,38 @@ class AuthCtrl extends GetxController {
   bool isSigningIn = false;
   final userCtrl = Get.find<UserController>();
 
+  ///for sign up page
+  TextEditingController signinEmailTextController = TextEditingController();
+  TextEditingController signinPasswordTextController = TextEditingController();
+  TextEditingController signinFullNameTextController = TextEditingController();
+
+  ///for login page
+  TextEditingController loginEmailTextController = TextEditingController();
+  TextEditingController loginPasswordTextController = TextEditingController();
+
   checkUser(BuildContext context) async {
     User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
       feedUserData(user);
       logger.d("user isn't null");
-      if (!user.emailVerified) {
-        logger.d(
-            "user email ${user.email} not verified, sending verification email");
-        messageStr =
-            "Verification link sent to this email. Click to verify then login again.";
-        update(["authMsgId"]);
-        try {
-          await user.sendEmailVerification();
-          user.reload();
 
-          debugPrint("verification link sent");
-        } catch (e) {
-          logger.e(e);
-          messageStr = e.toString();
-          update(["authMsgId"]);
-        } finally {
-          Get.offAll(() => LoginScreen());
-        }
+      logger.d("user email is verified. checking user exists in db");
+      if (await checkUserExistsInDb() == false) {
+        await createUserDb();
       } else {
-        logger.d("user email is verified. checking user exists in db");
-        if (await checkUserExistsInDb() == false) {
-          await createUserDb();
-        } else {
-          await deserializeUserInApp(user);
-        }
-
-        logger.d("User exists in db. Nav to MyBottomBar()");
-        Get.offAll(() => MyBottomBar());
+        await deserializeUserInApp(user);
       }
+
+      logger.d("User exists in db. Nav to MyBottomBar()");
+      Get.offAll(() => MyBottomBar());
     } else {
       logger.d("user is singout");
       Get.offAll(() => LoginScreen());
     }
   }
 
-  deserializeUserInApp(User user) async {
-    await usersCol.doc(user.uid).get().then(
-          (value) => userCtrl.appUser = UserModel.fromJson(
-            value.data() as Map<String, dynamic>,
-          ),
-        );
-    userCtrl.appUser.followingList.addIf(
-      !userCtrl.appUser.followingList.contains(userCtrl.appUser.id),
-      userCtrl.appUser.id,
-    );
-  }
-
-  static Future<User?> signInWithGoogle({required BuildContext context}) async {
+  Future<User?> signInWithGoogle({required BuildContext context}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
 
@@ -137,13 +115,26 @@ class AuthCtrl extends GetxController {
     }
   }
 
-  static feedUserData(User? user) {
+  feedUserData(User? user) {
     final userController = Get.find<UserController>();
 
     userController.appUser.id = user!.uid;
     userController.appUser.email = user.email!;
-    userController.appUser.displayName = user.displayName ?? "";
+    userController.appUser.displayName =
+        user.displayName ?? signinFullNameTextController.text;
     userController.appUser.profilePic = user.photoURL ?? "";
+  }
+
+  deserializeUserInApp(User user) async {
+    await usersCol.doc(user.uid).get().then(
+          (value) => userCtrl.appUser = UserModel.fromJson(
+            value.data() as Map<String, dynamic>,
+          ),
+        );
+    userCtrl.appUser.followingList.addIf(
+      !userCtrl.appUser.followingList.contains(userCtrl.appUser.id),
+      userCtrl.appUser.id,
+    );
   }
 
   static Future<void> signOut({required BuildContext context}) async {
@@ -175,81 +166,150 @@ class AuthCtrl extends GetxController {
     );
   }
 
-  createUserUsingEmail(String email, String password) async {
-    logger.d("in createUserUsingEmail");
+  // createUserUsingEmail(String email, String password) async {
+  //   logger.d("in createUserUsingEmail");
+  //   try {
+  //     UserCredential userCredential = await FirebaseAuth.instance
+  //         .createUserWithEmailAndPassword(email: email, password: password);
+  // logger.d("users created");
+  // if (userCredential.user != null) {
+  //   if (!userCredential.user!.emailVerified) {
+  //     logger.d("user email not verified, sending verification email");
+  //     messageStr =
+  //         "Verification link sent to this email. Click to verify then login again.";
+  //     update(["authMsgId"]);
+  //     await userCredential.user!.sendEmailVerification();
+  //     debugPrint("verification link sent");
+  //     return;
+  //   }
+  //   logger.d("navigating to BottomBar()");
+  //   // feedUserData(userCredential.user);
+  //   // await createUserDb();
+  //   Get.offAll(() => MyBottomBar());
+  // }
+  //   } on FirebaseAuthException catch (e) {
+  //     if (e.code == 'weak-password') {
+  //       logger.d('The password provided is too weak.');
+  //       messageStr = "Week password. Write strong password";
+  //       update(["authMsgId"]);
+  //     } else if (e.code == 'email-already-in-use') {
+  //       logger.d('The account already exists for that email.');
+  //     }
+  //   } catch (e) {
+  //     logger.e(e);
+  //   }
+  // }
+
+  // singInUsingEmail(String email, String password) async {
+  //   logger.d("in signInUsingEmail", email);
+  //   isSigningIn = true;
+  //   update(["loginBtnId"]);
+  //   try {
+  //     UserCredential userCredential = await FirebaseAuth.instance
+  //         .signInWithEmailAndPassword(email: email, password: password);
+
+  //     if (userCredential.user != null) {
+  //       feedUserData(userCredential.user);
+
+  //       if (!userCredential.user!.emailVerified) {
+  //         logger.d("user email not verified, sending verification email");
+  //         messageStr =
+  //             "Verification link sent to this email. Click to verify then login again.";
+  //         update(["authMsgId"]);
+
+  //         await userCredential.user!.sendEmailVerification();
+  //         debugPrint("verification link sent");
+  //         return;
+  //       }
+  //       await createUserDb();
+  //       logger.d("navigating to MyBottomBar()");
+  //       messageStr = "";
+  //       update(["authMsgId"]);
+
+  //       Get.offAll(() => MyBottomBar());
+  //     }
+  //   } on FirebaseAuthException catch (e) {
+  //     if (e.code == 'user-not-found') {
+  //       logger.d('No user found for that email.');
+
+  //       createUserUsingEmail(email, password);
+  //     } else if (e.code == 'wrong-password') {
+  //       logger.d('Wrong password provided for that user.');
+  //       messageStr = "Wrong password";
+  //       update(["authMsgId"]);
+  //     }
+  //   } finally {
+  // isSigningIn = false;
+  // update(["loginBtnId"]);
+  //   }
+  // }
+
+  createUserWithEmailPassword() async {
+    if (signinEmailTextController.text == "" ||
+        signinPasswordTextController.text == "" ||
+        signinFullNameTextController.text == "") {
+      Get.snackbar("Opps", "All *marked fields are required");
+      return;
+    }
+    isSigningIn = true;
+    update(["SIGN_IN_BTN"]);
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: signinEmailTextController.text,
+        password: signinPasswordTextController.text,
+      );
       logger.d("users created");
       if (userCredential.user != null) {
-        if (!userCredential.user!.emailVerified) {
-          logger.d("user email not verified, sending verification email");
-          messageStr =
-              "Verification link sent to this email. Click to verify then login again.";
-          update(["authMsgId"]);
-          await userCredential.user!.sendEmailVerification();
-          debugPrint("verification link sent");
-          return;
-        }
         logger.d("navigating to BottomBar()");
-        // feedUserData(userCredential.user);
-        // await createUserDb();
+        feedUserData(userCredential.user);
+        await createUserDb();
+        await deserializeUserInApp(userCredential.user!);
         Get.offAll(() => MyBottomBar());
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        logger.d('The password provided is too weak.');
-        messageStr = "Week password. Write strong password";
-        update(["authMsgId"]);
+        Get.snackbar("Opps", 'The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
-        logger.d('The account already exists for that email.');
+        Get.snackbar("Opps", 'The account already exists for that email.');
       }
     } catch (e) {
-      logger.e(e);
+      logger.d(e);
+      Get.snackbar("Opps", e.toString());
+    } finally {
+      isSigningIn = false;
+      update(["SIGN_IN_BTN"]);
     }
   }
 
-  singInUsingEmail(String email, String password) async {
-    logger.d("in signInUsingEmail", email);
+  loginWithEmailPassword() async {
+    if (loginEmailTextController.text == "" ||
+        loginPasswordTextController.text == "") {
+      Get.snackbar("Opps", "All *marked fields are required");
+      return;
+    }
     isSigningIn = true;
-    update(["loginBtnId"]);
+    update(["LOGIN_BTN"]);
     try {
       UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-
+          .signInWithEmailAndPassword(
+              email: loginEmailTextController.text,
+              password: loginPasswordTextController.text);
       if (userCredential.user != null) {
-        feedUserData(userCredential.user);
-
-        if (!userCredential.user!.emailVerified) {
-          logger.d("user email not verified, sending verification email");
-          messageStr =
-              "Verification link sent to this email. Click to verify then login again.";
-          update(["authMsgId"]);
-
-          await userCredential.user!.sendEmailVerification();
-          debugPrint("verification link sent");
-          return;
-        }
-        await createUserDb();
-        logger.d("navigating to MyBottomBar()");
-        messageStr = "";
-        update(["authMsgId"]);
-
+        logger.d("navigating to BottomBar()");
+        // feedUserData(userCredential.user);
+        await deserializeUserInApp(userCredential.user!);
         Get.offAll(() => MyBottomBar());
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        logger.d('No user found for that email.');
-
-        createUserUsingEmail(email, password);
+        Get.snackbar('Have you registered?', 'No user found for that email.');
       } else if (e.code == 'wrong-password') {
-        logger.d('Wrong password provided for that user.');
-        messageStr = "Wrong password";
-        update(["authMsgId"]);
+        Get.snackbar('Opps!', 'Wrong password');
       }
     } finally {
       isSigningIn = false;
-      update(["loginBtnId"]);
+      update(["LOGIN_BTN"]);
     }
   }
 

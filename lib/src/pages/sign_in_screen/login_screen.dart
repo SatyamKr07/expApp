@@ -110,8 +110,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  String email = "";
-  String password = "";
   emailPasswordTextField() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -120,10 +118,10 @@ class _LoginScreenState extends State<LoginScreen> {
           TextField(
             decoration: const InputDecoration(
               prefixIcon: Icon(Icons.alternate_email_sharp),
-              hintText: 'Email',
+              hintText: '*Email',
             ),
             onChanged: (val) {
-              email = val;
+              authCtrl.loginEmailTextController.text = val;
             },
           ),
           vSizedBox3,
@@ -132,17 +130,17 @@ class _LoginScreenState extends State<LoginScreen> {
             obscureText: true,
             decoration: const InputDecoration(
               prefixIcon: Icon(Icons.lock),
-              hintText: 'Password',
+              hintText: '*Password',
             ),
             onChanged: (val) {
-              password = val;
+              authCtrl.loginPasswordTextController.text = val;
             },
           ),
           SizedBox(height: 20),
           messageText(),
           SizedBox(height: 20),
           GetBuilder<AuthCtrl>(
-              id: "loginBtnId",
+              id: "LOGIN_BTN",
               builder: (_) {
                 return _.isSigningIn
                     ? Center(
@@ -162,9 +160,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               primary: Colors.red,
                             ),
                             onPressed: () {
+                              authCtrl.loginWithEmailPassword();
                               // Authentication authentication = Authentication();
 
-                              authCtrl.singInUsingEmail(email, password);
+                              // authCtrl.singInUsingEmail(email, password);
                             }),
                       );
               }),

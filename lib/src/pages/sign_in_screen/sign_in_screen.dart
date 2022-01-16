@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignInScreen extends StatelessWidget {
-  const SignInScreen({Key? key}) : super(key: key);
-
+  SignInScreen({Key? key}) : super(key: key);
+  final authCtrl = Get.find<AuthCtrl>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,9 +41,10 @@ class SignInScreen extends StatelessWidget {
               TextField(
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.person_outline),
-                  hintText: 'Full Name',
+                  hintText: '*Full Name',
                 ),
                 onChanged: (val) {
+                  authCtrl.signinFullNameTextController.text = val;
                   // email = val;
                 },
               ),
@@ -51,10 +52,10 @@ class SignInScreen extends StatelessWidget {
               TextField(
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.alternate_email_sharp),
-                  hintText: 'Email',
+                  hintText: '*Email',
                 ),
                 onChanged: (val) {
-                  // email = val;
+                  authCtrl.signinEmailTextController.text = val;
                 },
               ),
               vSizedBox3,
@@ -63,9 +64,10 @@ class SignInScreen extends StatelessWidget {
                 obscureText: true,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.lock),
-                  hintText: 'Password',
+                  hintText: '*Password',
                 ),
                 onChanged: (val) {
+                  authCtrl.signinPasswordTextController.text = val;
                   // password = val;
                 },
               ),
@@ -92,6 +94,7 @@ class SignInScreen extends StatelessWidget {
                                   primary: Colors.red,
                                 ),
                                 onPressed: () {
+                                  authCtrl.createUserWithEmailPassword();
                                   // Authentication authentication = Authentication();
 
                                   // authCtrl.singInUsingEmail(email, password);
