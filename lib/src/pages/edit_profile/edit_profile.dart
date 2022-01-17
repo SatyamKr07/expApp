@@ -196,10 +196,14 @@ class EditProfile extends StatelessWidget {
                                   side: BorderSide(color: Color(0xffEB1047)),
                                 ),
                               ),
-                              child: Text(
-                                editProfileController.updateStatus == "UPDATING"
-                                    ? "Saving"
-                                    : "Save Changes",
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Text(
+                                  editProfileController.updateStatus ==
+                                          "UPDATING"
+                                      ? "Saving"
+                                      : "Save Changes",
+                                ),
                               ),
                             ),
                           ),

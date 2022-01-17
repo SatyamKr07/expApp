@@ -5,6 +5,7 @@ import 'package:commentor/src/controllers/user_controller.dart';
 import 'package:commentor/src/pages/add_post/add_post.dart';
 import 'package:commentor/src/pages/home/home.dart';
 import 'package:commentor/src/pages/profile/profile.view.dart';
+import 'package:commentor/src/pages/search/search.dart';
 import 'package:commentor/src/pages/search_user/search_user.dart';
 import 'package:commentor/src/pages/story/story_list_page.dart';
 import 'package:commentor/src/pages/story/story_page.dart';
@@ -82,7 +83,8 @@ class _MyBottomBarState extends State<MyBottomBar> {
                       controller: _.pageController,
                       screens: [
                         Home(),
-                        SearchUser(),
+                        Search(),
+                        // SearchUser(),
                         AddPost(),
                         Scaffold(),
                         ProfileView(
