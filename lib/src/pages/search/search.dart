@@ -1,5 +1,7 @@
 import 'package:commentor/src/central/shared/dimensions.dart';
+import 'package:commentor/src/pages/search_user/search_user.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Search extends StatelessWidget {
   const Search({Key? key}) : super(key: key);
@@ -50,6 +52,13 @@ class Search extends StatelessWidget {
                 ),
               ),
               vSizedBox3,
+              InkWell(
+                onTap: () {
+                  Get.to(() => SearchUser());
+                },
+                child: searchTopic(text: "Search and Follow Users"),
+              ),
+              vSizedBox2,
               searchTopic(text: "Top Comments"),
               vSizedBox2,
               searchTopic(text: "Trending Pages"),
