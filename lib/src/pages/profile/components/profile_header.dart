@@ -30,7 +30,7 @@ class ProfileHeader extends StatelessWidget {
         children: [
           Row(
             children: [
-              if (userController.appUser.id == userModel.id)
+              if (userController.appUser.id == userModel.id) ...[
                 IconButton(
                   onPressed: () {
                     Get.to(() => EditProfile());
@@ -40,8 +40,14 @@ class ProfileHeader extends StatelessWidget {
                     // color: KConstantColors.whiteColor,
                     size: 16,
                   ),
-                )
-              else
+                ),
+                Text(
+                  userModel.username,
+                  style: TextStyle(
+                      // color: Color(0xff7630FE),
+                      ),
+                ),
+              ] else ...[
                 IconButton(
                   onPressed: () {
                     Get.back();
@@ -52,6 +58,13 @@ class ProfileHeader extends StatelessWidget {
                     size: 24,
                   ),
                 ),
+                Text(
+                  userModel.username,
+                  style: TextStyle(
+                      // color: Color(0xff7630FE),
+                      ),
+                ),
+              ],
               Spacer(),
               IconButton(
                   onPressed: () {},

@@ -86,6 +86,7 @@ class _ProfileViewState extends State<ProfileView> {
     }
 
     return Container(
+      // color: Color(0xff22232A),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: SingleChildScrollView(
