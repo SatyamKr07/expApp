@@ -5,6 +5,7 @@ import 'package:commentor/src/central/shared/dimensions.dart';
 import 'package:commentor/src/models/user_model.dart';
 import 'package:commentor/src/pages/edit_profile/edit_profile.dart';
 import 'package:commentor/src/pages/profile/components/follow_widget.dart';
+import 'package:commentor/src/pages/settings/settings.dart';
 import 'package:commentor/src/pages/sign_in_screen/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -67,20 +68,11 @@ class ProfileHeader extends StatelessWidget {
               ],
               Spacer(),
               IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    FontAwesomeIcons.bell,
-                    // color: KConstantColors.whiteColor,
-                  )),
-              IconButton(
                   onPressed: () async {
-                    await AuthCtrl.signOut(context: context);
-                    userController.appUser = UserModel(
-                        followersList: [], followingList: [], storiesList: []);
-                    Get.offAll(() => LoginScreen());
+                    Get.to(() => Settings());
                   },
                   icon: Icon(
-                    Icons.logout,
+                    Icons.settings_outlined,
                     // color: KConstantColors.whiteColor,
                   ))
             ],
