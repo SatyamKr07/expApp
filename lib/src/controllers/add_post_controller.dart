@@ -161,19 +161,29 @@ class AddPostController extends GetxController {
     commentModel.timestamp = DateTime.now();
     commentModel.postId = postId;
     try {
-      _commentCollection.add(commentModel.toJson()).then((docRef) {
-        _postsCollection
-            .doc(postId)
-            .update({"commentsCount": postModel.commentsCount += 1});
-        commentModel = CommentModel(
-            timestamp: DateTime.now(),
-            postedBy: userController.appUser,
-            postId: '',
-            commentId: '');
-        commentTextCtrl.text = "";
-      }).catchError((error) {
-        logger.e('firestore error $error');
-      });
+      _commentCollection
+          .add(commentModel.toJson())
+          .then((docRef) {
+            _postsCollection
+                .doc(postId)
+                .update({"commentsCount": postModel.commentsCount += 1});
+            commentModel = CommentModel(
+                timestamp: DateTime.now(),
+                postedBy: userController.appUser,
+                postId: '',
+                commentId: '');
+            commentTextCtrl.text = "";
+          })
+          .then((value) => {
+                userController.appUser.totalCommentsCount += 1,
+                _usersCollection.doc(userController.appUser.id).update({
+                  "totalCommentsCount":
+                      userController.appUser.totalCommentsCount
+                })
+              })
+          .catchError((error) {
+            logger.e('firestore error $error');
+          });
     } catch (e) {
       logger.e(e);
       // isUploading = false;

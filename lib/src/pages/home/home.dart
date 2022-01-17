@@ -33,20 +33,12 @@ class _HomeState extends State<Home> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(FontAwesomeIcons.bell)),
           IconButton(
             onPressed: () {
               Get.to(() => AddStory());
             },
             icon: const Icon(Icons.add),
           ),
-          IconButton(
-              onPressed: () {
-                Get.toNamed("/settings");
-                // Navigator.restorablePushNamed(
-                //     context, SettingsView.routeName);
-              },
-              icon: Icon(Icons.settings)),
         ],
         automaticallyImplyLeading: false,
         title: Row(children: [
