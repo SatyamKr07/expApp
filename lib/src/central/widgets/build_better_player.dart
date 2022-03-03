@@ -1,5 +1,5 @@
 import 'package:better_player/better_player.dart';
-import 'package:commentor/src/central/services/my_logger.dart';
+import '../services/my_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 

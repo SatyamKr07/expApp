@@ -1,11 +1,11 @@
-import 'package:commentor/src/central/services/my_logger.dart';
-import 'package:commentor/src/controllers/home_controller.dart';
-import 'package:commentor/src/controllers/story_controller.dart';
-import 'package:commentor/src/controllers/user_controller.dart';
-import 'package:commentor/src/models/story_model.dart';
-import 'package:commentor/src/models/user.dart';
-import 'package:commentor/src/models/user_model.dart';
-import 'package:commentor/src/pages/story/widgets/profile_widget.dart';
+import '../../../central/services/my_logger.dart';
+import '../../../controllers/home_controller.dart';
+import '../../../controllers/story_controller.dart';
+import '../../../controllers/user_controller.dart';
+import '../../../models/story_model.dart';
+import '../../../models/user.dart';
+import '../../../models/user_model.dart';
+import 'profile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

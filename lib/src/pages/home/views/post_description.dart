@@ -1,4 +1,4 @@
-import 'package:commentor/src/models/post_model.dart';
+import '../../../models/post_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

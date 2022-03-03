@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:commentor/src/central/services/my_logger.dart';
-import 'package:commentor/src/controllers/user_controller.dart';
-import 'package:commentor/src/models/user_model.dart';
+import '../../../central/services/my_logger.dart';
+import '../../../controllers/user_controller.dart';
+import '../../../models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/instance_manager.dart';

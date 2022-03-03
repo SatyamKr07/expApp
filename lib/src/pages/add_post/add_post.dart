@@ -1,7 +1,7 @@
-import 'package:commentor/src/central/services/my_logger.dart';
-import 'package:commentor/src/central/widgets/build_swiper.dart';
-import 'package:commentor/src/controllers/add_post_controller.dart';
-import 'package:commentor/src/pages/add_post/views/add_tags.dart';
+import '../../central/services/my_logger.dart';
+import '../../central/widgets/build_swiper.dart';
+import '../../controllers/add_post_controller.dart';
+import 'views/add_tags.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -39,7 +39,6 @@ class AddPost extends StatelessWidget {
                         GetBuilder<AddPostController>(
                           id: "ADD_IMAGES_SWIPER",
                           builder: (_) => BuildSwiper(
-                            imageUrls: const [],
                             editPage: true,
                             aspectRatio: 4 / 3,
                             mediaList: addBlogController.mediaList,

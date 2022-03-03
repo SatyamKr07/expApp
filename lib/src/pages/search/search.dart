@@ -1,5 +1,5 @@
-import 'package:commentor/src/central/shared/dimensions.dart';
-import 'package:commentor/src/pages/search_user/search_user.dart';
+import '../../central/shared/dimensions.dart';
+import '../search_user/search_user.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

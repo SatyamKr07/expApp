@@ -1,9 +1,9 @@
-import 'package:commentor/src/central/services/auth_ctrl.dart';
-import 'package:commentor/src/central/shared/dimensions.dart';
-import 'package:commentor/src/controllers/user_controller.dart';
-import 'package:commentor/src/models/user_model.dart';
-import 'package:commentor/src/pages/sign_in_screen/login_screen.dart';
-import 'package:commentor/src/pages/sign_in_screen/sign_in_screen.dart';
+import '../../central/services/auth_ctrl.dart';
+import '../../central/shared/dimensions.dart';
+import '../../controllers/user_controller.dart';
+import '../../models/user_model.dart';
+import '../sign_in_screen/login_screen.dart';
+import '../sign_in_screen/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

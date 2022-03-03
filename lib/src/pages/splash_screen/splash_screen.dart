@@ -1,4 +1,4 @@
-import 'package:commentor/src/central/services/auth_ctrl.dart';
+import '../../central/services/auth_ctrl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

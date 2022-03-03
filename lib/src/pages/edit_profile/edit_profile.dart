@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:commentor/src/central/services/image_service.dart';
-import 'package:commentor/src/central/services/my_logger.dart';
-import 'package:commentor/src/central/shared/dimensions.dart';
-import 'package:commentor/src/controllers/edit_profile_controller.dart';
-import 'package:commentor/src/controllers/user_controller.dart';
+import '../../central/services/image_service.dart';
+import '../../central/services/my_logger.dart';
+import '../../central/shared/dimensions.dart';
+import '../../controllers/edit_profile_controller.dart';
+import '../../controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

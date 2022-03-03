@@ -16,7 +16,7 @@ class MediaModel {
   });
 
   String type;
-  var url;
+  String url;
 
   factory MediaModel.fromJson(Map<String, dynamic> json) => MediaModel(
         type: json["type"],

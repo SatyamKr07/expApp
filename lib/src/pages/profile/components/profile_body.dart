@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:commentor/src/central/services/my_logger.dart';
-import 'package:commentor/src/controllers/user_controller.dart';
-import 'package:commentor/src/central/widgets/build_swiper.dart';
-import 'package:commentor/src/models/post_model.dart';
-import 'package:commentor/src/models/user_model.dart';
+import '../../../central/services/my_logger.dart';
+import '../../../controllers/user_controller.dart';
+import '../../../central/widgets/build_swiper.dart';
+import '../../../models/post_model.dart';
+import '../../../models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -60,7 +60,6 @@ class ProfileBody extends StatelessWidget {
                   },
                   child: BuildSwiper(
                     // picList: postList[index].picList,
-                    imageUrls: const [],
                     mediaList: postList[index].mediaList,
                   ),
                 ),

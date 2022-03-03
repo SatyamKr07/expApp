@@ -1,10 +1,10 @@
-import 'package:commentor/src/central/shared/dimensions.dart';
-import 'package:commentor/src/controllers/user_controller.dart';
-import 'package:commentor/src/controllers/home_controller.dart';
-import 'package:commentor/src/pages/add_story/add_story.dart';
-import 'package:commentor/src/pages/home/views/all_posts_list.dart';
-import 'package:commentor/src/pages/story/story_list_page.dart';
-import 'package:commentor/src/settings/settings_view.dart';
+import '../../central/shared/dimensions.dart';
+import '../../controllers/user_controller.dart';
+import '../../controllers/home_controller.dart';
+import '../add_story/add_story.dart';
+import 'views/all_posts_list.dart';
+import '../story/story_list_page.dart';
+import '../../settings/settings_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

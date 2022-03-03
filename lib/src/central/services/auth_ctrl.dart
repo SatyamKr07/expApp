@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:commentor/src/controllers/user_controller.dart';
-import 'package:commentor/src/models/user_model.dart';
-import 'package:commentor/src/pages/bottom_bar/my_bottom_bar.dart';
-import 'package:commentor/src/pages/sign_in_screen/login_screen.dart';
+import '../../controllers/user_controller.dart';
+import '../../models/user_model.dart';
+import '../../pages/bottom_bar/my_bottom_bar.dart';
+import '../../pages/sign_in_screen/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/instance_manager.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import './my_logger.dart';
+import 'my_logger.dart';
 
 class AuthCtrl extends GetxController {
   String messageStr = "";

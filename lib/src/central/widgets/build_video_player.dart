@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:commentor/src/central/services/my_logger.dart';
+import '../services/my_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 

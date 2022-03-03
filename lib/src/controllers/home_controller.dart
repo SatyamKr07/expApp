@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:commentor/src/central/services/my_logger.dart';
-import 'package:commentor/src/controllers/user_controller.dart';
-import 'package:commentor/src/models/post_model.dart';
+import '../central/services/my_logger.dart';
+import 'user_controller.dart';
+import '../models/post_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get_instance/src/extension_instance.dart';

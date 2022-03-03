@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:commentor/src/models/media_model.dart';
+import '../../models/media_model.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:image_picker/image_picker.dart';

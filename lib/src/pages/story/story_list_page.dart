@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:commentor/src/controllers/story_controller.dart';
-import 'package:commentor/src/models/user_model.dart';
+import '../../controllers/story_controller.dart';
+import '../../models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';

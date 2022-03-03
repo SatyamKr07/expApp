@@ -1,7 +1,7 @@
-import 'package:commentor/src/controllers/user_controller.dart';
-import 'package:commentor/src/models/user_model.dart';
-import 'package:commentor/src/pages/profile/components/show_followers.dart';
-import 'package:commentor/src/pages/profile/components/show_following.dart';
+import '../../../controllers/user_controller.dart';
+import '../../../models/user_model.dart';
+import 'show_followers.dart';
+import 'show_following.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';

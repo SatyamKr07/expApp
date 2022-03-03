@@ -1,6 +1,6 @@
-import 'package:commentor/src/central/services/auth_ctrl.dart';
-import 'package:commentor/src/central/shared/dimensions.dart';
-import 'package:commentor/src/pages/sign_in_screen/google_signin_btn.dart';
+import '../../central/services/auth_ctrl.dart';
+import '../../central/shared/dimensions.dart';
+import 'google_signin_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

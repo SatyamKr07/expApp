@@ -1,4 +1,4 @@
-import 'package:commentor/src/models/story_model.dart';
+import 'story_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class User {

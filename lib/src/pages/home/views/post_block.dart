@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:commentor/src/central/services/my_logger.dart';
-import 'package:commentor/src/controllers/user_controller.dart';
-import 'package:commentor/src/central/shared/dimensions.dart';
-import 'package:commentor/src/central/widgets/build_swiper.dart';
-import 'package:commentor/src/controllers/home_controller.dart';
-import 'package:commentor/src/models/post_model.dart';
-import 'package:commentor/src/pages/comment/comments.dart';
-import 'package:commentor/src/pages/profile/profile.view.dart';
+import '../../../central/services/my_logger.dart';
+import '../../../controllers/user_controller.dart';
+import '../../../central/shared/dimensions.dart';
+import '../../../central/widgets/build_swiper.dart';
+import '../../../controllers/home_controller.dart';
+import '../../../models/post_model.dart';
+import '../../comment/comments.dart';
+import '../../profile/profile.view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -232,7 +232,6 @@ class _PostBlockState extends State<PostBlock> {
                       borderRadius: BorderRadius.circular(12.0),
                       child: BuildSwiper(
                         aspectRatio: 4 / 3,
-                        imageUrls: const [],
                         mediaList: widget.postModel.mediaList,
                         editPage: false,
                       )

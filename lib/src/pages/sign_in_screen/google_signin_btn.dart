@@ -1,8 +1,8 @@
-import 'package:commentor/src/central/services/auth_ctrl.dart';
-import 'package:commentor/src/central/shared/dimensions.dart';
-import 'package:commentor/src/controllers/user_controller.dart';
-import 'package:commentor/src/pages/bottom_bar/my_bottom_bar.dart';
-import 'package:commentor/src/pages/home/home.dart';
+import '../../central/services/auth_ctrl.dart';
+import '../../central/shared/dimensions.dart';
+import '../../controllers/user_controller.dart';
+import '../bottom_bar/my_bottom_bar.dart';
+import '../home/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_instance/src/extension_instance.dart';

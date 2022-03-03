@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:commentor/src/central/services/image_service.dart';
-import 'package:commentor/src/central/services/my_logger.dart';
-import 'package:commentor/src/controllers/user_controller.dart';
-import 'package:commentor/src/models/media_model.dart';
-import 'package:commentor/src/models/story_model.dart';
+import '../central/services/image_service.dart';
+import '../central/services/my_logger.dart';
+import 'user_controller.dart';
+import '../models/media_model.dart';
+import '../models/story_model.dart';
 import 'package:get/get.dart';
-import 'package:commentor/src/central/services/firebase_services.dart';
+import '../central/services/firebase_services.dart';
 import 'package:image_picker/image_picker.dart';
 
 class DisplayStoryController extends GetxController {

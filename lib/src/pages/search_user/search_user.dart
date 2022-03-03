@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:commentor/src/controllers/user_controller.dart';
-import 'package:commentor/src/models/user_model.dart';
-import 'package:commentor/src/pages/profile/components/follow_widget.dart';
-import 'package:commentor/src/pages/profile/profile.view.dart';
+import '../../controllers/user_controller.dart';
+import '../../models/user_model.dart';
+import '../profile/components/follow_widget.dart';
+import '../profile/profile.view.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:commentor/src/controllers/user_controller.dart';
-import 'package:commentor/src/models/user.dart';
-import 'package:commentor/src/models/user_model.dart';
+import '../../../controllers/user_controller.dart';
+import '../../../models/user.dart';
+import '../../../models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 

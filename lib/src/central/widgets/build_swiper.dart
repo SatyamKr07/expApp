@@ -1,24 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:commentor/src/central/widgets/build_better_player.dart';
-import 'package:commentor/src/models/media_model.dart';
+import 'build_better_player.dart';
+import '../../models/media_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:universal_io/io.dart';
 
-import 'build_video_player.dart';
 import 'my_loading_widget.dart';
 
 class BuildSwiper extends StatefulWidget {
   BuildSwiper({
     Key? key,
-    required this.imageUrls,
     this.editPage = false,
     this.aspectRatio = 1,
     required this.mediaList,
   }) : super(key: key);
 
-  List imageUrls;
   bool editPage;
   double aspectRatio;
   List<MediaModel> mediaList;
